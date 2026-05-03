@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>飞猪保险超市 V2 - 玩法驱动综合保险货架</title>
+  <style>
+    :root {
+      --orange: #ff6a00;
+      --gold: #ffb21d;
+      --cyan: #11bfd1;
+      --blue: #1677ff;
+      --green: #16a970;
+      --red: #ff4d4f;
+      --ink: #17202b;
+      --muted: #657384;
+      --line: #e7edf3;
+      --bg: #f7f8fb;
+      --card: #fff;
+      --shadow: 0 14px 34px rgba(23,32,43,.1);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,178,29,.24), transparent 30%),
+        radial-gradient(circle at 92% 6%, rgba(17,191,209,.16), transparent 28%),
+        var(--bg);
+      letter-spacing: 0;
+    }
+
+    button {
+      font-family: inherit;
+      letter-spacing: 0;
+      cursor: pointer;
+    }
+
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px 18px 40px;
+    }
+
+    .hero {
+      min-height: 280px;
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(20,26,36,.76), rgba(20,26,36,.34), rgba(20,26,36,.08)),
+        url("assets/insurance-hero-mobile.jpg") center/cover;
+      box-shadow: var(--shadow);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 20px;
+      align-items: end;
+      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      font-size: 12px;
+      font-weight: 800;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 12px 0 10px;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 650px;
+      color: rgba(255,255,255,.9);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .hero-side {
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 8px;
+      padding: 14px;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-side strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .hero-side span {
+      display: block;
+      margin-top: 6px;
+      color: rgba(255,255,255,.82);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+    }
+
+    .app {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .app-top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 14px 14px 12px;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: #fff;
+    }
+
+    .app-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .app-title strong { font-size: 20px; }
+    .app-title span { font-size: 12px; color: rgba(255,255,255,.86); }
+
+    .search {
+      min-height: 40px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      color: #8d4d00;
+      padding: 0 13px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      background: rgba(255,255,255,.82);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      padding: 0 12px;
+      white-space: nowrap;
+      font-weight: 800;
+    }
+
+    .nav button.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+    }
+
+    .screen { padding: 14px; min-height: 720px; }
+    .grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      box-shadow: 0 8px 22px rgba(23,32,43,.05);
+    }
+
+    .card h2, .card h3 {
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+
+    .card h2 { font-size: 18px; }
+    .card h3 { font-size: 15px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .play-card {
+      min-height: 128px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .play-card:after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      top: -28px;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: rgba(255,106,0,.08);
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 22px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0 8px;
+      font-size: 11px;
+      font-weight: 850;
+      color: #9d5200;
+      background: #fff2dd;
+      border: 1px solid #ffdfad;
+    }
+
+    .tag.green { color: #08734b; background: #e9fbf4; border-color: #c4eedb; }
+    .tag.blue { color: #1066ad; background: #edf7ff; border-color: #cbe8ff; }
+    .tag.red { color: #b02a2a; background: #fff0f0; border-color: #ffd0d0; }
+
+    .primary, .secondary {
+      min-height: 40px;
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 880;
+    }
+
+    .primary {
+      color: #fff;
+      border: 0;
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      box-shadow: 0 10px 20px rgba(255,106,0,.18);
+    }
+
+    .secondary {
+      color: var(--orange);
+      border: 1px solid #ffdfad;
+      background: #fff7eb;
+    }
+
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      min-height: 38px;
+      border-radius: 999px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 820;
+      font-size: 13px;
+    }
+
+    .pill.active {
+      color: #a84d00;
+      border-color: rgba(255,106,0,.55);
+      background: #fff5e8;
+    }
+
+    .score {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 13px;
+      align-items: center;
+    }
+
+    .ring {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(var(--orange) calc(var(--score) * 1%), #edf1f5 0);
+    }
+
+    .ring span {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      color: var(--orange);
+      font-size: 24px;
+      font-weight: 920;
+    }
+
+    .gap-list, .task-list, .shelf, .plans, .rank-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .gap, .task, .item, .plan, .rank {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .gap-head, .task-head, .item-head, .plan-head, .rank-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .gap b, .task b, .item b, .plan b, .rank b { font-size: 15px; }
+    .meta { color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .mini {
+      border-radius: 8px;
+      padding: 8px 6px;
+      background: #f7f9fb;
+      color: var(--muted);
+      text-align: center;
+      font-size: 11px;
+      font-weight: 760;
+    }
+
+    .mini strong { display: block; color: var(--ink); font-size: 12px; margin-bottom: 2px; }
+
+    .side {
+      position: sticky;
+      top: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .side .card { box-shadow: none; }
+    .side ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 12px; line-height: 1.75; }
+
+    .toast {
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #151b26;
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .fixed-action {
+      position: sticky;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 0 -14px -14px;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(247,248,251,0), #f7f8fb 24%, #f7f8fb);
+    }
+
+    @media (max-width: 860px) {
+      .page { padding: 0; }
+      .hero { border-radius: 0; grid-template-columns: 1fr; min-height: 300px; padding: 22px 16px; }
+      .hero-side { display: none; }
+      .shell { grid-template-columns: 1fr; margin-top: 0; }
+      .app { border-left: 0; border-right: 0; border-radius: 0; box-shadow: none; }
+      .side { display: none; }
+      .grid3 { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
+      .mini-grid { grid-template-columns: repeat(2, 1fr); }
+      .screen { min-height: calc(100vh - 160px); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">V2 · 玩法驱动 · 综合保险货架</span>
+        <h1>飞猪保险超市</h1>
+        <p>不让用户从险种开始，而是从 AI 保障体检、会员权益、今日任务、场景活动和理赔服务开始行动，再把旅行、健康、意外、寿险、家财、车、宠物、运动、数码、责任险智能适配进去。</p>
+      </div>
+      <div class="hero-side">
+        <strong>10 类</strong><span>旅行、健康、意外、寿险、家财、车险、宠物、运动、数码、责任</span>
+        <strong style="margin-top:16px">8 步</strong><span>玩法首页、AI 体检、缺口报告、任务、货架、组合、确认、复购</span>
+      </div>
+    </section>
+
+    <div class="shell">
+      <section class="app">
+        <div class="app-top">
+          <div class="app-title"><strong>飞猪保险超市</strong><span>用玩法找到适合你的保障</span></div>
+          <div class="search">AI 问一问：我现在缺哪些保障？</div>
+        </div>
+        <nav class="nav" id="nav"></nav>
+        <div class="screen" id="screen"></div>
+      </section>
+
+      <aside class="side">
+        <div class="card">
+          <h2>V2 核心变化</h2>
+          <ul>
+            <li>先设计用户行动，再承接险种。</li>
+            <li>旅行险是强场景入口，不是频道边界。</li>
+            <li>AI 缺口体检和会员权益负责拉活。</li>
+            <li>任务、券包、榜单、服务形成复访理由。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>推荐规则可见</h2>
+          <p>切换画像标签后，缺口分、任务、险种排序和组合方案会同步变化，方便评审时讲清“为什么推荐”。</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const navItems = [
+      ["home", "玩法首页"],
+      ["check", "AI 体检"],
+      ["gap", "缺口报告"],
+      ["tasks", "今日任务"],
+      ["shelf", "智能货架"],
+      ["plans", "组合方案"],
+      ["confirm", "投保确认"],
+      ["service", "服务复购"]
+    ];
+
+    const state = {
+      screen: "home",
+      tags: { travel: true, family: true, car: false, pet: false, sport: false, digital: true, parents: false, asset: true },
+      tasks: { profile: false, family: false, policy: false, travel: false, coupon: false },
+      coupon: false,
+      selectedPlan: "travelPlus",
+      confirmed: false
+    };
+
+    const tagLabels = {
+      travel: ["近期有旅行", "旅行险置顶，联动数码/责任"],
+      family: ["亲子家庭", "健康、意外、寿险、家财增强"],
+      car: ["有车/自驾", "车险、责任、旅行自驾增强"],
+      pet: ["有宠物", "宠物险、家财、责任增强"],
+      sport: ["爱运动", "运动险、意外、健康增强"],
+      digital: ["数码设备多", "数码险、家财、行李增强"],
+      parents: ["父母老人", "健康、意外、寿险增强"],
+      asset: ["关注资产", "家财、责任、寿险增强"]
+    };
+
+    const products = [
+      { key: "travel", name: "旅行险", hook: "出行订单/签证/航变/酒店不可退", base: 20, tags: ["travel", "digital", "sport", "car"] },
+      { key: "health", name: "健康险", hook: "家庭成员/老人/儿童/医疗缺口", base: 18, tags: ["family", "parents", "sport"] },
+      { key: "accident", name: "意外险", hook: "通勤/运动/亲子/老人", base: 15, tags: ["family", "sport", "parents"] },
+      { key: "life", name: "寿险", hook: "家庭责任/房贷/子女教育", base: 12, tags: ["family", "parents", "asset"] },
+      { key: "home", name: "家财险", hook: "房屋/贵重物/旅行空置风险", base: 12, tags: ["asset", "family", "pet", "digital"] },
+      { key: "car", name: "车险", hook: "自驾/租车/有车用户", base: 10, tags: ["car", "travel"] },
+      { key: "pet", name: "宠物险", hook: "宠物家庭/宠物出行", base: 10, tags: ["pet"] },
+      { key: "sport", name: "运动险", hook: "滑雪/潜水/骑行/户外", base: 9, tags: ["sport", "travel"] },
+      { key: "digital", name: "数码险", hook: "手机/相机/电脑/旅行装备", base: 9, tags: ["digital", "travel"] },
+      { key: "liability", name: "责任险", hook: "第三方责任/家庭责任/自驾责任", base: 8, tags: ["asset", "car", "pet", "travel"] }
+    ];
+
+    const planDefs = {
+      travelPlus: { name: "出行安心包", desc: "旅行险 + 数码险 + 运动/责任扩展", price: 96, keys: ["旅行险", "数码险", "责任险"] },
+      familyBase: { name: "家庭基础包", desc: "健康险 + 意外险 + 寿险 + 家财险", price: 188, keys: ["健康险", "意外险", "寿险", "家财险"] },
+      carPet: { name: "车宠生活包", desc: "车险 + 宠物险 + 责任险", price: 158, keys: ["车险", "宠物险", "责任险"] },
+      asset: { name: "资产责任包", desc: "家财险 + 责任险 + 寿险", price: 128, keys: ["家财险", "责任险", "寿险"] },
+      digitalSport: { name: "数码运动包", desc: "数码险 + 运动险 + 意外险", price: 89, keys: ["数码险", "运动险", "意外险"] }
+    };
+
+    const screen = document.getElementById("screen");
+    const nav = document.getElementById("nav");
+
+    function activeTags() {
+      return Object.keys(state.tags).filter(key => state.tags[key]);
+    }
+
+    function rankedProducts() {
+      const tags = activeTags();
+      return products.map(item => {
+        const score = item.base + item.tags.filter(tag => tags.includes(tag)).length * 18 + (state.tags.travel && item.key === "travel" ? 18 : 0);
+        return { ...item, score };
+      }).sort((a, b) => b.score - a.score);
+    }
+
+    function gapScore() {
+      const tags = activeTags().length;
+      const done = Object.values(state.tasks).filter(Boolean).length;
+      return Math.max(28, Math.min(96, 42 + tags * 8 - done * 5));
+    }
+
+    function topGaps() {
+      return rankedProducts().slice(0, 4).map(item => ({
+        title: `可能缺${item.name}`,
+        desc: item.hook,
+        level: item.score > 62 ? "高优先" : item.score > 44 ? "建议补齐" : "可选"
+      }));
+    }
+
+    function planOrder() {
+      const order = ["travelPlus", "familyBase", "asset", "digitalSport", "carPet"];
+      if (!state.tags.travel) order.push(order.shift());
+      if (state.tags.car || state.tags.pet) return ["carPet", ...order.filter(x => x !== "carPet")];
+      if (state.tags.family || state.tags.parents) return ["familyBase", ...order.filter(x => x !== "familyBase")];
+      return order;
+    }
+
+    function navHtml() {
+      nav.innerHTML = navItems.map(([key, label]) => `<button class="${state.screen === key ? "active" : ""}" data-screen="${key}">${label}</button>`).join("");
+      nav.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => go(btn.dataset.screen)));
+    }
+
+    function tagButton(key) {
+      const [title, desc] = tagLabels[key];
+      return `<button class="pill ${state.tags[key] ? "active" : ""}" data-tag="${key}">${title}</button>`;
+    }
+
+    function playCard(title, desc, tag, target) {
+      return `<div class="card play-card"><div><span class="tag">${tag}</span><h3>${title}</h3><p>${desc}</p></div><button class="primary" data-screen="${target}">去体验</button></div>`;
+    }
+
+    function home() {
+      return `<div class="grid2">
+        ${playCard("AI 保障体检", "一分钟扫描出行、家庭、健康、资产、宠物、车、数码保障缺口。", "第一入口", "check")}
+        ${playCard("会员权益中心", "理赔预审、专家问答、家庭保单档案、保障券包，先给服务再转化。", "权益钩子", "tasks")}
+        ${playCard("今日任务", "完成画像、添加家庭成员、上传已有保单、检查旅行订单、领取保障券。", "行动钩子", "tasks")}
+        ${playCard("保障缺口窗口", "把用户可能缺的健康险、家财险、宠物险、旅行取消险做成可行动提醒。", "转化钩子", "gap")}
+      </div>
+      <div class="card" style="margin-top:10px"><h2>场景活动</h2><div class="grid3">
+        <div class="item"><b>暑期出境</b><span class="meta">旅行险 + 数码险 + 责任险</span></div>
+        <div class="item"><b>滑雪季</b><span class="meta">运动险 + 意外险 + 旅行险</span></div>
+        <div class="item"><b>家庭资产守护</b><span class="meta">家财险 + 责任险 + 寿险</span></div>
+      </div></div>
+      <div class="fixed-action"><button class="secondary" data-screen="shelf">逛智能货架</button><button class="primary" data-screen="check">开始 AI 体检</button></div>`;
+    }
+
+    function check() {
+      return `<div class="card"><h2>AI 保障体检</h2><p>选择与你相关的画像标签，系统会实时调整缺口、任务、货架顺序和组合方案。</p><div class="profile" style="margin-top:12px">${Object.keys(tagLabels).map(tagButton).join("")}</div></div>
+      <div class="card" style="margin-top:10px"><div class="score"><div class="ring" style="--score:${gapScore()}"><span>${gapScore()}</span></div><div><h2>保障缺口分</h2><p>${state.tags.travel ? "检测到近期旅行，旅行险置顶，同时联动数码、运动、责任、健康保障。" : "暂无强旅行活动，将按家庭、资产、车宠、运动等画像推荐日常保障。"}</p></div></div></div>
+      <div class="fixed-action"><button class="secondary" data-screen="home">回首页</button><button class="primary" data-screen="gap">生成缺口报告</button></div>`;
+    }
+
+    function gap() {
+      return `<div class="card"><h2>保障缺口窗口</h2><p>不是直接卖险种，而是把可行动缺口做成提醒窗口。</p></div>
+      <div class="gap-list" style="margin-top:10px">${topGaps().map((gap, idx) => `<div class="gap"><div class="gap-head"><b>${idx + 1}. ${gap.title}</b><span class="tag ${idx === 0 ? "red" : "blue"}">${gap.level}</span></div><span class="meta">${gap.desc}</span><button class="secondary" data-screen="shelf">查看适配货架</button></div>`).join("")}</div>
+      <div class="fixed-action"><button class="secondary" data-screen="check">调整画像</button><button class="primary" data-screen="tasks">做任务领权益</button></div>`;
+    }
+
+    function tasks() {
+      const list = [
+        ["profile", "完善保障画像", "让 AI 知道你是否有车、有宠、爱运动、近期出行。"],
+        ["family", "添加家庭成员", "生成家庭保障地图，适配健康、意外、寿险。"],
+        ["policy", "登记已有保单", "避免重复购买，生成只补缺口方案。"],
+        ["travel", "检查旅行订单", "有出行时自动识别航变、酒店不可退、签证医疗风险。"],
+        ["coupon", "领取会员保障券", "用于理赔预审、专家问答或组合方案优惠。"]
+      ];
+      return `<div class="card"><h2>会员权益中心</h2><div class="mini-grid"><div class="mini"><strong>理赔预审</strong>会员服务</div><div class="mini"><strong>专家问答</strong>AI+人工</div><div class="mini"><strong>家庭档案</strong>保单管理</div><div class="mini"><strong>保障券</strong>${state.coupon ? "已领取" : "待领取"}</div></div></div>
+      <div class="task-list" style="margin-top:10px">${list.map(([key, title, desc]) => `<div class="task"><div class="task-head"><b>${title}</b><span class="tag ${state.tasks[key] ? "green" : ""}">${state.tasks[key] ? "已完成" : "待行动"}</span></div><span class="meta">${desc}</span><button class="${state.tasks[key] ? "secondary" : "primary"}" data-task="${key}">${state.tasks[key] ? "重新查看" : "立即完成"}</button></div>`).join("")}</div>
+      <div class="fixed-action"><button class="secondary" data-screen="gap">看缺口</button><button class="primary" data-screen="shelf">进入货架</button></div>`;
+    }
+
+    function shelf() {
+      return `<div class="card"><h2>智能货架</h2><p>险种不做静态分类，而按当前玩法画像和缺口优先级排序。</p></div>
+      <div class="shelf" style="margin-top:10px">${rankedProducts().map((item, idx) => `<div class="item"><div class="item-head"><b>${idx + 1}. ${item.name}</b><span class="tag">${item.score} 匹配</span></div><span class="meta">${item.hook}</span><div class="mini-grid"><div class="mini"><strong>适合</strong>${item.tags.map(t => tagLabels[t][0]).slice(0,2).join("/")}</div><div class="mini"><strong>动作</strong>去对比</div><div class="mini"><strong>权益</strong>${state.coupon ? "可用券" : "领券"}</div><div class="mini"><strong>服务</strong>AI解释</div></div></div>`).join("")}</div>
+      <div class="fixed-action"><button class="secondary" data-screen="tasks">领权益</button><button class="primary" data-screen="plans">看组合方案</button></div>`;
+    }
+
+    function plans() {
+      return `<div class="card"><h2>智能组合方案</h2><p>把高匹配险种打成用户听得懂的行动包，而不是让用户自己凑。</p></div>
+      <div class="plans" style="margin-top:10px">${planOrder().map(key => {
+        const plan = planDefs[key];
+        return `<div class="plan"><div class="plan-head"><div><b>${plan.name}</b><span class="meta" style="display:block">${plan.desc}</span></div><span class="tag">¥${plan.price} 起</span></div><div class="mini-grid">${plan.keys.map(k => `<div class="mini"><strong>${k}</strong>适配</div>`).join("")}</div><button class="${state.selectedPlan === key ? "primary" : "secondary"}" data-plan="${key}">${state.selectedPlan === key ? "已选择" : "选择方案"}</button></div>`;
+      }).join("")}</div>
+      <div class="fixed-action"><button class="secondary" data-screen="shelf">返回货架</button><button class="primary" data-screen="confirm">去确认</button></div>`;
+    }
+
+    function confirm() {
+      const plan = planDefs[state.selectedPlan];
+      return `<div class="card"><h2>投保确认演示</h2><p>演示环境不真实支付、不采集真实个人信息，保留主动确认和免责说明。</p></div>
+      <div class="card" style="margin-top:10px"><h3>${plan.name}</h3><p>${plan.desc}</p><div class="mini-grid" style="margin-top:10px"><div class="mini"><strong>模拟价</strong>¥${plan.price} 起</div><div class="mini"><strong>权益</strong>${state.coupon ? "已用券" : "可领券"}</div><div class="mini"><strong>确认</strong>${state.confirmed ? "已确认" : "待确认"}</div><div class="mini"><strong>服务</strong>理赔预审</div></div></div>
+      <div class="gap" style="margin-top:10px"><div class="gap-head"><b>必须由用户主动确认</b><span class="tag red">合规提醒</span></div><span class="meta">已阅读责任免除、等待期、免赔额、健康告知和理赔材料要求；AI 推荐不是唯一选择。</span><button class="primary" data-confirm="1">${state.confirmed ? "已确认，继续" : "我已阅读并确认"}</button></div>
+      <div class="fixed-action"><button class="secondary" data-screen="plans">返回方案</button><button class="primary" data-screen="${state.confirmed ? "service" : "confirm"}">${state.confirmed ? "进入服务" : "先完成确认"}</button></div>`;
+    }
+
+    function service() {
+      return `<div class="card"><h2>服务与复购</h2><p>用理赔服务、保单档案和会员权益形成复访，不只靠一次交易。</p></div>
+      <div class="grid2" style="margin-top:10px">
+        ${playCard("AI 理赔预审", "票据、证明、保单先检查，减少补件焦虑。", "服务信任", "tasks")}
+        ${playCard("家庭保单档案", "把家庭成员、已有保单、缺口报告长期沉淀。", "账户经营", "check")}
+        ${playCard("下一次推荐", "有旅行活动推旅行险，无旅行活动推健康/家财/车宠等。", "复购", "shelf")}
+        ${playCard("会员权益升级", "专家问答、保障券、理赔优先通道。", "会员", "tasks")}
+      </div>
+      <div class="fixed-action"><button class="secondary" data-screen="home">回玩法首页</button><button class="primary" data-screen="check">重新体检</button></div>`;
+    }
+
+    const screens = { home, check, gap, tasks, shelf, plans, confirm, service };
+
+    function go(key) {
+      state.screen = key;
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function render() {
+      navHtml();
+      screen.innerHTML = screens[state.screen]();
+      screen.querySelectorAll("[data-screen]").forEach(btn => btn.addEventListener("click", () => go(btn.dataset.screen)));
+      screen.querySelectorAll("[data-tag]").forEach(btn => btn.addEventListener("click", () => {
+        state.tags[btn.dataset.tag] = !state.tags[btn.dataset.tag];
+        render();
+      }));
+      screen.querySelectorAll("[data-task]").forEach(btn => btn.addEventListener("click", () => {
+        const key = btn.dataset.task;
+        state.tasks[key] = true;
+        if (key === "coupon") state.coupon = true;
+        render();
+      }));
+      screen.querySelectorAll("[data-plan]").forEach(btn => btn.addEventListener("click", () => {
+        state.selectedPlan = btn.dataset.plan;
+        render();
+      }));
+      screen.querySelectorAll("[data-confirm]").forEach(btn => btn.addEventListener("click", () => {
+        state.confirmed = true;
+        render();
+      }));
+    }
+
+    render();
+  </script>
+</body>
+</html>

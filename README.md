@@ -6,6 +6,10 @@
 
 https://ivanyxqg-cloud.github.io/feizhu-insurance-channel/
 
+V2 玩法驱动综合保险超市：
+
+https://ivanyxqg-cloud.github.io/feizhu-insurance-channel/v2/
+
 主要链路：
 
 - 频道首页
