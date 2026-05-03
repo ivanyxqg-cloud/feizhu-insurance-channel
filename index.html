@@ -1,0 +1,1714 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>飞猪安心游保障中心 - 高保真频道链路原型</title>
+  <style>
+    :root {
+      --fz-orange: #ff6a00;
+      --fz-gold: #ffb21d;
+      --fz-yellow: #ffd45a;
+      --fz-cyan: #13c8d2;
+      --fz-blue: #1687ff;
+      --fz-green: #16b77a;
+      --ink: #151b26;
+      --sub: #637080;
+      --soft: #f7f8fb;
+      --line: #e6ebf1;
+      --white: #fff;
+      --danger: #ff4d4f;
+      --shadow: 0 18px 45px rgba(23, 28, 38, .12);
+      --soft-shadow: 0 8px 24px rgba(23, 28, 38, .08);
+      --radius: 8px;
+      --phone-w: 414px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(255,178,29,.22), transparent 28%),
+        radial-gradient(circle at 86% 0%, rgba(19,200,210,.16), transparent 24%),
+        linear-gradient(180deg, #fff7e9 0%, #f7f8fb 28%, #f7f8fb 100%);
+      letter-spacing: 0;
+    }
+
+    button, input {
+      font-family: inherit;
+      letter-spacing: 0;
+    }
+
+    .stage {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 24px 56px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 292px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background-image:
+        linear-gradient(90deg, rgba(19, 24, 34, .74) 0%, rgba(19, 24, 34, .45) 34%, rgba(19, 24, 34, .06) 72%),
+        url("assets/insurance-hero-mobile.jpg");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      width: min(650px, 56%);
+      padding: 34px 38px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 292px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.32);
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.02;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 560px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,.92);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      padding: 11px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .metric span {
+      display: block;
+      color: rgba(255,255,255,.78);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .toolbar {
+      margin: 18px 0 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .demo-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .walk-btn {
+      min-height: 38px;
+      border: 0;
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      border-radius: 999px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 820;
+      box-shadow: 0 12px 24px rgba(255,106,0,.18);
+    }
+
+    .walk-btn.secondary {
+      color: var(--fz-orange);
+      background: #fff7ea;
+      border: 1px solid #ffdfad;
+      box-shadow: none;
+    }
+
+    .step-count {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      border-radius: 999px;
+      padding: 0 12px;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      color: var(--sub);
+      background: rgba(255,255,255,.78);
+      border-radius: 999px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 740;
+      box-shadow: 0 4px 16px rgba(23,28,38,.04);
+    }
+
+    .chip.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      box-shadow: 0 12px 24px rgba(255,106,0,.22);
+    }
+
+    .source-note {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: right;
+      max-width: 360px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: var(--phone-w) 1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .phone-shell {
+      position: sticky;
+      top: 18px;
+      width: var(--phone-w);
+      padding: 12px;
+      border-radius: 34px;
+      background: linear-gradient(180deg, #242a36, #10141c);
+      box-shadow: 0 28px 70px rgba(15, 22, 34, .25);
+    }
+
+    .phone {
+      width: 100%;
+      height: 846px;
+      overflow: hidden;
+      border-radius: 26px;
+      background: #f7f8fb;
+      border: 1px solid rgba(255,255,255,.08);
+      position: relative;
+    }
+
+    .statusbar {
+      height: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(255,255,255,.9);
+      background: linear-gradient(135deg, #ff6a00, #ffb21d);
+    }
+
+    .screen-scroll {
+      height: calc(100% - 88px);
+      overflow: auto;
+      scrollbar-width: none;
+      padding-bottom: 18px;
+    }
+
+    .screen-scroll::-webkit-scrollbar { display: none; }
+
+    .tabbar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 60px;
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      backdrop-filter: blur(12px);
+      z-index: 8;
+    }
+
+    .tabbar button {
+      border: 0;
+      background: transparent;
+      color: var(--sub);
+      font-size: 11px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      gap: 2px;
+    }
+
+    .tabbar button.active {
+      color: var(--fz-orange);
+    }
+
+    .tabbar i {
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .screen-head {
+      padding: 15px 16px 12px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(20,24,32,.05), rgba(20,24,32,.2)),
+        linear-gradient(135deg, #ff6a00, #ffb21d 68%, #ffd45a);
+    }
+
+    .appnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .appnav strong {
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .nav-icons {
+      display: flex;
+      gap: 7px;
+    }
+
+    .circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.24);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .searchbar {
+      min-height: 40px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      color: #8a5c26;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 13px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(142, 72, 0, .16);
+    }
+
+    .hero-card {
+      margin: 12px 16px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: var(--soft-shadow);
+      border: 1px solid rgba(255, 178, 29, .22);
+    }
+
+    .hero-photo {
+      height: 118px;
+      background-image:
+        linear-gradient(90deg, rgba(20,24,32,.58), rgba(20,24,32,.05)),
+        url("assets/insurance-hero-mobile.jpg");
+      background-size: cover;
+      background-position: 45% 45%;
+      padding: 14px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-photo b {
+      font-size: 20px;
+      line-height: 1.15;
+      max-width: 220px;
+    }
+
+    .hero-photo span {
+      display: inline-flex;
+      width: fit-content;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.2);
+      font-size: 11px;
+      font-weight: 760;
+      backdrop-filter: blur(8px);
+    }
+
+    .trip-card {
+      padding: 12px;
+    }
+
+    .trip-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .route {
+      font-size: 19px;
+      font-weight: 860;
+    }
+
+    .route small {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--sub);
+      font-weight: 650;
+    }
+
+    .score {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: conic-gradient(var(--fz-orange) 0 72%, #eef1f5 72% 100%);
+      padding: 7px;
+      flex: 0 0 auto;
+    }
+
+    .score-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      text-align: center;
+      color: var(--fz-orange);
+      font-weight: 860;
+      line-height: 1.05;
+      font-size: 17px;
+    }
+
+    .score-inner span {
+      display: block;
+      color: var(--sub);
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .risk-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .risk {
+      border-radius: 8px;
+      background: #fff8ed;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 11px;
+      color: #965100;
+      font-weight: 750;
+    }
+
+    .risk strong {
+      display: block;
+      font-size: 15px;
+      color: var(--fz-orange);
+      margin-bottom: 2px;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      height: 42px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 820;
+      color: var(--ink);
+      background: #f2f5f8;
+    }
+
+    .btn.primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      box-shadow: 0 10px 18px rgba(255,106,0,.18);
+    }
+
+    .btn.blue {
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-blue), var(--fz-cyan));
+    }
+
+    .btn.ghost {
+      color: var(--fz-orange);
+      background: #fff6e8;
+      border: 1px solid #ffe1b5;
+    }
+
+    .content {
+      padding: 14px 16px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 2px 0 10px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    .section-title span {
+      color: var(--fz-orange);
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .ai-card,
+    .white-card,
+    .product-card,
+    .plan-card {
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 8px 22px rgba(23,28,38,.05);
+    }
+
+    .ai-card {
+      padding: 12px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.97), rgba(255,249,238,.98)),
+        radial-gradient(circle at 84% 0%, rgba(19,200,210,.18), transparent 26%);
+    }
+
+    .ai-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .bot {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-cyan));
+      box-shadow: 0 8px 16px rgba(19,200,210,.18);
+      font-weight: 860;
+      font-size: 12px;
+    }
+
+    .ai-text {
+      color: #384453;
+      font-size: 13px;
+      line-height: 1.58;
+      font-weight: 620;
+    }
+
+    .ai-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 11px;
+    }
+
+    .ai-actions button,
+    .mini-action {
+      min-height: 34px;
+      border: 1px solid #ffdfad;
+      background: #fff7eb;
+      color: #9f5b00;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .scene-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .scene {
+      min-height: 78px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      text-align: center;
+      padding: 8px 4px;
+    }
+
+    .scene i {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      font-style: normal;
+      font-size: 15px;
+    }
+
+    .scene b {
+      font-size: 12px;
+      line-height: 1.15;
+    }
+
+    .product-card {
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+
+    .product-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .product-head h3 {
+      margin: 0 0 5px;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .product-card p,
+    .white-card p,
+    .plan-card p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      border-radius: 999px;
+      padding: 0 7px;
+      font-size: 11px;
+      font-weight: 790;
+      white-space: nowrap;
+      color: #9b5400;
+      background: #fff2dc;
+      border: 1px solid #ffdb9d;
+    }
+
+    .tag.green {
+      color: #08764d;
+      background: #e9fbf4;
+      border-color: #c1efdc;
+    }
+
+    .tag.blue {
+      color: #1267ad;
+      background: #ebf6ff;
+      border-color: #cae7ff;
+    }
+
+    .cover-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .cover {
+      border-radius: 8px;
+      background: #f7f9fb;
+      padding: 7px 4px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--sub);
+      font-weight: 700;
+    }
+
+    .cover strong {
+      display: block;
+      color: var(--ink);
+      font-size: 11px;
+      margin-bottom: 2px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .price {
+      color: var(--fz-orange);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .price small {
+      color: var(--sub);
+      font-size: 11px;
+      font-weight: 680;
+    }
+
+    .mini-action {
+      padding: 0 10px;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      color: #fff;
+    }
+
+    .diagnosis {
+      display: grid;
+      gap: 9px;
+    }
+
+    .diag-item {
+      display: grid;
+      grid-template-columns: 38px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .diag-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff3df;
+      color: var(--fz-orange);
+      font-weight: 900;
+    }
+
+    .diag-item b {
+      display: block;
+      font-size: 13px;
+    }
+
+    .diag-item small {
+      color: var(--sub);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .progress {
+      display: grid;
+      gap: 10px;
+    }
+
+    .progress-step {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 10px;
+      position: relative;
+    }
+
+    .progress-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 32px;
+      bottom: -8px;
+      width: 2px;
+      background: #ffe0b2;
+    }
+
+    .dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--fz-orange);
+      z-index: 1;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .progress-copy {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .progress-copy b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .progress-copy span {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .plan-card {
+      padding: 12px;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-card.reco {
+      border-color: rgba(255,106,0,.42);
+      box-shadow: 0 12px 26px rgba(255,106,0,.12);
+    }
+
+    .plan-card.reco::before {
+      content: "主推";
+      position: absolute;
+      right: -25px;
+      top: 12px;
+      width: 90px;
+      transform: rotate(35deg);
+      text-align: center;
+      background: var(--fz-orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 0;
+    }
+
+    .plan-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .plan-top h3 {
+      margin: 0 0 5px;
+      font-size: 16px;
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .check {
+      border-radius: 8px;
+      background: #f7f9fb;
+      padding: 8px;
+      font-size: 11px;
+      color: var(--sub);
+      line-height: 1.35;
+    }
+
+    .check b {
+      color: var(--ink);
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .compare-table {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 88px 1fr 1fr;
+      border-bottom: 1px solid var(--line);
+      min-height: 46px;
+    }
+
+    .compare-row:last-child { border-bottom: 0; }
+
+    .compare-row div {
+      padding: 9px 8px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--sub);
+      border-right: 1px solid var(--line);
+    }
+
+    .compare-row div:last-child { border-right: 0; }
+    .compare-row b { color: var(--ink); }
+
+    .detail-hero {
+      padding: 16px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255,106,0,.94), rgba(255,178,29,.9)),
+        url("assets/insurance-hero-mobile.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .detail-hero h2 {
+      margin: 8px 0 6px;
+      font-size: 21px;
+      line-height: 1.18;
+    }
+
+    .detail-hero p {
+      color: rgba(255,255,255,.92);
+      font-size: 12px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .info-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .info-tabs span {
+      min-height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.24);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .terms {
+      display: grid;
+      gap: 8px;
+    }
+
+    .term {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .term i {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-style: normal;
+      color: #fff;
+      background: var(--fz-green);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .term.warn i { background: var(--danger); }
+    .term b { font-size: 13px; display: block; margin-bottom: 3px; }
+    .term span { color: var(--sub); font-size: 12px; line-height: 1.45; }
+
+    .form-line {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      min-height: 44px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .form-line:last-child { border-bottom: 0; }
+    .form-line span:first-child { color: var(--sub); }
+    .form-line b { text-align: right; }
+
+    .consent {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .box {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--fz-orange);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .consent b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .consent span {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .calendar-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .calendar-item {
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 11px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+    }
+
+    .day {
+      color: var(--fz-orange);
+      font-size: 12px;
+      font-weight: 860;
+      line-height: 1.35;
+    }
+
+    .calendar-item b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .calendar-item span {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .claim-status {
+      padding: 12px;
+      border: 1px solid rgba(255,106,0,.24);
+      background: #fff8ed;
+      border-radius: 8px;
+    }
+
+    .claim-status b {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .claim-status span {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .dashboard {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      border-radius: 8px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--line);
+      box-shadow: var(--soft-shadow);
+      padding: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .panel p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .cards3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .big-card {
+      min-height: 158px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 15px;
+    }
+
+    .big-card h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .big-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .path-map {
+      display: grid;
+      gap: 10px;
+    }
+
+    .path-row {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .path-name {
+      border-radius: 8px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--fz-orange), var(--fz-gold));
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 860;
+    }
+
+    .nodes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .node {
+      min-height: 34px;
+      padding: 8px 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .node.active {
+      border-color: rgba(255,106,0,.38);
+      color: #963f00;
+      background: #fff4e5;
+    }
+
+    .arrow {
+      color: #aeb8c4;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .matrix th,
+    .matrix td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding: 12px;
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.58;
+    }
+
+    .matrix th {
+      text-align: left;
+      background: #fff7eb;
+      color: #8a4d00;
+      font-weight: 850;
+    }
+
+    .matrix tr:last-child td { border-bottom: 0; }
+    .matrix td:last-child, .matrix th:last-child { border-right: 0; }
+
+    .ops-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .ops {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      min-height: 132px;
+    }
+
+    .ops b {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 14px;
+    }
+
+    .ops span {
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .choice {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 760;
+      line-height: 1.35;
+    }
+
+    .choice small {
+      display: block;
+      color: var(--sub);
+      font-size: 10px;
+      font-weight: 650;
+      margin-top: 2px;
+    }
+
+    .choice.active {
+      border-color: rgba(255,106,0,.6);
+      background: #fff6e8;
+      color: #a54900;
+      box-shadow: 0 8px 18px rgba(255,106,0,.1);
+    }
+
+    .mock-input {
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .mock-input span {
+      color: var(--sub);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .bottom-cta {
+      position: sticky;
+      bottom: 0;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px 16px 12px;
+      background: linear-gradient(180deg, rgba(247,248,251,0), rgba(247,248,251,.98) 28%, #f7f8fb);
+    }
+
+    .full-cta {
+      grid-template-columns: 1fr;
+    }
+
+    .receipt {
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .receipt-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--sub);
+    }
+
+    .receipt-line:last-child { border-bottom: 0; }
+    .receipt-line b { color: var(--ink); text-align: right; }
+
+    .toast {
+      margin: 10px 16px 0;
+      border-radius: 8px;
+      background: #151b26;
+      color: #fff;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      box-shadow: var(--soft-shadow);
+    }
+
+    @media (max-width: 1180px) {
+      .workspace { grid-template-columns: 1fr; }
+      .phone-shell { position: relative; top: auto; margin: 0 auto; }
+      .source-note { text-align: left; max-width: none; }
+    }
+
+    @media (max-width: 720px) {
+      .stage { padding: 14px 10px 40px; }
+      .hero-copy { width: 100%; padding: 24px 20px; background: rgba(17,23,34,.28); }
+      .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+      .toolbar { display: block; }
+      .demo-controls { margin-top: 10px; }
+      .source-note { margin-top: 10px; }
+      .phone-shell { width: min(var(--phone-w), 100%); }
+      .cards3, .ops-grid { grid-template-columns: 1fr; }
+      .path-row { grid-template-columns: 1fr; }
+      .scene-grid { grid-template-columns: repeat(2, 1fr); }
+      .compare-row { grid-template-columns: 72px 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <section class="hero" aria-label="项目主视觉">
+      <div class="hero-copy">
+        <div>
+          <span class="eyebrow">飞猪调性 · AI 代购 · 保险频道完整链路</span>
+          <h1>安心游保障中心</h1>
+          <p>把“出行保险”升级为飞猪行程里的保障操作系统：从行程识别、风险解释、方案代购、条款确认，到旅中提醒、报案材料和理赔进度，全链路闭环。</p>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric"><strong>4 层</strong><span>场景/方案/榜单/伴随货架</span></div>
+          <div class="metric"><strong>8 条</strong><span>核心用户路径</span></div>
+          <div class="metric"><strong>21 页</strong><span>频道页面与服务页</span></div>
+          <div class="metric"><strong>3 段</strong><span>保前/保中/保后 AI</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="chips" role="tablist" aria-label="手机原型页面切换">
+        <button class="chip active" data-screen="home">频道首页</button>
+        <button class="chip" data-screen="ai">AI 代购</button>
+        <button class="chip" data-screen="plan">方案结果</button>
+        <button class="chip" data-screen="compare">产品对比</button>
+        <button class="chip" data-screen="detail">详情条款</button>
+        <button class="chip" data-screen="checkout">投保确认</button>
+        <button class="chip" data-screen="calendar">保单日历</button>
+        <button class="chip" data-screen="claim">理赔服务</button>
+      </div>
+      <div class="demo-controls" aria-label="演示流程控制">
+        <button class="walk-btn secondary" id="prevStep">上一步</button>
+        <span class="step-count" id="stepCount">1 / 8 · 频道首页</span>
+        <button class="walk-btn" id="nextStep">下一步</button>
+      </div>
+      <div class="source-note">参考飞猪公开服务表达：AI“问一问”、机票透明服务、出行保险、门票安心保障、会员权益与行程助手。</div>
+    </div>
+
+    <div class="workspace">
+      <aside class="phone-shell">
+        <div class="phone" aria-label="飞猪保险频道移动端高保真原型">
+          <div class="statusbar"><span>9:41</span><span>5G  100%</span></div>
+          <div class="screen-scroll" id="phoneScreen"></div>
+          <nav class="tabbar">
+            <button class="active" data-screen="home"><i>⌂</i>保障</button>
+            <button data-screen="ai"><i>✦</i>AI</button>
+            <button data-screen="calendar"><i>▣</i>保单</button>
+            <button data-screen="claim"><i>○</i>理赔</button>
+          </nav>
+        </div>
+      </aside>
+
+      <section class="dashboard">
+        <div class="panel">
+          <h2>一、这次不是频道装修，而是货架模式重构</h2>
+          <div class="cards3">
+            <div class="big-card">
+              <h3>用户先看到“我的行程风险”</h3>
+              <ul>
+                <li>读取近期机票、酒店、门票、签证、玩乐订单</li>
+                <li>转成医疗、取消、航变、行李、救援等风险分</li>
+                <li>首屏直接给“已覆盖/缺口/建议补齐”</li>
+              </ul>
+            </div>
+            <div class="big-card">
+              <h3>先卖方案，再展开商品</h3>
+              <ul>
+                <li>省钱版、标准推荐版、高保障版、只补缺口版</li>
+                <li>每套方案展示“为什么推荐”和“不适合谁”</li>
+                <li>用户可替换单项产品，避免黑盒推荐</li>
+              </ul>
+            </div>
+            <div class="big-card">
+              <h3>保后服务反哺成交信任</h3>
+              <ul>
+                <li>保障日历、旅中触发提醒、一键报案</li>
+                <li>材料 OCR 检查、理赔进度解释、补件提醒</li>
+                <li>把理赔服务做成频道资产，而不是客服尾部动作</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>二、完整路径地图</h2>
+          <div class="path-map">
+            <div class="path-row">
+              <div class="path-name">频道主动进入</div>
+              <div class="nodes"><span class="node active">飞猪首页</span><span class="arrow">→</span><span class="node active">保险频道</span><span class="arrow">→</span><span class="node active">AI 配保障</span><span class="arrow">→</span><span class="node active">缺口诊断</span><span class="arrow">→</span><span class="node active">三方案</span><span class="arrow">→</span><span class="node active">投保</span><span class="arrow">→</span><span class="node active">保单日历</span></div>
+            </div>
+            <div class="path-row">
+              <div class="path-name">机票下单伴随</div>
+              <div class="nodes"><span class="node">机票下单</span><span class="arrow">→</span><span class="node">航线延误风险</span><span class="arrow">→</span><span class="node">延误/取消保障卡</span><span class="arrow">→</span><span class="node">自主勾选</span><span class="arrow">→</span><span class="node">航变提醒</span><span class="arrow">→</span><span class="node">自动理赔入口</span></div>
+            </div>
+            <div class="path-row">
+              <div class="path-name">酒店/度假伴随</div>
+              <div class="nodes"><span class="node">酒店/度假下单</span><span class="arrow">→</span><span class="node">不可取消损失</span><span class="arrow">→</span><span class="node">取消保障</span><span class="arrow">→</span><span class="node">风险确认</span><span class="arrow">→</span><span class="node">出发前提醒</span><span class="arrow">→</span><span class="node">取消理赔</span></div>
+            </div>
+            <div class="path-row">
+              <div class="path-name">出境游/签证</div>
+              <div class="nodes"><span class="node">目的地页</span><span class="arrow">→</span><span class="node">医疗成本提醒</span><span class="arrow">→</span><span class="node">申根校验</span><span class="arrow">→</span><span class="node">高保额方案</span><span class="arrow">→</span><span class="node">旅中救援常驻</span></div>
+            </div>
+            <div class="path-row">
+              <div class="path-name">理赔服务闭环</div>
+              <div class="nodes"><span class="node">我的保单</span><span class="arrow">→</span><span class="node">事故识别</span><span class="arrow">→</span><span class="node">材料清单</span><span class="arrow">→</span><span class="node">AI 预审</span><span class="arrow">→</span><span class="node">保司审核</span><span class="arrow">→</span><span class="node">赔付复盘</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>三、货架与 AI 能力矩阵</h2>
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>货架层</th>
+                <th>用户语言</th>
+                <th>核心模块</th>
+                <th>AI 介入点</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>场景货架</td>
+                <td>我去哪、和谁去、怎么玩</td>
+                <td>出境、亲子、老人、航变、酒店取消、签证、滑雪潜水、自驾租车</td>
+                <td>根据订单标签和目的地风险，自动排序场景卡和生成风险解释</td>
+              </tr>
+              <tr>
+                <td>方案货架</td>
+                <td>给我一套省心/省钱/高保障方案</td>
+                <td>省钱版、标准推荐、高保障、只补缺口</td>
+                <td>把多产品组合成方案，展示推荐依据、替换项、缺口和预算影响</td>
+              </tr>
+              <tr>
+                <td>榜单货架</td>
+                <td>大家都买什么，哪个更靠谱</td>
+                <td>飞猪优选榜、出境医疗榜、亲子榜、航变高赔榜、目的地热卖榜</td>
+                <td>用保障完整度、理赔便利度、价格效率、服务评价构成可解释排序</td>
+              </tr>
+              <tr>
+                <td>伴随货架</td>
+                <td>这个订单有没有必要买</td>
+                <td>机票、酒店、度假、门票、签证、租车订单页</td>
+                <td>识别订单不可退、航线延误、目的地天气和活动风险，做轻量推荐</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <h2>四、页面清单与运营抓手</h2>
+          <div class="ops-grid">
+            <div class="ops"><b>频道首页</b><span>行程识别、风险评分、AI 代购、场景入口、优选方案、保障日历、理赔入口。</span></div>
+            <div class="ops"><b>AI 代购页</b><span>4 问配置、订单读取、风险翻译、方案生成、替换商品、条款问答。</span></div>
+            <div class="ops"><b>产品与投保页</b><span>保什么、不保什么、怎么赔、适合谁、价格、投被保人、合规确认。</span></div>
+            <div class="ops"><b>保后服务页</b><span>保单日历、航变触发、材料预审、报案进度、补件提醒、复盘推荐。</span></div>
+          </div>
+          <p class="footer-note">合规底线：不默认勾选；销售主体、保险公司、免责、等待期、理赔材料显著展示；AI 推荐展示依据并保留可回溯记录；高龄、既往症、高风险运动和目的地风险做适当性提醒。</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const phone = document.getElementById("phoneScreen");
+    const chips = [...document.querySelectorAll(".chip")];
+    const tabs = [...document.querySelectorAll(".tabbar button")];
+    const sequence = ["home", "ai", "plan", "compare", "detail", "checkout", "calendar", "claim"];
+    const labels = { home: "频道首页", ai: "AI 代购", plan: "方案结果", compare: "产品对比", detail: "详情条款", checkout: "投保确认", calendar: "保单日历", claim: "理赔服务" };
+    const state = {
+      destination: "tokyo",
+      party: "family",
+      budget: "balanced",
+      activity: "city",
+      plan: "standard",
+      travellerReady: false,
+      termReady: false,
+      currentScreen: "home"
+    };
+
+    const dict = {
+      destination: {
+        tokyo: { title: "杭州 → 东京", desc: "5 月 20 日出发 · 5 天", medical: "境外医疗", route: "国际航线", baseRisk: 72 },
+        singapore: { title: "上海 → 新加坡", desc: "6 月 8 日出发 · 4 天", medical: "境外医疗", route: "晚班航线", baseRisk: 66 },
+        sanya: { title: "北京 → 三亚", desc: "7 月 15 日出发 · 5 天", medical: "国内医疗", route: "暑期高峰", baseRisk: 58 },
+        europe: { title: "杭州 → 巴黎", desc: "8 月 2 日出发 · 9 天", medical: "申根医疗", route: "中转航线", baseRisk: 84 }
+      },
+      party: {
+        solo: { title: "单人出行", desc: "轻量保障", people: 1, add: 0 },
+        couple: { title: "双人出行", desc: "2 位成人", people: 2, add: 4 },
+        family: { title: "亲子家庭", desc: "2 大 1 小", people: 3, add: 9 },
+        elder: { title: "老人同行", desc: "含 65 岁以上", people: 3, add: 16 }
+      },
+      budget: {
+        economy: { title: "省钱优先", desc: "保核心风险", multiplier: .72, plan: "economy" },
+        balanced: { title: "均衡推荐", desc: "保障完整", multiplier: 1, plan: "standard" },
+        premium: { title: "高保障", desc: "高保额和救援", multiplier: 1.72, plan: "premium" },
+        gap: { title: "只补缺口", desc: "不重复购买", multiplier: .55, plan: "gap" }
+      },
+      activity: {
+        city: { title: "城市自由行", desc: "酒店/门票/交通", add: 0 },
+        transit: { title: "中转航班", desc: "航变更敏感", add: 8 },
+        ski: { title: "滑雪潜水", desc: "普通险常不赔", add: 18 },
+        rental: { title: "自驾租车", desc: "第三方责任", add: 10 }
+      }
+    };
+
+    function riskScore() {
+      return Math.min(96, dict.destination[state.destination].baseRisk + dict.party[state.party].add + dict.activity[state.activity].add);
+    }
+
+    function unitPrice(kind = state.plan) {
+      const base = kind === "economy" ? 39 : kind === "premium" ? 128 : kind === "gap" ? 29 : 68;
+      const activityAdd = state.activity === "ski" ? 45 : state.activity === "rental" ? 18 : state.activity === "transit" ? 10 : 0;
+      const elderAdd = state.party === "elder" ? 32 : 0;
+      return Math.round((base + activityAdd + elderAdd) * dict.budget[state.budget].multiplier);
+    }
+
+    function totalPrice() {
+      return unitPrice() * dict.party[state.party].people;
+    }
+
+    function planName(kind = state.plan) {
+      return kind === "economy" ? "轻量省钱版" : kind === "premium" ? "高保障放心版" : kind === "gap" ? "只补缺口版" : "标准推荐版";
+    }
+
+    function choice(group, value, title, desc) {
+      return `<button class="choice ${state[group] === value ? "active" : ""}" data-choice="${group}:${value}">${title}<small>${desc}</small></button>`;
+    }
+
+    function head(title, tip) {
+      return `<header class="screen-head"><div class="appnav"><strong>${title}</strong><div class="nav-icons"><span class="circle">?</span><span class="circle">⋯</span></div></div><div class="searchbar">${tip}</div></header>`;
+    }
+
+    function home() {
+      const dest = dict.destination[state.destination];
+      const party = dict.party[state.party];
+      const score = riskScore();
+      return `${head("安心游保障中心", "🔎 说出行程，AI 帮你配保障")}
+        <section class="hero-card"><div class="hero-photo"><span>飞猪问一问 · 服务保障专员</span><b>先看缺口，再买这次真正需要的保障</b></div>
+          <div class="trip-card"><div class="trip-top"><div class="route">${dest.title}<small>${dest.desc} · ${party.title} · 已识别机票/酒店/门票/租车订单</small></div><div class="score"><div class="score-inner">${score}<span>风险分</span></div></div></div>
+          <div class="risk-strip"><div class="risk"><strong>${score > 76 ? "高" : "中"}</strong>${dest.medical}</div><div class="risk"><strong>中</strong>${dest.route}</div><div class="risk"><strong>${state.party === "elder" ? "高" : "中"}</strong>${party.title}</div><div class="risk"><strong>${state.activity === "ski" ? "高" : "低"}</strong>${dict.activity[state.activity].title}</div></div>
+          <div class="cta-grid"><button class="btn primary" data-screen="ai">开始真实选择</button><button class="btn ghost" data-screen="plan">查看推荐方案</button></div></div></section>
+        <section class="content"><div class="section-title"><h2>你可以这样操作</h2><span>完整链路</span></div><div class="progress"><div class="progress-step"><div class="dot">1</div><div class="progress-copy"><b>选择行程</b><span>目的地、同行人、预算、玩法会改变风险和价格。</span></div></div><div class="progress-step"><div class="dot">2</div><div class="progress-copy"><b>比较方案</b><span>AI 解释为什么推荐、哪些情况不赔。</span></div></div><div class="progress-step"><div class="dot">3</div><div class="progress-copy"><b>模拟投保和理赔</b><span>完成确认后进入保单日历，触发航变理赔演练。</span></div></div></div></section>`;
+    }
+
+    function ai() {
+      const dest = dict.destination[state.destination];
+      return `${head("AI 保障代购", "一步步选择，方案会实时变化")}
+        <section class="content"><div class="ai-card"><div class="ai-row"><div class="bot">AI</div><div class="ai-text">我会像代购一样帮你把保险术语翻译成旅行风险。你先选择 4 项，我会生成可解释方案，不会默认帮你购买。</div></div></div></section>
+        <section class="content"><div class="section-title"><h2>1. 这次去哪</h2><span>${dest.title}</span></div><div class="choice-grid">${choice("destination","tokyo","日本东京","医疗/亲子/航变")}${choice("destination","singapore","新加坡","短途出境")}${choice("destination","sanya","海南三亚","暑期亲子")}${choice("destination","europe","欧洲申根","高医疗保额")}</div></section>
+        <section class="content"><div class="section-title"><h2>2. 和谁出行</h2><span>${dict.party[state.party].title}</span></div><div class="choice-grid">${choice("party","solo","单人","轻量保障")}${choice("party","couple","双人","2 位成人")}${choice("party","family","亲子","2 大 1 小")}${choice("party","elder","老人同行","适当性提醒")}</div></section>
+        <section class="content"><div class="section-title"><h2>3. 预算偏好</h2><span>${dict.budget[state.budget].title}</span></div><div class="choice-grid">${choice("budget","economy","省钱优先","保核心")}${choice("budget","balanced","均衡推荐","默认主推")}${choice("budget","premium","高保障","高保额")}${choice("budget","gap","只补缺口","不重复买")}</div></section>
+        <section class="content"><div class="section-title"><h2>4. 玩法风险</h2><span>${dict.activity[state.activity].title}</span></div><div class="choice-grid">${choice("activity","city","城市自由行","常规行程")}${choice("activity","transit","中转航班","航变敏感")}${choice("activity","ski","滑雪潜水","专项保障")}${choice("activity","rental","自驾租车","责任风险")}</div></section>
+        <div class="toast">已生成：${planName(dict.budget[state.budget].plan)} · 预估 ¥${unitPrice(dict.budget[state.budget].plan)}/人 · 风险分 ${riskScore()}</div>
+        <div class="bottom-cta"><button class="btn" data-screen="home">返回</button><button class="btn primary" data-screen="plan">生成三套方案</button></div>`;
+    }
+
+    function planCard(kind, text) {
+      const active = state.plan === kind;
+      return `<div class="plan-card ${active ? "reco" : ""}"><div class="plan-top"><div><h3>${planName(kind)}</h3><p>${text}</p></div><span class="price">¥${unitPrice(kind)}</span></div><div class="checklist"><div class="check"><b>${kind === "premium" ? "150万" : kind === "economy" ? "30万" : "80万"}</b>医疗保额</div><div class="check"><b>${kind === "gap" ? "补缺口" : "24h"}</b>救援/理赔</div><div class="check"><b>${kind === "economy" ? "不含" : "包含"}</b>取消损失</div><div class="check"><b>${state.activity === "ski" ? "专项" : "常规"}</b>玩法风险</div></div><div class="cta-grid"><button class="btn ghost" data-plan="${kind}">选择该方案</button><button class="btn primary" data-screen="${active ? "detail" : "compare"}">${active ? "看条款" : "对比"}</button></div></div>`;
+    }
+
+    function plan() {
+      return `${head("三套保障方案", "可切换方案，价格会跟选择变化")}
+        <section class="content"><div class="ai-card"><div class="ai-row"><div class="bot">AI</div><div class="ai-text">基于 ${dict.destination[state.destination].title}、${dict.party[state.party].title}、${dict.activity[state.activity].title}，我建议优先看“${planName()}”。总价约 ¥${totalPrice()}。</div></div></div></section>
+        <section class="content">${planCard("economy","适合短途、预算敏感，只保核心风险。")}${planCard("standard","医疗、救援、航变、行李、取消损失均衡覆盖。")}${planCard("premium","适合老人同行、申根长线、转机复杂或高风险玩法。")}${planCard("gap","识别订单权益后只补未覆盖风险，适合已有保障用户。")}</section>`;
+    }
+
+    function compare() {
+      return `${head("产品对比", "不是比价格，而是比这次能不能用")}
+        <section class="content"><div class="ai-card"><div class="ai-row"><div class="bot">AI</div><div class="ai-text">${planName()}更匹配当前行程。若你只想覆盖航变和取消，可选只补缺口；若有老人或滑雪潜水，建议高保障版。</div></div></div></section>
+        <section class="content"><div class="compare-table"><div class="compare-row"><div><b>维度</b></div><div><b>${planName()}</b></div><div><b>替代方案</b></div></div><div class="compare-row"><div>价格</div><div>¥${unitPrice()}/人</div><div>¥${unitPrice("gap")}/人起</div></div><div class="compare-row"><div>医疗</div><div>80-150 万，含救援</div><div>基础医疗或不含</div></div><div class="compare-row"><div>取消</div><div>覆盖不可退损失</div><div>可单独补买</div></div><div class="compare-row"><div>不适合</div><div>既往症、高危未申明</div><div>长线/老人/亲子保障不足</div></div></div><div class="bottom-cta"><button class="btn" data-screen="plan">回方案</button><button class="btn primary" data-screen="detail">确认本方案</button></div></section>`;
+    }
+
+    function detail() {
+      return `<section class="detail-hero"><span class="tag">飞猪优选 · ${planName()}</span><h2>${dict.destination[state.destination].title} ${planName()}</h2><p>按你的选择生成，重点覆盖 ${dict.destination[state.destination].medical}、救援、航变、订单取消和 ${dict.activity[state.activity].title}。</p><div class="info-tabs"><span>保什么</span><span>不保什么</span><span>多少钱</span><span>怎么赔</span><span>适合谁</span></div></section>
+        <section class="content"><div class="section-title"><h2>AI 帮我读条款</h2><span>可问答</span></div><div class="terms"><div class="term"><i>✓</i><div><b>保什么</b><span>医疗、紧急救援、航班延误、行李异常、订单取消损失；${state.activity === "ski" ? "已加入专项运动提醒。" : "常规旅行风险已覆盖。"}</span></div></div><div class="term warn"><i>!</i><div><b>不保什么</b><span>既往症、高风险运动未投专项、无证明材料、主动放弃行程等可能不赔。</span></div></div><div class="term"><i>¥</i><div><b>怎么赔</b><span>从保单页一键报案，订单/航班/酒店信息自动带入，材料先由 AI 预审。</span></div></div></div></section>
+        <section class="content"><div class="receipt"><div class="receipt-line"><span>单人价格</span><b>¥${unitPrice()}</b></div><div class="receipt-line"><span>被保人数</span><b>${dict.party[state.party].people} 人</b></div><div class="receipt-line"><span>模拟合计</span><b>¥${totalPrice()}</b></div></div><div class="bottom-cta"><button class="btn" data-screen="compare">继续对比</button><button class="btn primary" data-screen="checkout">去投保确认</button></div></section>`;
+    }
+
+    function checkout() {
+      const ok = state.travellerReady && state.termReady;
+      return `${head("投保确认", "演示环境不会真实支付")}
+        <section class="content"><div class="white-card" style="padding:12px"><div class="form-line"><span>投保人</span><b>演示用户</b><span>已填</span></div><div class="form-line"><span>被保人</span><b>${dict.party[state.party].title} · ${dict.party[state.party].people} 人</b><span>可改</span></div><div class="form-line"><span>保障期</span><b>${dict.destination[state.destination].desc}</b><span></span></div><div class="form-line"><span>销售主体</span><b>保险经纪/代理信息</b><span>查看</span></div></div></section>
+        <section class="content"><div class="section-title"><h2>必须由用户主动确认</h2><span>不默认勾选</span></div><div class="white-card" style="padding:0 12px"><div class="consent" data-toggle="travellerReady"><div class="box">${state.travellerReady ? "✓" : ""}</div><div><b>被保人信息真实有效</b><span>年龄、证件、出行日期会影响承保和理赔。</span></div></div><div class="consent" data-toggle="termReady"><div class="box">${state.termReady ? "✓" : ""}</div><div><b>已阅读责任免除和理赔材料</b><span>既往症、无证明材料、高危活动未申明等可能不赔。</span></div></div></div></section>
+        <div class="bottom-cta"><button class="btn" data-screen="detail">返回条款</button><button class="btn primary" ${ok ? 'data-screen="calendar"' : 'data-lock="1"'}>${ok ? `模拟支付 ¥${totalPrice()}` : "请先勾选确认"}</button></div>`;
+    }
+
+    function calendar() {
+      return `${head("承保成功 · 保障日历", "保障跟着行程走")}
+        <section class="content"><div class="claim-status"><b>${planName()}已生效</b><span>${dict.party[state.party].people} 人已承保 · 模拟保单号 FZ${Date.now().toString().slice(-6)} · 救援入口已固定到行程页。</span></div></section>
+        <section class="content"><div class="calendar-list"><div class="calendar-item"><div class="day">出发前 7 天</div><div><b>检查签证和取消损失</b><span>若订单不可退，AI 会提示可补买项和材料要求。</span></div></div><div class="calendar-item"><div class="day">出发当天</div><div><b>航班动态触发保障</b><span>出现延误/取消时自动判断是否可赔。</span></div></div><div class="calendar-item"><div class="day">旅途中</div><div><b>就医、救援、行李异常</b><span>展示中文救援电话和现场材料清单。</span></div></div><div class="calendar-item"><div class="day">回来后</div><div><b>理赔材料预审</b><span>票据、诊断证明、延误证明先由 AI 检查。</span></div></div></div><div class="bottom-cta"><button class="btn" data-screen="home">回频道</button><button class="btn primary" data-screen="claim">模拟航变理赔</button></div></section>`;
+    }
+
+    function claim() {
+      return `${head("一键理赔", "订单、航班、保单自动带入")}
+        <section class="content"><div class="claim-status"><b>检测到航班延误 126 分钟</b><span>可能触发延误保障。系统已带入航班号、起降时间、订单号和保单号。</span></div></section>
+        <section class="content"><div class="mock-input"><b>事故类型</b><span>航班延误</span></div><div class="mock-input" style="margin-top:8px"><b>材料上传</b><span>延误证明、登机牌已识别</span></div><div class="mock-input" style="margin-top:8px"><b>收款账户</b><span>演示环境不收集真实信息</span></div></section>
+        <section class="content"><div class="progress"><div class="progress-step"><div class="dot">✓</div><div class="progress-copy"><b>已报案</b><span>事故类型和保单已匹配。</span></div></div><div class="progress-step"><div class="dot">✓</div><div class="progress-copy"><b>材料预审通过</b><span>关键材料齐全，可以提交保司。</span></div></div><div class="progress-step"><div class="dot">3</div><div class="progress-copy"><b>保司审核中</b><span>预计 1-2 个工作日出结果。</span></div></div><div class="progress-step"><div class="dot">4</div><div class="progress-copy"><b>赔付到账</b><span>结束后生成本次保障复盘。</span></div></div></div><div class="bottom-cta"><button class="btn blue">联系人工专家</button><button class="btn primary" data-screen="home">完成演示</button></div></section>`;
+    }
+
+    const screens = { home, ai, plan, compare, detail, checkout, calendar, claim };
+
+    function render(screen) {
+      state.currentScreen = screen;
+      phone.innerHTML = screens[screen]();
+      phone.scrollTop = 0;
+      chips.forEach(btn => btn.classList.toggle("active", btn.dataset.screen === screen));
+      tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.screen === screen));
+      const idx = sequence.indexOf(screen);
+      document.getElementById("stepCount").textContent = `${idx + 1} / ${sequence.length} · ${labels[screen]}`;
+      phone.querySelectorAll("[data-screen]").forEach(el => el.addEventListener("click", () => render(el.dataset.screen)));
+      phone.querySelectorAll("[data-choice]").forEach(el => el.addEventListener("click", () => {
+        const [group, value] = el.dataset.choice.split(":");
+        state[group] = value;
+        if (group === "budget") state.plan = dict.budget[value].plan;
+        render("ai");
+      }));
+      phone.querySelectorAll("[data-plan]").forEach(el => el.addEventListener("click", () => {
+        state.plan = el.dataset.plan;
+        render("plan");
+      }));
+      phone.querySelectorAll("[data-toggle]").forEach(el => el.addEventListener("click", () => {
+        state[el.dataset.toggle] = !state[el.dataset.toggle];
+        render("checkout");
+      }));
+      phone.querySelectorAll("[data-lock]").forEach(el => el.addEventListener("click", () => {
+        const note = document.createElement("div");
+        note.className = "toast";
+        note.textContent = "请先主动勾选两项确认，演示才会进入承保成功页。";
+        phone.prepend(note);
+      }));
+    }
+
+    [...chips, ...tabs].forEach(btn => btn.addEventListener("click", () => render(btn.dataset.screen)));
+    document.getElementById("prevStep").addEventListener("click", () => render(sequence[(sequence.indexOf(state.currentScreen) - 1 + sequence.length) % sequence.length]));
+    document.getElementById("nextStep").addEventListener("click", () => render(sequence[(sequence.indexOf(state.currentScreen) + 1) % sequence.length]));
+    render("home");
+  </script>
+</body>
+</html>
