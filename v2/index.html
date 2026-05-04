@@ -4,63 +4,68 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#ff6a00" />
-  <title>飞猪保险超市 V2</title>
+  <title>飞猪保险频道 V2</title>
   <style>
     :root {
-      --fz-orange: #ff6a00;
-      --fz-orange-2: #ff8a1c;
-      --fz-gold: #ffd36a;
-      --ink: #16120f;
-      --muted: #746a60;
-      --line: rgba(25, 18, 12, .09);
-      --bg: #f6f2eb;
-      --card: rgba(255, 255, 255, .94);
-      --green: #1f9d72;
-      --blue: #2773ff;
-      --teal: #00a7a7;
-      --red: #e94747;
-      --shadow: 0 18px 48px rgba(84, 44, 10, .16);
+      --orange: #ff6a00;
+      --orange-2: #ff8f1f;
+      --gold: #ffe5a6;
+      --ink: #17120d;
+      --soft: #76695f;
+      --muted: #9a8d82;
+      --line: rgba(31, 22, 14, .08);
+      --bg: #f8f3ea;
+      --card: #fffdf8;
+      --green: #21a572;
+      --blue: #3577f6;
+      --red: #e94f45;
+      --shadow: 0 14px 34px rgba(88, 48, 13, .13);
+      --img-hero: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1100&q=82");
+      --img-travel: url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=82");
+      --img-family: url("https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=900&q=82");
+      --img-carpet: url("https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=900&q=82");
+      --img-asset: url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=82");
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     }
 
     * { box-sizing: border-box; }
-    html { min-height: 100%; background: #efe7da; }
+    html { min-height: 100%; background: #efe6da; }
     body {
       margin: 0;
       min-height: 100%;
       color: var(--ink);
       background:
-        radial-gradient(circle at 18% 12%, rgba(255, 211, 106, .42), transparent 30%),
-        radial-gradient(circle at 82% 0%, rgba(0, 167, 167, .18), transparent 28%),
-        linear-gradient(135deg, #fff7eb 0%, #f4eee5 38%, #efe7da 100%);
+        radial-gradient(circle at 18% 0%, rgba(255, 229, 166, .65), transparent 30%),
+        radial-gradient(circle at 86% 6%, rgba(255, 106, 0, .18), transparent 24%),
+        linear-gradient(135deg, #fff8ed 0%, #f0e5d8 100%);
     }
 
     button, input { font: inherit; }
     button {
       border: 0;
-      cursor: pointer;
       color: inherit;
+      cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
+    input { border: 0; outline: 0; color: var(--ink); background: transparent; min-width: 0; }
 
-    .desktop-shell {
-      width: 100%;
+    .stage {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 24px 0;
+      padding: 22px 0;
     }
 
     .phone {
       width: min(430px, 100vw);
       min-height: min(932px, 100vh);
-      background: var(--bg);
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
       position: relative;
-      border: 1px solid rgba(255, 255, 255, .7);
+      overflow: hidden;
+      border-radius: 30px;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.75);
     }
 
     .status {
@@ -70,673 +75,565 @@
       justify-content: space-between;
       padding: 0 18px 7px;
       font-size: 12px;
-      font-weight: 800;
-      background: linear-gradient(180deg, #fff8ec 0%, rgba(255, 248, 236, .88) 100%);
+      font-weight: 900;
+      background: rgba(255, 249, 238, .86);
     }
 
-    .status-icons {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-
+    .sys { display: flex; align-items: center; gap: 5px; }
     .signal { width: 18px; height: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; align-items: end; }
-    .signal span { display: block; width: 3px; background: #111; border-radius: 2px; }
-    .signal span:nth-child(1) { height: 3px; }
-    .signal span:nth-child(2) { height: 5px; }
-    .signal span:nth-child(3) { height: 7px; }
-    .signal span:nth-child(4) { height: 10px; }
+    .signal i { display: block; width: 3px; background: #111; border-radius: 2px; }
+    .signal i:nth-child(1) { height: 3px; }
+    .signal i:nth-child(2) { height: 5px; }
+    .signal i:nth-child(3) { height: 7px; }
+    .signal i:nth-child(4) { height: 10px; }
     .battery { width: 22px; height: 11px; border: 1.8px solid #111; border-radius: 3px; position: relative; }
+    .battery::before { content: ""; position: absolute; inset: 2px 5px 2px 2px; border-radius: 1px; background: #111; }
     .battery::after { content: ""; position: absolute; right: -4px; top: 3px; width: 2px; height: 5px; border-radius: 0 2px 2px 0; background: #111; }
-    .battery::before { content: ""; position: absolute; inset: 2px 5px 2px 2px; background: #111; border-radius: 1px; }
 
     .app {
       height: calc(min(932px, 100vh) - 34px);
       overflow-y: auto;
       overscroll-behavior: contain;
-      padding-bottom: calc(92px + env(safe-area-inset-bottom));
+      padding-bottom: calc(82px + env(safe-area-inset-bottom));
       scroll-behavior: smooth;
     }
-
     .app::-webkit-scrollbar { width: 0; }
 
-    .topbar {
+    .top {
       position: sticky;
       top: 0;
       z-index: 20;
-      padding: 10px 16px 12px;
-      background: rgba(255, 248, 236, .9);
+      padding: 8px 14px 10px;
+      background: rgba(255, 249, 238, .92);
       backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, .62);
+      border-bottom: 1px solid rgba(255,255,255,.66);
     }
 
-    .topline {
+    .brand-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 9px;
-      min-width: 0;
     }
-
-    .brand-mark {
+    .mark {
       width: 34px;
       height: 34px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--fz-orange), #ffb02e);
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
       color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 17px;
+      background: linear-gradient(135deg, var(--orange), #ffb13a);
       font-weight: 950;
-      box-shadow: 0 9px 22px rgba(255, 106, 0, .28);
+      box-shadow: 0 8px 18px rgba(255,106,0,.26);
     }
+    h1 { margin: 0; font-size: 19px; line-height: 1.05; letter-spacing: 0; }
+    .brand small { display: block; margin-top: 2px; color: #8c6b48; font-size: 11px; font-weight: 750; }
 
-    .brand h1 {
-      margin: 0;
-      font-size: 20px;
-      letter-spacing: 0;
-      line-height: 1.05;
-    }
-
-    .brand p {
-      margin: 2px 0 0;
-      color: #886442;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .icon-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .78);
-      border: 1px solid rgba(255, 255, 255, .75);
+    .round {
+      width: 35px;
+      height: 35px;
       display: grid;
       place-items: center;
-      font-weight: 900;
-      box-shadow: 0 8px 18px rgba(79, 48, 18, .08);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 8px 18px rgba(47, 31, 18, .08);
+      font-weight: 950;
     }
 
     .search {
-      height: 42px;
-      border-radius: 16px;
+      height: 38px;
       display: flex;
       align-items: center;
-      padding: 0 13px;
-      background: #fff;
-      box-shadow: inset 0 0 0 1px rgba(255, 106, 0, .16);
       gap: 8px;
+      padding: 0 12px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid rgba(255,106,0,.16);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 720;
     }
+    .search b { color: var(--orange); font-size: 15px; }
+    .search input::placeholder { color: #aa9e93; }
 
-    .search b { color: var(--fz-orange); font-size: 15px; }
-    .search span { color: #95877a; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .content {
-      padding: 12px 13px 18px;
-    }
-
+    .content { padding: 10px 13px 18px; }
     .hero {
       position: relative;
-      min-height: 178px;
-      border-radius: 24px;
+      min-height: 176px;
       overflow: hidden;
+      border-radius: 26px;
       padding: 16px;
       color: #fff;
       background:
-        linear-gradient(112deg, rgba(39, 20, 8, .9), rgba(255, 106, 0, .62)),
-        url("assets/insurance-hero-mobile.jpg") center/cover;
-      box-shadow: 0 18px 40px rgba(120, 59, 2, .22);
+        linear-gradient(180deg, rgba(25,17,10,.08) 0%, rgba(25,17,10,.18) 44%, rgba(25,17,10,.78) 100%),
+        var(--img-hero) center/cover;
+      box-shadow: 0 16px 38px rgba(83, 45, 13, .2);
     }
-
-    .hero::after {
+    .hero-content {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+    }
+    .assistant-bot {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      width: 92px;
+      height: 92px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .2);
+      border: 1px solid rgba(255,255,255,.34);
+      backdrop-filter: blur(16px);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 14px 26px rgba(30,20,12,.16);
+      z-index: 1;
+    }
+    .assistant-bot::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 28%, rgba(27, 14, 7, .2) 100%);
-      pointer-events: none;
+      inset: 13px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 36% 28%, #fff, #ffe0a2 44%, var(--orange) 100%);
+      animation: breathe 2.8s ease-in-out infinite;
+      box-shadow: 0 0 0 8px rgba(255,232,180,.18);
     }
-
-    .hero > * { position: relative; z-index: 1; }
-    .eyebrow {
+    .assistant-face {
+      position: relative;
+      z-index: 2;
+      width: 42px;
+      height: 34px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.82);
+      box-shadow: inset 0 -3px 0 rgba(255,106,0,.12);
+    }
+    .assistant-face::before,
+    .assistant-face::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #5d2b04;
+    }
+    .assistant-face::before { left: 11px; }
+    .assistant-face::after { right: 11px; }
+    .pulse-dot {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff4be;
+      box-shadow: 0 0 0 5px rgba(255,244,190,.16);
+      animation: floatDot 3.4s ease-in-out infinite;
+    }
+    .pulse-dot.one { left: 11px; top: 18px; }
+    .pulse-dot.two { right: 11px; bottom: 17px; animation-delay: .8s; }
+    @keyframes breathe {
+      0%, 100% { transform: scale(.96); filter: saturate(1); }
+      50% { transform: scale(1.04); filter: saturate(1.15); }
+    }
+    @keyframes floatDot {
+      0%, 100% { transform: translateY(0); opacity: .72; }
+      50% { transform: translateY(-7px); opacity: 1; }
+    }
+    .pill {
+      height: 24px;
+      width: fit-content;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      height: 24px;
+      gap: 5px;
       padding: 0 9px;
       border-radius: 99px;
-      background: rgba(255, 255, 255, .18);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.18);
+      color: #fff;
       font-size: 11px;
-      font-weight: 800;
-    }
-
-    .hero h2 {
-      margin: 10px 0 7px;
-      font-size: 25px;
-      line-height: 1.18;
-      letter-spacing: 0;
-      max-width: 280px;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 310px;
-      color: rgba(255, 255, 255, .86);
-      font-size: 13px;
-      line-height: 1.45;
-      font-weight: 650;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 9px;
-      margin-top: 14px;
-    }
-
-    .primary, .secondary, .ghost {
-      height: 38px;
-      padding: 0 14px;
-      border-radius: 999px;
       font-weight: 900;
+      backdrop-filter: blur(12px);
+    }
+    .hero h2 { margin: 8px 0 10px; font-size: 25px; line-height: 1.08; letter-spacing: 0; max-width: 250px; }
+    .hero-actions { display: flex; gap: 8px; }
+
+    .btn {
+      height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      padding: 0 15px;
+      border-radius: 999px;
+      font-weight: 950;
       white-space: nowrap;
-      transition: transform .18s ease, opacity .18s ease;
+      transition: transform .16s ease, opacity .16s ease;
     }
+    .btn:active, .scenario:active, .mini:active, .choice:active, .nav button:active { transform: scale(.98); }
+    .btn.primary { color: #321700; background: linear-gradient(135deg, #fff3bf, #fff); }
+    .btn.orange { color: #fff; background: linear-gradient(135deg, var(--orange), #ffa52e); box-shadow: 0 9px 18px rgba(255,106,0,.24); }
+    .btn.ghost { color: #fff; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.25); }
+    .btn.light { color: var(--ink); background: #fff6e8; border: 1px solid rgba(255,106,0,.12); }
 
-    .primary {
-      color: #351802;
-      background: linear-gradient(135deg, #ffe58b, #fff4cc);
-      box-shadow: 0 9px 20px rgba(255, 218, 111, .24);
-    }
-
-    .secondary {
-      color: #fff;
-      background: rgba(255, 255, 255, .17);
-      border: 1px solid rgba(255, 255, 255, .25);
-    }
-
-    .ghost {
-      color: var(--ink);
-      background: #fff;
-      border: 1px solid var(--line);
-    }
-
-    .primary:active, .secondary:active, .ghost:active, .task-btn:active, .nav-item:active { transform: scale(.98); }
-
-    .section {
-      margin-top: 14px;
-    }
-
-    .section-head {
+    .section { margin-top: 12px; }
+    .head {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin: 0 3px 8px;
       gap: 10px;
+      margin: 0 3px 7px;
     }
+    .head h2 { margin: 0; font-size: 17px; line-height: 1.1; letter-spacing: 0; }
+    .head span { color: var(--muted); font-size: 11px; font-weight: 760; }
+    .link { padding: 0; color: var(--orange); background: transparent; font-size: 12px; font-weight: 950; }
 
-    .section-title {
-      margin: 0;
-      font-size: 17px;
-      letter-spacing: 0;
-    }
-
-    .section-sub {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 650;
-    }
-
-    .link-btn {
-      background: transparent;
-      color: var(--fz-orange);
-      font-size: 12px;
-      font-weight: 900;
-      padding: 0;
-      flex: 0 0 auto;
-    }
-
-    .grid-2 {
+    .scenes {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
+      gap: 10px;
+    }
+    .scenario {
+      min-height: 96px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 12px;
+      color: #fff;
+      text-align: left;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.25) 48%, rgba(0,0,0,.72) 100%),
+        var(--scene) center/cover;
+      box-shadow: 0 12px 24px rgba(61, 38, 16, .12);
+    }
+    .scenario strong {
+      position: absolute;
+      left: 12px;
+      bottom: 31px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+    .scenario span {
+      position: absolute;
+      left: 12px;
+      bottom: 13px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 99px;
+      color: #3a1a02;
+      background: rgba(255,243,191,.92);
+      font-size: 10px;
+      font-weight: 950;
     }
 
     .card {
+      border-radius: 22px;
       background: var(--card);
-      border: 1px solid rgba(255, 255, 255, .72);
+      border: 1px solid rgba(255,255,255,.78);
+      box-shadow: 0 10px 24px rgba(73, 48, 25, .08);
+    }
+
+    .recommend {
+      display: grid;
+      grid-template-columns: 86px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 11px;
+    }
+    .thumb {
+      width: 86px;
+      height: 76px;
       border-radius: 18px;
-      box-shadow: 0 10px 24px rgba(78, 50, 18, .08);
+      background: var(--thumb) center/cover;
     }
+    .recommend h3, .plan h3, .product h3 { margin: 0; font-size: 15px; letter-spacing: 0; }
+    .tagline { margin: 6px 0 0; color: var(--soft); font-size: 12px; font-weight: 760; }
+    .price { color: var(--orange); font-size: 18px; font-weight: 950; white-space: nowrap; }
 
-    .play-card {
-      padding: 12px;
-      min-height: 126px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
+    .guide-hero {
+      min-height: 190px;
       position: relative;
-    }
-
-    .play-card::after {
-      content: "";
-      position: absolute;
-      right: -22px;
-      top: -28px;
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      background: rgba(255, 106, 0, .12);
-    }
-
-    .play-card.alt::after { background: rgba(0, 167, 167, .12); }
-    .play-card h3, .mini-card h3, .product h3, .plan h3, .member h3 {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.22;
-      letter-spacing: 0;
-    }
-
-    .play-card p, .mini-card p, .product p, .plan p, .member p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.45;
-      font-weight: 650;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      height: 22px;
-      padding: 0 8px;
-      border-radius: 99px;
-      background: #fff2dd;
-      color: #b24d00;
-      font-size: 10px;
-      font-weight: 900;
-      width: fit-content;
-    }
-
-    .badge.blue { background: #eaf2ff; color: #1f5bd3; }
-    .badge.green { background: #e9f8f1; color: #0b7c55; }
-    .badge.dark { background: #251b14; color: #fff0ce; }
-
-    .risk-panel {
-      padding: 13px;
+      overflow: hidden;
+      border-radius: 26px;
+      color: #fff;
       background:
-        linear-gradient(135deg, rgba(255, 255, 255, .96), rgba(255, 248, 237, .94)),
-        linear-gradient(135deg, rgba(255, 106, 0, .1), transparent);
+        linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.68)),
+        var(--guide-img) center/cover;
+      padding: 15px;
     }
+    .guide-hero h2 { position: absolute; left: 15px; bottom: 44px; margin: 0; font-size: 25px; letter-spacing: 0; }
+    .progress {
+      position: absolute;
+      left: 15px;
+      right: 15px;
+      bottom: 20px;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: rgba(255,255,255,.3);
+    }
+    .progress i { display: block; height: 100%; width: var(--p); border-radius: inherit; background: #fff1b7; }
 
-    .risk-top {
+    .choices { display: grid; gap: 10px; }
+    .choice {
+      min-height: 58px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      text-align: left;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgba(73,48,25,.06);
     }
-
-    .score {
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
+    .choice span { color: var(--muted); font-size: 12px; font-weight: 800; }
+    .choice b {
+      width: 32px;
+      height: 32px;
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(circle at center, #fff 58%, transparent 60%),
-        conic-gradient(var(--fz-orange) var(--score), #efe1d0 0);
-      box-shadow: inset 0 0 0 1px rgba(255, 106, 0, .09);
       flex: 0 0 auto;
+      border-radius: 12px;
+      background: #fff3df;
+      color: var(--orange);
     }
 
-    .score b { font-size: 23px; line-height: 1; }
-    .score span { display: block; margin-top: 2px; font-size: 10px; color: var(--muted); font-weight: 800; }
-
-    .chips {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 2px 1px 4px;
-      scrollbar-width: none;
-    }
-
-    .chips::-webkit-scrollbar { display: none; }
-
-    .chip {
-      flex: 0 0 auto;
-      height: 32px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .8);
-      border: 1px solid var(--line);
-      color: #4b4038;
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .chip.active {
-      color: #321600;
-      background: linear-gradient(135deg, #ffd56b, #fff1b8);
-      border-color: rgba(255, 106, 0, .22);
-      box-shadow: 0 8px 15px rgba(255, 106, 0, .16);
-    }
-
-    .gap-list {
+    .gap-grid {
       display: grid;
-      gap: 7px;
-      margin-top: 11px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
     }
-
     .gap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 9px 10px;
-      border-radius: 13px;
-      background: rgba(255, 255, 255, .76);
-      border: 1px solid rgba(255, 106, 0, .09);
-    }
-
-    .gap strong { display: block; font-size: 12px; }
-    .gap span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 650; }
-    .gap button { height: 28px; padding: 0 10px; border-radius: 99px; color: #fff; background: var(--fz-orange); font-size: 11px; font-weight: 900; flex: 0 0 auto; }
-
-    .task-list { display: grid; gap: 8px; }
-    .task {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px;
-      border-radius: 16px;
+      padding: 11px 8px;
+      text-align: center;
+      border-radius: 18px;
       background: #fff;
       border: 1px solid var(--line);
     }
-
-    .task-icon, .cat-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 13px;
+    .ring {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 7px;
       display: grid;
       place-items: center;
-      background: #fff4de;
-      color: #c55300;
-      font-weight: 950;
-      flex: 0 0 auto;
-    }
-
-    .task:nth-child(2n) .task-icon { background: #eaf7ff; color: #1d69c9; }
-    .task:nth-child(3n) .task-icon { background: #e9f8f1; color: #0b7c55; }
-    .task-body { min-width: 0; flex: 1; }
-    .task-body strong { display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .task-body span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .task-btn {
-      height: 30px;
-      padding: 0 10px;
-      border-radius: 999px;
-      color: #fff;
-      background: #251b14;
-      font-size: 11px;
-      font-weight: 900;
-      flex: 0 0 auto;
-    }
-    .task.done .task-btn { background: #edf7f1; color: #0b7c55; }
-    .task.done { background: linear-gradient(135deg, #fff, #f1fbf6); }
-
-    .scroll-row {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(152px, 40%);
-      gap: 9px;
-      overflow-x: auto;
-      padding-bottom: 3px;
-      scrollbar-width: none;
-    }
-
-    .scroll-row::-webkit-scrollbar { display: none; }
-
-    .mini-card {
-      min-height: 112px;
-      padding: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .mini-card::after {
-      content: "";
-      position: absolute;
-      inset: auto -24px -28px auto;
-      width: 78px;
-      height: 78px;
       border-radius: 50%;
-      background: rgba(255, 210, 106, .36);
-    }
-
-    .member {
-      padding: 13px;
       background:
-        linear-gradient(135deg, #20170f 0%, #4b2a13 52%, #ff6a00 160%);
-      color: #fff;
-      position: relative;
-      overflow: hidden;
+        radial-gradient(circle at center, #fff 58%, transparent 60%),
+        conic-gradient(var(--c) var(--v), #efe5da 0);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 950;
     }
-
-    .member::after {
-      content: "";
-      position: absolute;
-      right: 12px;
-      top: 14px;
-      width: 70px;
-      height: 70px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(255, 211, 106, .55), rgba(255, 255, 255, .08));
-      transform: rotate(12deg);
-    }
-
-    .member p { color: rgba(255, 255, 255, .72); }
-    .member .benefits {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 11px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .benefit {
-      min-height: 58px;
-      padding: 9px;
-      border-radius: 13px;
-      background: rgba(255, 255, 255, .12);
-      border: 1px solid rgba(255, 255, 255, .12);
-    }
-
-    .benefit strong { display: block; font-size: 12px; }
-    .benefit span { display: block; margin-top: 3px; font-size: 10px; color: rgba(255,255,255,.72); font-weight: 650; }
-
-    .product-list, .plan-list { display: grid; gap: 9px; }
-
-    .product {
-      padding: 12px;
-      display: grid;
-      grid-template-columns: 42px 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .product h3 { font-size: 14px; }
-    .product p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .product .rank { color: var(--fz-orange); font-size: 16px; font-weight: 950; }
-    .scoreline { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
-    .metric { height: 20px; padding: 0 7px; border-radius: 99px; background: #f6efe5; color: #746050; font-size: 10px; font-weight: 850; display: inline-flex; align-items: center; }
+    .gap strong { display: block; font-size: 12px; }
+    .gap span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 850; }
 
     .plan {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      gap: 11px;
+      align-items: center;
+      background: #fff;
+    }
+    .plan-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fff2d5, #ffe1a6);
+      color: #b95400;
+      font-weight: 950;
+      font-size: 18px;
+    }
+    .plan.main {
+      grid-template-columns: 1fr;
+      padding: 0;
+      overflow: hidden;
+    }
+    .plan-photo {
+      min-height: 150px;
       padding: 13px;
-      border: 1px solid rgba(255, 106, 0, .12);
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.68)),
+        var(--plan-img) center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .plan-photo h3 { font-size: 21px; }
+    .plan-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      gap: 10px;
+    }
+    .cover-dots { display: flex; gap: 7px; }
+    .dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: #fff5e8;
+      color: #86430b;
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    details {
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+    summary {
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 13px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 950;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .reason {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 0 12px 12px;
+    }
+    .reason span {
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: #684628;
+      background: #fff5e7;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .product {
+      min-height: 118px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      background: #fff;
+    }
+    .product small { color: var(--muted); font-size: 11px; font-weight: 800; }
+
+    .detail-top {
+      min-height: 260px;
       position: relative;
       overflow: hidden;
+      border-radius: 26px;
+      padding: 14px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.68)),
+        var(--detail-img) center/cover;
     }
-
-    .plan.active {
-      border-color: rgba(255, 106, 0, .52);
-      box-shadow: 0 12px 26px rgba(255, 106, 0, .14);
+    .detail-top .back {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.88);
+      color: #24160a;
+      font-weight: 950;
     }
+    .detail-copy { position: absolute; left: 14px; right: 14px; bottom: 14px; }
+    .detail-copy h2 { margin: 8px 0 8px; font-size: 27px; letter-spacing: 0; }
 
-    .plan-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+    .mini-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
-
-    .price {
-      font-weight: 950;
-      color: var(--fz-orange);
-      font-size: 18px;
-      white-space: nowrap;
-    }
-
-    .cover-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-
-    .cover-row span {
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 8px;
-      border-radius: 999px;
-      background: #fff5e7;
-      color: #7d4b17;
-      font-size: 10px;
-      font-weight: 850;
-    }
-
-    .compare {
-      overflow: hidden;
-    }
-
-    .compare-row {
+    .mini {
+      min-height: 72px;
       display: grid;
-      grid-template-columns: 88px 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid var(--line);
-      min-height: 42px;
-      align-items: stretch;
+      place-items: center;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 950;
+      text-align: center;
     }
-
-    .compare-row:first-child { border-top: 0; }
-    .compare-row > div {
-      padding: 10px 9px;
-      font-size: 11px;
-      line-height: 1.35;
-      border-left: 1px solid var(--line);
-    }
-    .compare-row > div:first-child {
-      border-left: 0;
-      color: var(--muted);
-      font-weight: 850;
-      background: #fff8ed;
-    }
-    .compare-row strong { color: var(--ink); }
+    .mini b { display: block; color: var(--orange); font-size: 18px; }
 
     .confirm {
       padding: 13px;
+      background: #fff;
     }
-
-    .form-row {
+    .row {
+      min-height: 46px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      padding: 11px 0;
+      justify-content: space-between;
       border-bottom: 1px solid var(--line);
       font-size: 13px;
-      font-weight: 850;
+      font-weight: 900;
     }
-
-    .form-row span { color: var(--muted); font-size: 12px; text-align: right; font-weight: 700; }
+    .row span { color: var(--soft); font-weight: 800; }
     .check {
       display: flex;
       gap: 8px;
       align-items: flex-start;
-      padding: 11px 0 3px;
-      color: #5d5148;
+      margin-top: 12px;
+      color: var(--soft);
       font-size: 11px;
       line-height: 1.45;
-      font-weight: 650;
+      font-weight: 760;
     }
+    .check input { margin-top: 2px; accent-color: var(--orange); }
 
-    .check input { margin-top: 2px; accent-color: var(--fz-orange); }
-    .cta-bar {
-      position: sticky;
-      bottom: calc(68px + env(safe-area-inset-bottom));
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-      padding: 9px 10px;
-      border-radius: 18px;
-      background: rgba(37, 27, 20, .92);
-      color: #fff;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 14px 30px rgba(37, 27, 20, .24);
-      z-index: 12;
-    }
-
-    .cta-bar strong { display: block; font-size: 15px; }
-    .cta-bar span { color: rgba(255,255,255,.66); font-size: 10px; font-weight: 650; }
-    .cta-bar button {
-      height: 39px;
-      padding: 0 15px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--fz-orange), #ffb12d);
-      color: #fff;
-      font-weight: 950;
-    }
-
-    .timeline { display: grid; gap: 9px; }
-    .step {
+    .timeline { display: grid; gap: 10px; }
+    .time-card {
       display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 9px;
-      padding: 11px;
-      border-radius: 16px;
+      grid-template-columns: 42px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
       background: #fff;
-      border: 1px solid var(--line);
     }
-    .dot {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
+    .time-icon {
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
-      background: #fff0d9;
-      color: var(--fz-orange);
-      font-size: 12px;
+      border-radius: 15px;
+      background: #fff0d7;
+      color: var(--orange);
       font-weight: 950;
     }
-    .step strong { display: block; font-size: 13px; }
-    .step span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.42; font-weight: 650; }
+    .time-card strong { display: block; font-size: 14px; }
+    .time-card span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 800; }
 
-    .bottom-nav {
+    .nav {
       position: absolute;
       left: 0;
       right: 0;
@@ -744,165 +641,107 @@
       height: calc(70px + env(safe-area-inset-bottom));
       display: grid;
       grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
       padding: 7px 10px calc(8px + env(safe-area-inset-bottom));
-      background: rgba(255, 255, 255, .92);
+      background: rgba(255,255,255,.94);
+      border-top: 1px solid var(--line);
       backdrop-filter: blur(18px);
-      border-top: 1px solid rgba(25, 18, 12, .08);
       z-index: 30;
     }
-
-    .nav-item {
-      border-radius: 17px;
-      background: transparent;
-      color: #8c8175;
+    .nav button {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 3px;
+      border-radius: 17px;
+      background: transparent;
+      color: #95897d;
       font-size: 10px;
-      font-weight: 900;
+      font-weight: 950;
     }
-
-    .nav-item b {
-      width: 22px;
-      height: 22px;
-      border-radius: 9px;
+    .nav b {
+      width: 23px;
+      height: 23px;
       display: grid;
       place-items: center;
-      font-size: 12px;
+      border-radius: 9px;
     }
-
-    .nav-item.active {
-      color: #2b1503;
-      background: #fff2df;
-    }
-
-    .nav-item.active b {
-      background: linear-gradient(135deg, var(--fz-orange), #ffb12d);
-      color: #fff;
-    }
+    .nav button.active { color: #321700; background: #fff1df; }
+    .nav button.active b { color: #fff; background: linear-gradient(135deg, var(--orange), #ffaf31); }
 
     .toast {
       position: absolute;
       left: 50%;
-      bottom: 92px;
-      transform: translateX(-50%) translateY(18px);
-      min-width: 210px;
-      max-width: 330px;
-      padding: 10px 13px;
-      border-radius: 999px;
-      background: rgba(31, 21, 13, .92);
+      bottom: 90px;
+      z-index: 50;
+      transform: translateX(-50%) translateY(16px);
+      max-width: 320px;
+      padding: 10px 14px;
+      border-radius: 99px;
       color: #fff;
-      text-align: center;
+      background: rgba(28, 19, 12, .92);
       font-size: 12px;
-      font-weight: 850;
+      font-weight: 900;
       opacity: 0;
       pointer-events: none;
-      transition: .22s ease;
-      z-index: 50;
+      transition: .18s ease;
     }
-
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    .modal {
-      position: absolute;
-      inset: 0;
-      display: none;
-      place-items: end center;
-      background: rgba(23, 16, 10, .42);
-      z-index: 45;
-      padding: 14px;
-    }
-
-    .modal.show { display: grid; }
-    .sheet {
-      width: 100%;
-      max-height: 82%;
-      overflow-y: auto;
-      border-radius: 24px 24px 20px 20px;
-      background: #fffaf3;
-      padding: 15px;
-      box-shadow: 0 -16px 40px rgba(25, 18, 12, .22);
-    }
-
-    .sheet-head {
+    .sticky-cta {
+      position: sticky;
+      bottom: calc(76px + env(safe-area-inset-bottom));
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-top: 14px;
+      padding: 9px 10px;
+      border-radius: 19px;
+      color: #fff;
+      background: rgba(29, 20, 12, .92);
+      box-shadow: 0 12px 28px rgba(29,20,12,.22);
+      backdrop-filter: blur(16px);
+      z-index: 10;
     }
-
-    .sheet h2 { margin: 0; font-size: 18px; letter-spacing: 0; }
-    .sheet p { margin: 5px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; font-weight: 650; }
-    .close { width: 32px; height: 32px; border-radius: 50%; background: #f2eadf; font-weight: 950; }
-
-    .empty {
-      padding: 18px 14px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      font-weight: 650;
-    }
-
-    .fineprint {
-      color: #9a8f84;
-      font-size: 10px;
-      line-height: 1.45;
-      font-weight: 650;
-      padding: 8px 2px 0;
-    }
+    .sticky-cta strong { display: block; font-size: 16px; }
+    .sticky-cta span { color: rgba(255,255,255,.68); font-size: 10px; font-weight: 760; }
 
     @media (max-width: 520px) {
-      .desktop-shell { padding: 0; }
-      .phone {
-        width: 100vw;
-        min-height: 100vh;
-        border-radius: 0;
-        border: 0;
-        box-shadow: none;
-      }
+      .stage { padding: 0; }
+      .phone { width: 100vw; min-height: 100vh; border: 0; border-radius: 0; box-shadow: none; }
       .app { height: calc(100vh - 34px); }
     }
   </style>
 </head>
 <body>
-  <div class="desktop-shell">
-    <div class="phone" id="phone">
+  <div class="stage">
+    <div class="phone">
       <div class="status">
         <span>9:41</span>
-        <div class="status-icons">
-          <div class="signal"><span></span><span></span><span></span><span></span></div>
-          <span style="font-size:11px;font-weight:950;">5G</span>
-          <div class="battery"></div>
-        </div>
+        <div class="sys"><div class="signal"><i></i><i></i><i></i><i></i></div><span>5G</span><div class="battery"></div></div>
       </div>
 
       <main class="app" id="app">
-        <header class="topbar">
-          <div class="topline">
+        <header class="top">
+          <div class="brand-row">
             <div class="brand">
-              <div class="brand-mark">F</div>
-              <div>
-                <h1>飞猪保险超市</h1>
-                <p>用玩法找到适合你的保障</p>
-              </div>
+              <div class="mark">F</div>
+              <div><h1>飞猪保险</h1><small>一句话配保障</small></div>
             </div>
-            <button class="icon-btn" data-action="open-ai">AI</button>
+            <button class="round" data-view="service">单</button>
           </div>
-          <button class="search" data-tab="shelf">
-            <b>查</b>
-            <span id="searchText">搜：出境、亲子、车宠、数码、理赔预审</span>
-          </button>
+          <label class="search">
+            <b>问</b>
+            <input id="intentInput" placeholder="我想给这次旅行配保障" />
+          </label>
         </header>
         <div class="content" id="view"></div>
       </main>
 
-      <nav class="bottom-nav" id="nav"></nav>
+      <nav class="nav" id="nav"></nav>
       <div class="toast" id="toast"></div>
-      <div class="modal" id="modal"></div>
     </div>
   </div>
 
@@ -910,436 +749,337 @@
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-    const state = {
-      tab: 'home',
-      selected: new Set(['travel', 'family', 'digital']),
-      completed: new Set(['coupon']),
-      coupon: true,
-      selectedPlan: 'travel',
-      confirmed: false,
-      claimStage: 1,
-      toastTimer: null
+    const scenes = {
+      travel: {
+        title: '出行保障',
+        short: '航变 医疗 行李',
+        img: 'var(--img-travel)',
+        icon: '旅',
+        hero: '出发前配好',
+        questions: [
+          { title: '去哪儿', options: [['domestic','国内'], ['asia','亚洲'], ['global','欧美澳']] },
+          { title: '和谁去', options: [['solo','自己'], ['family','亲子'], ['parents','父母']] },
+          { title: '怎么玩', options: [['city','城市'], ['sport','滑雪潜水'], ['drive','自驾']] }
+        ],
+        main: { name: '出行安心包', price: 39, cover: ['航变', '医疗', '行李'], fit: '本次出行', gaps: [['医疗', 76], ['取消', 58], ['行李', 68]] },
+        alts: ['运动加护', '数码随行']
+      },
+      family: {
+        title: '家庭健康',
+        short: '老人 儿童 门诊',
+        img: 'var(--img-family)',
+        icon: '家',
+        hero: '一家人少操心',
+        questions: [
+          { title: '保障谁', options: [['child','孩子'], ['parents','父母'], ['all','全家']] },
+          { title: '最担心', options: [['clinic','门诊'], ['hospital','住院'], ['accident','意外']] },
+          { title: '预算', options: [['light','轻量'], ['balanced','均衡'], ['plus','加强']] }
+        ],
+        main: { name: '家庭基础包', price: 128, cover: ['门诊', '意外', '住院'], fit: '亲子家庭', gaps: [['医疗', 70], ['意外', 64], ['责任', 45]] },
+        alts: ['老人关怀', '儿童门诊']
+      },
+      carpet: {
+        title: '车宠生活',
+        short: '自驾 宠物 责任',
+        img: 'var(--img-carpet)',
+        icon: '宠',
+        hero: '路上也安心',
+        questions: [
+          { title: '生活方式', options: [['car','有车'], ['pet','有宠'], ['both','车宠都有']] },
+          { title: '常见场景', options: [['drive','自驾'], ['boarding','寄养'], ['city','城市通勤']] },
+          { title: '优先补', options: [['rescue','救援'], ['medical','医疗'], ['liability','责任']] }
+        ],
+        main: { name: '车宠生活包', price: 88, cover: ['救援', '宠医', '责任'], fit: '有车有宠', gaps: [['救援', 62], ['宠医', 72], ['责任', 54]] },
+        alts: ['宠物医疗', '自驾责任']
+      },
+      asset: {
+        title: '数码资产',
+        short: '手机 相机 房屋',
+        img: 'var(--img-asset)',
+        icon: '数',
+        hero: '贵重物有底',
+        questions: [
+          { title: '要守护', options: [['phone','手机'], ['camera','相机电脑'], ['home','房屋']] },
+          { title: '使用场景', options: [['trip','旅行'], ['daily','日常'], ['empty','房屋空置']] },
+          { title: '担心什么', options: [['break','损坏'], ['steal','丢失'], ['water','水电风险']] }
+        ],
+        main: { name: '资产随行包', price: 66, cover: ['数码', '家财', '责任'], fit: '高值装备', gaps: [['设备', 74], ['家财', 52], ['责任', 48]] },
+        alts: ['数码轻保', '家财守护']
+      }
     };
 
-    const profileTags = [
-      { id: 'travel', label: '近期有出行', impact: ['旅行险', '数码险', '运动险', '责任险'] },
-      { id: 'family', label: '亲子家庭', impact: ['健康险', '意外险', '寿险', '家财险'] },
-      { id: 'parent', label: '父母老人', impact: ['健康险', '意外险'] },
-      { id: 'car', label: '有车/自驾', impact: ['车险', '责任险', '旅行险'] },
-      { id: 'pet', label: '有宠物', impact: ['宠物险', '家财险', '责任险'] },
-      { id: 'sport', label: '爱运动', impact: ['运动险', '意外险'] },
-      { id: 'digital', label: '数码装备多', impact: ['数码险', '旅行险', '家财险'] },
-      { id: 'asset', label: '房屋资产', impact: ['家财险', '责任险', '寿险'] }
-    ];
-
-    const products = [
-      { id: 'travel', name: '旅行险', icon: '旅', base: 88, price: 19, tags: ['航变', '医疗', '行李', '取消'], rule: ['travel', 'digital', 'sport', 'car'], hook: '识别机票酒店订单，自动补齐航变、境外医疗、取消和行李风险。' },
-      { id: 'health', name: '健康险', icon: '健', base: 82, price: 69, tags: ['门急诊', '住院', '老人', '儿童'], rule: ['family', 'parent'], hook: '围绕家庭成员、老人儿童和医疗缺口，给出可解释的补齐动作。' },
-      { id: 'accident', name: '意外险', icon: '意', base: 80, price: 12, tags: ['通勤', '运动', '老人', '亲子'], rule: ['family', 'sport', 'parent'], hook: '按通勤、亲子陪伴、户外运动拆保障，不让低频风险被忽略。' },
-      { id: 'life', name: '寿险', icon: '寿', base: 74, price: 45, tags: ['家庭责任', '房贷', '教育金'], rule: ['family', 'asset'], hook: '从家庭责任、房贷和子女教育测算基础保额，不做强销售。' },
-      { id: 'home', name: '家财险', icon: '家', base: 76, price: 18, tags: ['房屋', '贵重物', '空置', '水电'], rule: ['asset', 'family', 'pet', 'digital'], hook: '旅行期间空置、贵重物、宠物破坏、水电风险一起纳入。' },
-      { id: 'car', name: '车险', icon: '车', base: 72, price: 399, tags: ['自驾', '租车', '救援', '代步'], rule: ['car', 'travel'], hook: '自驾、租车和家庭用车场景联动，突出救援和责任边界。' },
-      { id: 'pet', name: '宠物险', icon: '宠', base: 70, price: 29, tags: ['门诊', '手术', '寄养', '第三方'], rule: ['pet'], hook: '宠物医疗、寄养、出行和第三方责任打成生活包。' },
-      { id: 'sport', name: '运动险', icon: '动', base: 73, price: 15, tags: ['滑雪', '潜水', '骑行', '户外'], rule: ['sport', 'travel'], hook: '按目的地玩法识别高风险运动，条款重点前置提醒。' },
-      { id: 'digital', name: '数码险', icon: '数', base: 71, price: 9, tags: ['手机', '相机', '电脑', '装备'], rule: ['digital', 'travel'], hook: '把旅行装备、相机电脑和手机碎屏放进同一个资产视图。' },
-      { id: 'liability', name: '责任险', icon: '责', base: 68, price: 16, tags: ['家庭', '自驾', '宠物', '第三方'], rule: ['car', 'pet', 'asset', 'travel'], hook: '第三方责任、家庭责任、自驾责任统一说明赔付边界。' }
-    ];
-
-    const tasks = [
-      { id: 'profile', icon: '画', title: '完善保障画像', desc: '选择出行、家庭、资产、车宠标签', reward: '+8 分' },
-      { id: 'family', icon: '家', title: '建立家庭保障账户', desc: '把自己、伴侣、孩子、父母放进同一视图', reward: '亲属缺口' },
-      { id: 'policy', icon: '单', title: '上传已有保单演示', desc: '本页仅模拟识别，不真实上传文件', reward: '去重推荐' },
-      { id: 'travelOrder', icon: '行', title: '检查近期旅行订单', desc: '机票酒店签证玩法联动旅行险', reward: '出行包' },
-      { id: 'claim', icon: '赔', title: '体验理赔预审', desc: '模拟材料清单与进度透明化', reward: '省心赔' }
-    ];
-
-    const scenarios = [
-      { id: 'summer', title: '暑期出境', desc: '境外医疗、航变、取消、行李延误', tag: '旅行强场景' },
-      { id: 'ski', title: '滑雪季', desc: '高风险运动、救援、装备损坏', tag: '运动玩法' },
-      { id: 'school', title: '开学季', desc: '儿童门急诊、意外、教育责任', tag: '亲子家庭' },
-      { id: 'petTrip', title: '宠物出行', desc: '宠物医疗、寄养、第三方责任', tag: '车宠生活' },
-      { id: 'drive', title: '自驾季', desc: '道路救援、租车、第三方责任', tag: '有车用户' },
-      { id: 'asset', title: '家庭资产守护', desc: '空置房屋、贵重物、水电风险', tag: '资产责任' }
-    ];
-
-    const benefits = [
-      { title: 'AI 专家问答', desc: '解释条款、保额、免责和等待期' },
-      { title: '理赔预审', desc: '先看材料是否齐，减少反复补交' },
-      { title: '保障券包', desc: '旅行、家庭、车宠场景自动匹配' },
-      { title: '家庭保单档案', desc: '按成员和资产管理已有保障' }
-    ];
-
-    const plans = [
-      { id: 'travel', name: '出行安心包', price: 39, match: ['travel', 'digital', 'sport'], covers: ['旅行险', '数码险', '运动险', '责任险'], desc: '面向近期机酒订单、出境、滑雪潜水和高价值装备。' },
-      { id: 'family', name: '家庭基础包', price: 128, match: ['family', 'parent', 'asset'], covers: ['健康险', '意外险', '寿险', '家财险'], desc: '面向亲子家庭和父母老人，先补基础医疗与家庭责任。' },
-      { id: 'carpet', name: '车宠生活包', price: 88, match: ['car', 'pet'], covers: ['车险', '宠物险', '责任险', '家财险'], desc: '面向自驾、租车、有宠家庭，突出救援和第三方责任。' },
-      { id: 'asset', name: '资产责任包', price: 66, match: ['asset', 'digital', 'car'], covers: ['家财险', '责任险', '数码险', '寿险'], desc: '面向房屋、贵重物、数码装备和家庭资产管理。' },
-      { id: 'sport', name: '数码运动包', price: 49, match: ['sport', 'digital', 'travel'], covers: ['运动险', '数码险', '意外险', '旅行险'], desc: '面向滑雪、骑行、潜水和影像装备用户。' }
+    const categories = [
+      ['旅行', '航变医疗', '¥19'], ['健康', '家人门诊', '¥69'], ['意外', '通勤运动', '¥12'], ['寿险', '家庭责任', '¥45'],
+      ['家财', '房屋贵重物', '¥18'], ['车险', '自驾救援', '¥399'], ['宠物', '宠医寄养', '¥29'], ['运动', '滑雪潜水', '¥15'],
+      ['数码', '手机相机', '¥9'], ['责任', '第三方', '¥16']
     ];
 
     const navs = [
-      { id: 'home', label: '首页', icon: '首' },
-      { id: 'play', label: '玩法', icon: '玩' },
-      { id: 'shelf', label: '货架', icon: '货' },
-      { id: 'policy', label: '保单', icon: '单' },
-      { id: 'mine', label: '我的', icon: '我' }
+      ['home', '首页', '首'], ['guide', '导购', '问'], ['shelf', '保障', '保'], ['service', '服务', '单'], ['mine', '我的', '我']
     ];
 
-    function selectedArray() {
-      return Array.from(state.selected);
-    }
+    const state = {
+      view: 'home',
+      intent: 'travel',
+      step: 0,
+      answers: [],
+      chosenPlan: null,
+      agreed: false,
+      toastTimer: null
+    };
 
-    function productScore(product) {
-      const active = selectedArray();
-      let score = product.base;
-      for (const tag of active) {
-        if (product.rule.includes(tag)) score += tag === 'travel' && product.id === 'travel' ? 18 : 10;
-      }
-      if (!state.selected.has('travel') && product.id === 'travel') score -= 15;
-      if (state.completed.has('policy')) score += 3;
-      return Math.max(45, Math.min(99, score));
-    }
-
-    function sortedProducts() {
-      return [...products].sort((a, b) => productScore(b) - productScore(a));
-    }
-
-    function planScore(plan) {
-      let score = 72;
-      for (const tag of selectedArray()) if (plan.match.includes(tag)) score += 9;
-      if (!state.selected.has('travel') && plan.id === 'travel') score -= 14;
-      return Math.max(50, Math.min(99, score));
-    }
-
-    function sortedPlans() {
-      return [...plans].sort((a, b) => planScore(b) - planScore(a));
-    }
-
-    function score() {
-      const base = 46;
-      const tagScore = state.selected.size * 5;
-      const taskScore = state.completed.size * 6;
-      const gapPenalty = Math.max(0, 4 - state.selected.size) * 4;
-      return Math.max(42, Math.min(96, base + tagScore + taskScore - gapPenalty));
-    }
-
-    function gaps() {
-      const p = sortedProducts();
-      return p.slice(0, 4).map((product, index) => ({
-        id: product.id,
-        title: index === 0 ? product.name + '应优先补齐' : product.name + '存在可优化空间',
-        desc: product.hook,
-        action: index === 0 ? '看方案' : '去补齐'
-      }));
-    }
-
-    function toast(message) {
+    function scene() { return scenes[state.intent] || scenes.travel; }
+    function showToast(text) {
       const el = $('#toast');
-      el.textContent = message;
+      el.textContent = text;
       el.classList.add('show');
       clearTimeout(state.toastTimer);
-      state.toastTimer = setTimeout(() => el.classList.remove('show'), 1700);
+      state.toastTimer = setTimeout(() => el.classList.remove('show'), 1500);
     }
-
-    function setTab(tab) {
-      state.tab = tab;
+    function setView(view) {
+      state.view = view;
       render();
       $('#app').scrollTo({ top: 0, behavior: 'smooth' });
     }
+    function startGuide(intent) {
+      state.intent = intent;
+      state.step = 0;
+      state.answers = [];
+      state.chosenPlan = null;
+      setView('guide');
+    }
+    function answer(value) {
+      state.answers[state.step] = value;
+      if (state.step < scene().questions.length - 1) {
+        state.step += 1;
+        render();
+      } else {
+        state.chosenPlan = scene().main;
+        setView('result');
+      }
+    }
 
     function renderNav() {
-      $('#nav').innerHTML = navs.map(nav => `
-        <button class="nav-item ${state.tab === nav.id ? 'active' : ''}" data-tab="${nav.id}">
-          <b>${nav.icon}</b><span>${nav.label}</span>
+      $('#nav').innerHTML = navs.map(([id, label, icon]) => `
+        <button class="${state.view === id || (id === 'guide' && ['guide','result','detail','confirm'].includes(state.view)) ? 'active' : ''}" data-nav="${id}">
+          <b>${icon}</b><span>${label}</span>
         </button>
       `).join('');
-    }
-
-    function profileChips() {
-      return `<div class="chips">${profileTags.map(tag => `
-        <button class="chip ${state.selected.has(tag.id) ? 'active' : ''}" data-profile="${tag.id}">${tag.label}</button>
-      `).join('')}</div>`;
-    }
-
-    function riskPanel(compact = false) {
-      const s = score();
-      return `
-        <section class="section">
-          <div class="card risk-panel">
-            <div class="risk-top">
-              <div>
-                <span class="badge">AI 保障体检</span>
-                <h3 style="margin:8px 0 4px;font-size:18px;letter-spacing:0;">保障缺口窗口</h3>
-                <p style="margin:0;color:var(--muted);font-size:12px;line-height:1.45;font-weight:650;">按出行、家庭、资产、车宠和数码画像动态调整推荐，不按佣金排序。</p>
-              </div>
-              <div class="score" style="--score:${s}%"><div><b>${s}</b><span>保障分</span></div></div>
-            </div>
-            ${profileChips()}
-            ${compact ? '' : `<div class="gap-list">${gaps().map(gap => `
-              <div class="gap">
-                <div><strong>${gap.title}</strong><span>${gap.desc}</span></div>
-                <button data-gap="${gap.id}">${gap.action}</button>
-              </div>
-            `).join('')}</div>`}
-          </div>
-        </section>
-      `;
-    }
-
-    function memberCard() {
-      return `
-        <section class="section">
-          <div class="card member">
-            <span class="badge dark">F 会员权益中心</span>
-            <h3 style="margin-top:9px;">不是只卖险，是把保前、保中、理赔服务串起来</h3>
-            <p>权益会跟随你的订单和家庭账户变化，先帮你判断、再给动作。</p>
-            <div class="benefits">
-              ${benefits.map(item => `<button class="benefit" data-benefit="${item.title}"><strong>${item.title}</strong><span>${item.desc}</span></button>`).join('')}
-            </div>
-          </div>
-        </section>
-      `;
-    }
-
-    function taskList(limit) {
-      const list = limit ? tasks.slice(0, limit) : tasks;
-      return `<div class="task-list">${list.map(task => {
-        const done = state.completed.has(task.id);
-        return `
-          <div class="task ${done ? 'done' : ''}">
-            <div class="task-icon">${task.icon}</div>
-            <div class="task-body"><strong>${task.title}</strong><span>${task.desc} · ${task.reward}</span></div>
-            <button class="task-btn" data-task="${task.id}">${done ? '已完成' : '去完成'}</button>
-          </div>
-        `;
-      }).join('')}</div>`;
-    }
-
-    function scenarioRow() {
-      return `<div class="scroll-row">${scenarios.map(item => `
-        <button class="card mini-card" data-scenario="${item.id}">
-          <span class="badge ${item.id === 'ski' || item.id === 'petTrip' ? 'blue' : ''}">${item.tag}</span>
-          <h3 style="margin-top:18px;">${item.title}</h3>
-          <p>${item.desc}</p>
-        </button>
-      `).join('')}</div>`;
-    }
-
-    function productList(limit) {
-      const list = sortedProducts().slice(0, limit || products.length);
-      return `<div class="product-list">${list.map((product, index) => `
-        <button class="card product" data-product="${product.id}">
-          <div class="cat-icon">${product.icon}</div>
-          <div>
-            <h3>${product.name}</h3>
-            <p>${product.hook}</p>
-            <div class="scoreline">${product.tags.slice(0, 3).map(tag => `<span class="metric">${tag}</span>`).join('')}</div>
-          </div>
-          <div class="rank">${productScore(product)}</div>
-        </button>
-      `).join('')}</div>`;
-    }
-
-    function planList(limit) {
-      const list = sortedPlans().slice(0, limit || plans.length);
-      return `<div class="plan-list">${list.map(plan => `
-        <button class="card plan ${state.selectedPlan === plan.id ? 'active' : ''}" data-plan="${plan.id}">
-          <div class="plan-head">
-            <div><span class="badge green">匹配度 ${planScore(plan)}</span><h3 style="margin-top:8px;">${plan.name}</h3><p>${plan.desc}</p></div>
-            <div class="price">¥${plan.price}</div>
-          </div>
-          <div class="cover-row">${plan.covers.map(item => `<span>${item}</span>`).join('')}</div>
-        </button>
-      `).join('')}</div>`;
     }
 
     function homeView() {
       return `
         <section class="hero">
-          <span class="eyebrow">飞猪订单 × 家庭保障 × AI 缺口体检</span>
-          <h2>先玩起来，再把该补的保障补齐</h2>
-          <p>旅行险是强入口，频道会继续扩展健康、家财、车宠、数码、责任等高价值保障。</p>
-          <div class="hero-actions">
-            <button class="primary" data-tab="play">开始体检</button>
-            <button class="secondary" data-tab="shelf">看智能货架</button>
+          <div class="assistant-bot" aria-hidden="true">
+            <i class="pulse-dot one"></i>
+            <div class="assistant-face"></div>
+            <i class="pulse-dot two"></i>
+          </div>
+          <div class="hero-content">
+            <span class="pill">飞猪 AI 投保助手</span>
+            <h2>先问清，再推荐</h2>
+            <div class="hero-actions">
+              <button class="btn primary" data-start="travel">找助手</button>
+              <button class="btn ghost" data-view="shelf">全部保障</button>
+            </div>
           </div>
         </section>
 
         <section class="section">
-          <div class="grid-2">
-            <button class="card play-card" data-tab="play">
-              <span class="badge">玩法 1</span>
-              <div><h3>AI 保障体检</h3><p>选择画像后生成缺口报告和补齐任务。</p></div>
-            </button>
-            <button class="card play-card alt" data-action="coupon">
-              <span class="badge blue">玩法 2</span>
-              <div><h3>会员权益券包</h3><p>旅行、家庭、车宠权益随场景发放。</p></div>
-            </button>
+          <div class="head"><div><h2>选一个场景</h2><span>先选诉求，再给方案</span></div></div>
+          <div class="scenes">
+            ${Object.entries(scenes).map(([id, item]) => `
+              <button class="scenario" style="--scene:${item.img}" data-start="${id}">
+                <strong>${item.title}</strong><span>${item.short}</span>
+              </button>
+            `).join('')}
           </div>
         </section>
 
-        ${riskPanel(false)}
-        ${memberCard()}
-
         <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">今日任务</h2><p class="section-sub">把频道从“逛货架”变成“做动作”</p></div>
-            <button class="link-btn" data-tab="play">全部</button>
-          </div>
-          ${taskList(3)}
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">场景活动</h2><p class="section-sub">旅行人群向生活方式保障扩展</p></div>
-          </div>
-          ${scenarioRow()}
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">智能货架</h2><p class="section-sub">按当前画像排序，不是静态险种分类</p></div>
-            <button class="link-btn" data-tab="shelf">更多</button>
-          </div>
-          ${productList(4)}
+          <div class="head"><div><h2>今日推荐</h2><span>本次出行优先</span></div></div>
+          <button class="card recommend" data-start="travel" style="width:100%;text-align:left;">
+            <div class="thumb" style="--thumb:var(--img-travel)"></div>
+            <div><h3>出行安心包</h3><p class="tagline">航变 医疗 行李</p></div>
+            <div class="price">¥39</div>
+          </button>
         </section>
       `;
     }
 
-    function playView() {
+    function guideView() {
+      const item = scene();
+      const q = item.questions[state.step];
+      const pct = ((state.step + 1) / item.questions.length) * 100;
       return `
-        ${riskPanel(false)}
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">玩法任务</h2><p class="section-sub">完成后报告、货架和方案会同步变化</p></div>
-          </div>
-          ${taskList()}
+        <section class="guide-hero" style="--guide-img:${item.img}">
+          <span class="pill">第 ${state.step + 1} 步</span>
+          <h2>${q.title}</h2>
+          <div class="progress" style="--p:${pct}%"><i></i></div>
         </section>
         <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">会员权益</h2><p class="section-sub">用权益把用户留在保前、保中、保后</p></div>
+          <div class="choices">
+            ${q.options.map(([value, label]) => `
+              <button class="choice" data-answer="${value}">
+                <span>${label}</span><b>›</b>
+              </button>
+            `).join('')}
           </div>
-          ${memberCard()}
+        </section>
+      `;
+    }
+
+    function resultView() {
+      const item = scene();
+      const plan = state.chosenPlan || item.main;
+      return `
+        <section class="plan main card">
+          <div class="plan-photo" style="--plan-img:${item.img}">
+            <span class="pill">已匹配</span>
+            <h3>${plan.name}</h3>
+          </div>
+          <div class="plan-bottom">
+            <div class="cover-dots">${plan.cover.map(x => `<span class="dot">${x}</span>`).join('')}</div>
+            <div class="price">¥${plan.price}</div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="head"><div><h2>缺口一眼看</h2><span>颜色越满越优先</span></div></div>
+          <div class="gap-grid">
+            ${plan.gaps.map(([name, val], idx) => `
+              <div class="gap"><div class="ring" style="--v:${val}%;--c:${idx === 0 ? 'var(--orange)' : idx === 1 ? 'var(--blue)' : 'var(--green)'}">${val}</div><strong>${name}</strong><span>待补齐</span></div>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="head"><div><h2>备选方案</h2><span>少看一点，快决定</span></div></div>
+          <div class="choices">
+            ${item.alts.map((name, idx) => `
+              <button class="plan card" data-alt="${name}">
+                <div class="plan-icon">${idx + 1}</div>
+                <div><h3>${name}</h3><p class="tagline">${idx ? '更省钱' : '保障更强'}</p></div>
+                <div class="price">¥${idx ? plan.price - 18 : plan.price + 26}</div>
+              </button>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="section">
+          <details>
+            <summary>为什么推荐 <span>⌄</span></summary>
+            <div class="reason"><span>${plan.fit}</span><span>${plan.cover[0]}优先</span><span>可用权益</span></div>
+          </details>
+        </section>
+
+        <div class="sticky-cta">
+          <div><strong>¥${plan.price}</strong><span>演示价格</span></div>
+          <button class="btn orange" data-view="detail">看详情</button>
+        </div>
+      `;
+    }
+
+    function detailView() {
+      const item = scene();
+      const plan = state.chosenPlan || item.main;
+      return `
+        <section class="detail-top" style="--detail-img:${item.img}">
+          <button class="back" data-view="result">‹</button>
+          <div class="detail-copy">
+            <span class="pill">${plan.fit}</span>
+            <h2>${plan.name}</h2>
+            <div class="hero-actions"><span class="pill">¥${plan.price} 起</span><span class="pill">理赔预审</span></div>
+          </div>
         </section>
         <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">活动玩法</h2><p class="section-sub">点击场景会自动添加画像标签</p></div>
+          <div class="mini-row">
+            ${plan.cover.map((x, idx) => `<button class="mini"><span><b>${idx + 1}</b>${x}</span></button>`).join('')}
           </div>
-          ${scenarioRow()}
         </section>
+        <section class="section">
+          <details open>
+            <summary>保障重点 <span>⌄</span></summary>
+            <div class="reason"><span>保障范围</span><span>免责提示</span><span>服务权益</span></div>
+          </details>
+        </section>
+        <div class="sticky-cta">
+          <div><strong>¥${plan.price}</strong><span>不真实支付</span></div>
+          <button class="btn orange" data-view="confirm">确认演示</button>
+        </div>
+      `;
+    }
+
+    function confirmView() {
+      const plan = state.chosenPlan || scene().main;
+      return `
+        <section class="section">
+          <div class="head"><div><h2>确认信息</h2><span>演示链路</span></div></div>
+          <div class="card confirm">
+            <label class="check" style="margin-top:0;margin-bottom:6px;"><input id="agree" type="checkbox" ${state.agreed ? 'checked' : ''}> <span>已阅读保障范围和免责说明。本页不采集真实信息。</span></label>
+            <div class="row"><strong>方案</strong><span>${plan.name}</span></div>
+            <div class="row"><strong>对象</strong><span>本人/家庭</span></div>
+            <div class="row"><strong>权益</strong><span>理赔预审</span></div>
+            <div class="row"><strong>合计</strong><span style="color:var(--orange);font-weight:950;">¥${plan.price}</span></div>
+          </div>
+        </section>
+        <div class="sticky-cta">
+          <div><strong>¥${plan.price}</strong><span>演示确认</span></div>
+          <button class="btn orange" data-confirm>完成</button>
+        </div>
       `;
     }
 
     function shelfView() {
       return `
-        ${riskPanel(true)}
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">飞猪优选榜</h2><p class="section-sub">参考投保门槛、保障范围、性价比、服务理赔、机构能力五维</p></div>
-          </div>
-          ${productList()}
-        </section>
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">组合方案</h2><p class="section-sub">按玩法结果打包，不要求用户自己拼险种</p></div>
-          </div>
-          ${planList()}
-        </section>
-        ${compareAndConfirm()}
-      `;
-    }
-
-    function compareAndConfirm() {
-      const selected = plans.find(item => item.id === state.selectedPlan) || sortedPlans()[0];
-      const alternative = sortedPlans().find(item => item.id !== selected.id) || plans[0];
-      return `
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">方案对比</h2><p class="section-sub">把关键差异直接摆出来</p></div>
-          </div>
-          <div class="card compare">
-            <div class="compare-row"><div></div><div><strong>${selected.name}</strong></div><div><strong>${alternative.name}</strong></div></div>
-            <div class="compare-row"><div>适配场景</div><div>${selected.desc}</div><div>${alternative.desc}</div></div>
-            <div class="compare-row"><div>覆盖内容</div><div>${selected.covers.join('、')}</div><div>${alternative.covers.join('、')}</div></div>
-            <div class="compare-row"><div>演示价格</div><div>¥${selected.price}/起</div><div>¥${alternative.price}/起</div></div>
-            <div class="compare-row"><div>服务动作</div><div>AI 解释条款、理赔预审、保单日历</div><div>AI 解释条款、缺口提醒</div></div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">投保确认演示</h2><p class="section-sub">静态原型，不采集真实信息，不发起真实支付</p></div>
-          </div>
-          <div class="card confirm">
-            <div class="form-row"><strong>已选方案</strong><span>${selected.name}</span></div>
-            <div class="form-row"><strong>保障对象</strong><span>本人及家庭账户演示成员</span></div>
-            <div class="form-row"><strong>生效时间</strong><span>下次出行或确认后次日</span></div>
-            <div class="form-row"><strong>模拟合计</strong><span style="color:var(--fz-orange);font-weight:950;">¥${selected.price}</span></div>
-            <label class="check"><input type="checkbox" id="agree" ${state.confirmed ? 'checked' : ''}> <span>我已阅读保障范围、免责说明、等待期和理赔材料要求。本页面仅为频道交互演示。</span></label>
-          </div>
-          <div class="cta-bar">
-            <div><strong>¥${selected.price}</strong><span>${state.coupon ? '已叠加会员权益券' : '可领取会员权益券'}</span></div>
-            <button data-action="confirm">确认投保演示</button>
-          </div>
-        </section>
-      `;
-    }
-
-    function policyView() {
-      return `
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">家庭保单日历</h2><p class="section-sub">按人、车、宠物、房屋和旅行订单统一管理</p></div>
-            <button class="link-btn" data-action="policy-demo">添加</button>
-          </div>
-          <div class="task-list">
-            <div class="task done"><div class="task-icon">旅</div><div class="task-body"><strong>东京亲子游保障</strong><span>7 月 18 日出发 · 航变/医疗/行李已覆盖</span></div><button class="task-btn" data-tab="shelf">续配</button></div>
-            <div class="task"><div class="task-icon">家</div><div class="task-body"><strong>家庭基础保障待补齐</strong><span>父母医疗、家庭责任、房屋空置风险待确认</span></div><button class="task-btn" data-tab="play">补齐</button></div>
-            <div class="task"><div class="task-icon">数</div><div class="task-body"><strong>相机与电脑保障</strong><span>旅行装备价值较高，建议加入数码险</span></div><button class="task-btn" data-tab="shelf">查看</button></div>
-          </div>
-        </section>
-        <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">理赔服务</h2><p class="section-sub">模拟“先预审、再提交”的服务链路</p></div>
-            <button class="link-btn" data-action="claim-next">下一步</button>
-          </div>
-          <div class="timeline">
-            ${['选择事故类型与保单', 'AI 预审材料清单', '提交理赔并查看进度', '复盘保障缺口'].map((item, index) => `
-              <div class="step">
-                <div class="dot">${index + 1}</div>
-                <div><strong>${item}</strong><span>${index + 1 <= state.claimStage ? '当前演示已到达该步骤，用户能看到所需材料和下一步动作。' : '点击“下一步”继续模拟理赔链路。'}</span></div>
-              </div>
+        <section class="section" style="margin-top:0;">
+          <div class="head"><div><h2>全部保障</h2><span>需要时再展开</span></div></div>
+          <div class="product-grid">
+            ${categories.map(([name, fit, price], idx) => `
+              <button class="product card" data-category="${name}">
+                <div><h3>${name}</h3><small>${fit}</small></div>
+                <div class="price">${price}</div>
+              </button>
             `).join('')}
           </div>
         </section>
-        <p class="fineprint">提示：这里展示的是频道服务链路原型，不接入真实保险公司系统，不构成理赔承诺。</p>
+      `;
+    }
+
+    function serviceView() {
+      return `
+        <section class="section" style="margin-top:0;">
+          <div class="head"><div><h2>保单服务</h2><span>少打扰，关键提醒</span></div></div>
+          <div class="timeline">
+            <div class="time-card card"><div class="time-icon">旅</div><div><strong>东京亲子游</strong><span>7月18日 · 已保障</span></div><button class="link" data-start="travel">续配</button></div>
+            <div class="time-card card"><div class="time-icon">家</div><div><strong>家庭健康</strong><span>2项待补齐</span></div><button class="link" data-start="family">补齐</button></div>
+            <div class="time-card card"><div class="time-icon">赔</div><div><strong>理赔预审</strong><span>3步看材料</span></div><button class="link" data-claim>开始</button></div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="gap-grid">
+            <div class="gap"><div class="ring" style="--v:33%;--c:var(--orange)">1</div><strong>选事故</strong><span>第一步</span></div>
+            <div class="gap"><div class="ring" style="--v:66%;--c:var(--blue)">2</div><strong>看材料</strong><span>第二步</span></div>
+            <div class="gap"><div class="ring" style="--v:100%;--c:var(--green)">3</div><strong>查进度</strong><span>第三步</span></div>
+          </div>
+        </section>
       `;
     }
 
     function mineView() {
       return `
-        <section class="section">
-          <div class="card risk-panel">
-            <div class="risk-top">
-              <div>
-                <span class="badge">我的保障账户</span>
-                <h3 style="margin:8px 0 4px;font-size:18px;">家庭保障资产</h3>
-                <p style="margin:0;color:var(--muted);font-size:12px;font-weight:650;">3 位家庭成员 · 1 个旅行订单 · 2 个待补齐缺口</p>
-              </div>
-              <div class="score" style="--score:${score()}%"><div><b>${score()}</b><span>保障分</span></div></div>
-            </div>
-            ${profileChips()}
+        <section class="hero" style="min-height:190px;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.7)), var(--img-family) center/cover;">
+          <div class="hero-content">
+            <span class="pill">家庭账户</span>
+            <h2>保障分 76</h2>
+            <div class="hero-actions"><button class="btn primary" data-start="family">继续补齐</button></div>
           </div>
         </section>
-        ${memberCard()}
         <section class="section">
-          <div class="section-head">
-            <div><h2 class="section-title">权益券包</h2><p class="section-sub">权益随场景触发，不做无意义发券</p></div>
-          </div>
-          <div class="task-list">
-            <div class="task ${state.coupon ? 'done' : ''}"><div class="task-icon">券</div><div class="task-body"><strong>旅行保障券</strong><span>出境/滑雪/亲子旅行可用</span></div><button class="task-btn" data-action="coupon">${state.coupon ? '已领取' : '领取'}</button></div>
-            <div class="task"><div class="task-icon">问</div><div class="task-body"><strong>AI 专家问答 3 次</strong><span>产品解读、方案配置、理赔陪伴</span></div><button class="task-btn" data-action="open-ai">去问</button></div>
-            <div class="task"><div class="task-icon">赔</div><div class="task-body"><strong>理赔预审权益</strong><span>材料清单、缺失项、进度解释</span></div><button class="task-btn" data-tab="policy">体验</button></div>
+          <div class="mini-row">
+            <button class="mini"><span><b>3</b>成员</span></button>
+            <button class="mini"><span><b>2</b>缺口</span></button>
+            <button class="mini"><span><b>1</b>权益</span></button>
           </div>
         </section>
       `;
@@ -1347,158 +1087,46 @@
 
     function render() {
       renderNav();
-      const views = { home: homeView, play: playView, shelf: shelfView, policy: policyView, mine: mineView };
-      $('#view').innerHTML = views[state.tab]();
-      bindEvents();
-      $('#searchText').textContent = state.selected.has('travel')
-        ? '搜：出境医疗、航变、亲子、数码装备、理赔预审'
-        : '搜：健康、家财、车宠、家庭责任、AI 体检';
+      const views = { home: homeView, guide: guideView, result: resultView, detail: detailView, confirm: confirmView, shelf: shelfView, service: serviceView, mine: mineView };
+      $('#view').innerHTML = (views[state.view] || homeView)();
+      bind();
     }
 
-    function bindEvents() {
-      $$('[data-tab]').forEach(btn => btn.addEventListener('click', () => setTab(btn.dataset.tab)));
-      $$('[data-profile]').forEach(btn => btn.addEventListener('click', () => {
-        const id = btn.dataset.profile;
-        if (state.selected.has(id)) state.selected.delete(id);
-        else state.selected.add(id);
+    function bind() {
+      $$('[data-nav]').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.nav)));
+      $$('[data-view]').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+      $$('[data-start]').forEach(btn => btn.addEventListener('click', () => startGuide(btn.dataset.start)));
+      $$('[data-answer]').forEach(btn => btn.addEventListener('click', () => answer(btn.dataset.answer)));
+      $$('[data-alt]').forEach(btn => btn.addEventListener('click', () => {
+        const base = scene().main;
+        state.chosenPlan = { ...base, name: btn.dataset.alt, price: btn.dataset.alt.includes('轻') ? base.price - 18 : base.price + 26 };
         render();
-        toast('画像已更新，货架和缺口同步重排');
+        showToast('已切换方案');
       }));
-      $$('[data-task]').forEach(btn => btn.addEventListener('click', () => {
-        const id = btn.dataset.task;
-        state.completed.add(id);
-        if (id === 'travelOrder') state.selected.add('travel');
-        if (id === 'family') state.selected.add('family');
-        if (id === 'profile') state.selected.add('asset');
-        if (id === 'claim') setTab('policy');
-        else {
-          render();
-          toast('任务完成，保障分已更新');
-        }
+      $$('[data-category]').forEach(btn => btn.addEventListener('click', () => {
+        const name = btn.dataset.category;
+        const map = { 旅行: 'travel', 健康: 'family', 意外: 'family', 寿险: 'family', 家财: 'asset', 车险: 'carpet', 宠物: 'carpet', 运动: 'travel', 数码: 'asset', 责任: 'carpet' };
+        startGuide(map[name] || 'travel');
       }));
-      $$('[data-scenario]').forEach(btn => btn.addEventListener('click', () => {
-        const map = { summer: 'travel', ski: 'sport', school: 'family', petTrip: 'pet', drive: 'car', asset: 'asset' };
-        state.selected.add(map[btn.dataset.scenario]);
-        if (btn.dataset.scenario === 'summer' || btn.dataset.scenario === 'ski') state.selected.add('travel');
-        render();
-        toast('已把该场景加入 AI 画像');
-      }));
-      $$('[data-product]').forEach(btn => btn.addEventListener('click', () => openProduct(btn.dataset.product)));
-      $$('[data-plan]').forEach(btn => btn.addEventListener('click', () => {
-        state.selectedPlan = btn.dataset.plan;
-        render();
-        toast('已切换组合方案');
-      }));
-      $$('[data-gap]').forEach(btn => btn.addEventListener('click', () => {
-        state.tab = 'shelf';
-        state.selectedPlan = sortedPlans()[0].id;
-        render();
-        $('#app').scrollTo({ top: 0, behavior: 'smooth' });
-      }));
-      $$('[data-benefit]').forEach(btn => btn.addEventListener('click', () => openBenefit(btn.dataset.benefit)));
-      $$('[data-action]').forEach(btn => btn.addEventListener('click', () => handleAction(btn.dataset.action)));
+      const input = $('#intentInput');
+      input.addEventListener('keydown', event => {
+        if (event.key !== 'Enter') return;
+        const text = input.value;
+        if (/家|孩|父|母|健康/.test(text)) startGuide('family');
+        else if (/车|宠|狗|猫/.test(text)) startGuide('carpet');
+        else if (/数码|手机|相机|电脑|房/.test(text)) startGuide('asset');
+        else startGuide('travel');
+      });
       const agree = $('#agree');
-      if (agree) agree.addEventListener('change', () => state.confirmed = agree.checked);
-    }
-
-    function handleAction(action) {
-      if (action === 'open-ai') return openAI();
-      if (action === 'coupon') {
-        state.coupon = true;
-        state.completed.add('coupon');
-        render();
-        return toast('会员权益券已放入券包');
-      }
-      if (action === 'confirm') {
-        const agree = $('#agree');
-        if (!agree || !agree.checked) return toast('请先勾选阅读确认');
-        state.confirmed = true;
-        state.completed.add('policy');
-        setTab('policy');
-        return toast('投保确认演示完成，已生成保单日历');
-      }
-      if (action === 'claim-next') {
-        state.claimStage = Math.min(4, state.claimStage + 1);
-        render();
-        return toast(state.claimStage === 4 ? '理赔链路已演示完成' : '已进入下一步理赔预审');
-      }
-      if (action === 'policy-demo') {
-        state.completed.add('policy');
-        render();
-        return toast('已添加一张演示保单');
-      }
-    }
-
-    function openProduct(id) {
-      const item = products.find(product => product.id === id);
-      if (!item) return;
-      openSheet(`
-        <div class="sheet-head">
-          <div><h2>${item.name} · 飞猪优选</h2><p>${item.hook}</p></div>
-          <button class="close" data-close>×</button>
-        </div>
-        <div class="compare card">
-          <div class="compare-row"><div>推荐分</div><div><strong>${productScore(item)}</strong></div><div>当前画像动态计算</div></div>
-          <div class="compare-row"><div>核心保障</div><div>${item.tags.join('、')}</div><div>按场景解释条款重点</div></div>
-          <div class="compare-row"><div>模拟价格</div><div>¥${item.price}/起</div><div>可叠加会员券</div></div>
-          <div class="compare-row"><div>优选标准</div><div>投保门槛、保障范围、性价比</div><div>服务理赔、机构能力</div></div>
-        </div>
-        <button class="primary" style="width:100%;margin-top:12px;" data-sheet-tab="shelf">加入组合方案</button>
-        <p class="fineprint">该卡片为静态交互原型，不展示真实产品条款。真实上线需接入合规产品、费率和适当性校验。</p>
-      `);
-    }
-
-    function openBenefit(title) {
-      const item = benefits.find(benefit => benefit.title === title);
-      openSheet(`
-        <div class="sheet-head">
-          <div><h2>${title}</h2><p>${item ? item.desc : '会员权益演示'}</p></div>
-          <button class="close" data-close>×</button>
-        </div>
-        <div class="timeline">
-          <div class="step"><div class="dot">1</div><div><strong>触发权益</strong><span>根据订单、画像、保单日历判断用户最需要的权益。</span></div></div>
-          <div class="step"><div class="dot">2</div><div><strong>给出动作</strong><span>不是展示说明，而是让用户直接体检、问答、预审或补齐。</span></div></div>
-          <div class="step"><div class="dot">3</div><div><strong>沉淀账户</strong><span>结果回流家庭保障账户，影响下一次推荐。</span></div></div>
-        </div>
-      `);
-    }
-
-    function openAI() {
-      const top = sortedProducts()[0];
-      openSheet(`
-        <div class="sheet-head">
-          <div><h2>AI 保险管家</h2><p>我会先解释风险和条款，再给补齐动作；演示中不读取真实个人数据。</p></div>
-          <button class="close" data-close>×</button>
-        </div>
-        <div class="task-list">
-          <button class="task" data-ai-question="why"><div class="task-icon">问</div><div class="task-body"><strong>为什么先推荐${top.name}？</strong><span>${top.hook}</span></div><button class="task-btn">解释</button></button>
-          <button class="task" data-ai-question="compare"><div class="task-icon">比</div><div class="task-body"><strong>帮我对比两个方案</strong><span>看保障范围、免责、价格和理赔服务。</span></div><button class="task-btn">对比</button></button>
-          <button class="task" data-ai-question="claim"><div class="task-icon">赔</div><div class="task-body"><strong>理赔材料怎么准备？</strong><span>先做材料预审，再进入保单服务。</span></div><button class="task-btn">预审</button></button>
-        </div>
-        <div class="empty" id="aiAnswer">选择一个问题，我会用频道内的规则给出可解释答案。</div>
-      `);
-    }
-
-    function openSheet(html) {
-      const modal = $('#modal');
-      modal.innerHTML = `<section class="sheet">${html}</section>`;
-      modal.classList.add('show');
-      $$('[data-close]', modal).forEach(btn => btn.addEventListener('click', closeSheet));
-      modal.addEventListener('click', event => { if (event.target === modal) closeSheet(); }, { once: true });
-      $$('[data-sheet-tab]', modal).forEach(btn => btn.addEventListener('click', () => { closeSheet(); setTab(btn.dataset.sheetTab); }));
-      $$('[data-ai-question]', modal).forEach(btn => btn.addEventListener('click', () => {
-        const type = btn.dataset.aiQuestion;
-        const answers = {
-          why: `当前画像包含 ${selectedArray().map(id => profileTags.find(tag => tag.id === id)?.label).filter(Boolean).join('、')}，所以 ${sortedProducts()[0].name} 排在最前。`,
-          compare: '我会优先对比保障范围、免责范围、价格效率、服务理赔、机构能力，避免只看低价。',
-          claim: '理赔预审会先列出事故证明、费用凭证、身份/保单信息，并标出缺失项。'
-        };
-        $('#aiAnswer', modal).textContent = answers[type];
+      if (agree) agree.addEventListener('change', () => state.agreed = agree.checked);
+      $$('[data-confirm]').forEach(btn => btn.addEventListener('click', () => {
+        const agreeBox = $('#agree');
+        if (!agreeBox || !agreeBox.checked) return showToast('请先勾选阅读确认');
+        state.agreed = true;
+        setView('service');
+        showToast('已生成演示保单');
       }));
-    }
-
-    function closeSheet() {
-      $('#modal').classList.remove('show');
+      $$('[data-claim]').forEach(btn => btn.addEventListener('click', () => showToast('理赔预审已开启')));
     }
 
     render();
