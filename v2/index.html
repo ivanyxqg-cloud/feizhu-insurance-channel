@@ -359,7 +359,7 @@
     .price { color: var(--orange); font-size: 18px; font-weight: 950; white-space: nowrap; }
 
     .guide-hero {
-      min-height: 190px;
+      min-height: 156px;
       position: relative;
       overflow: hidden;
       border-radius: 26px;
@@ -383,6 +383,45 @@
     .progress i { display: block; height: 100%; width: var(--p); border-radius: inherit; background: #fff1b7; }
 
     .choices { display: grid; gap: 10px; }
+    .visual-choices {
+      display: grid;
+      gap: 10px;
+    }
+    .visual-choice {
+      min-height: 92px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      color: #fff;
+      text-align: left;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.02) 0%, rgba(0,0,0,.28) 48%, rgba(0,0,0,.74) 100%),
+        var(--choice-img),
+        var(--img-travel);
+      background-position: center;
+      background-size: cover;
+      box-shadow: 0 12px 24px rgba(61, 38, 16, .12);
+    }
+    .visual-choice strong {
+      position: absolute;
+      left: 13px;
+      bottom: 14px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .visual-choice b {
+      position: absolute;
+      right: 13px;
+      bottom: 13px;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #361900;
+      background: rgba(255,244,199,.94);
+      font-size: 18px;
+    }
     .choice {
       min-height: 58px;
       display: flex;
@@ -445,6 +484,48 @@
       gap: 11px;
       align-items: center;
       background: #fff;
+    }
+    .plan.visual {
+      min-height: 104px;
+      position: relative;
+      display: block;
+      padding: 0;
+      overflow: hidden;
+      color: #fff;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.72)),
+        var(--alt-img),
+        var(--img-travel);
+      background-position: center;
+      background-size: cover;
+      text-align: left;
+    }
+    .plan.visual h3 {
+      position: absolute;
+      left: 13px;
+      bottom: 38px;
+      font-size: 18px;
+    }
+    .plan.visual .tagline {
+      position: absolute;
+      left: 13px;
+      bottom: 15px;
+      margin: 0;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 99px;
+      color: #331700;
+      background: rgba(255,244,199,.94);
+      font-size: 10px;
+    }
+    .plan.visual .price {
+      position: absolute;
+      right: 13px;
+      top: 12px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,.3);
     }
     .plan-icon {
       width: 58px;
@@ -542,6 +623,44 @@
       justify-content: space-between;
       text-align: left;
       background: #fff;
+    }
+    .product.visual {
+      min-height: 132px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background-image:
+        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.74)),
+        var(--cat-img),
+        var(--img-travel);
+      background-position: center;
+      background-size: cover;
+    }
+    .product.visual h3 {
+      position: absolute;
+      left: 12px;
+      bottom: 37px;
+      font-size: 17px;
+    }
+    .product.visual small {
+      position: absolute;
+      left: 12px;
+      bottom: 15px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 99px;
+      color: #351900;
+      background: rgba(255,244,199,.94);
+    }
+    .product.visual .price {
+      position: absolute;
+      right: 12px;
+      top: 11px;
+      color: #fff;
+      font-size: 16px;
+      text-shadow: 0 2px 9px rgba(0,0,0,.32);
     }
     .product small { color: var(--muted); font-size: 11px; font-weight: 800; }
 
@@ -814,6 +933,67 @@
       ['数码', '手机相机', '¥9'], ['责任', '第三方', '¥16']
     ];
 
+    const imageBank = {
+      domestic: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=82")',
+      asia: 'url("https://images.unsplash.com/photo-1528164344705-47542687000d?auto=format&fit=crop&w=900&q=82")',
+      global: 'url("https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=82")',
+      solo: 'url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=82")',
+      family: 'var(--img-family)',
+      parents: 'url("https://images.unsplash.com/photo-1542385151-efd9000785a0?auto=format&fit=crop&w=900&q=82")',
+      city: 'url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=82")',
+      sport: 'url("https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=900&q=82")',
+      drive: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=82")',
+      child: 'var(--img-family)',
+      clinic: 'url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=82")',
+      hospital: 'url("https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=82")',
+      accident: 'url("https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=82")',
+      light: 'url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=82")',
+      balanced: 'var(--img-family)',
+      plus: 'url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=82")',
+      car: 'url("https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=900&q=82")',
+      pet: 'var(--img-carpet)',
+      both: 'url("https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&w=900&q=82")',
+      boarding: 'var(--img-carpet)',
+      rescue: 'url("https://images.unsplash.com/photo-1489824904134-891ab64532f1?auto=format&fit=crop&w=900&q=82")',
+      medical: 'url("https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=900&q=82")',
+      liability: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=82")',
+      phone: 'url("https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=82")',
+      camera: 'url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=82")',
+      home: 'url("https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=900&q=82")',
+      trip: 'var(--img-travel)',
+      daily: 'url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=82")',
+      empty: 'url("https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=82")',
+      break: 'url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=82")',
+      steal: 'url("https://images.unsplash.com/photo-1484807352052-23338990c6c6?auto=format&fit=crop&w=900&q=82")',
+      water: 'url("https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=82")'
+    };
+
+    const categoryImages = {
+      旅行: 'var(--img-travel)', 健康: 'url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=82")',
+      意外: 'url("https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=900&q=82")', 寿险: 'var(--img-family)',
+      家财: 'url("https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=900&q=82")', 车险: 'url("https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=900&q=82")',
+      宠物: 'var(--img-carpet)', 运动: 'url("https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=900&q=82")',
+      数码: 'var(--img-asset)', 责任: 'url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=82")'
+    };
+
+    const safeImages = {
+      domestic: 'var(--img-travel)', asia: 'var(--img-hero)', global: 'var(--img-travel)',
+      solo: 'var(--img-travel)', family: 'var(--img-family)', parents: 'var(--img-family)',
+      city: 'var(--img-travel)', sport: 'var(--img-travel)', drive: 'var(--img-carpet)',
+      child: 'var(--img-family)', clinic: 'var(--img-family)', hospital: 'var(--img-family)', accident: 'var(--img-family)',
+      light: 'var(--img-family)', balanced: 'var(--img-family)', plus: 'var(--img-family)',
+      car: 'var(--img-carpet)', pet: 'var(--img-carpet)', both: 'var(--img-carpet)', boarding: 'var(--img-carpet)',
+      rescue: 'var(--img-carpet)', medical: 'var(--img-carpet)', liability: 'var(--img-carpet)',
+      phone: 'var(--img-asset)', camera: 'var(--img-asset)', home: 'var(--img-asset)', trip: 'var(--img-travel)',
+      daily: 'var(--img-asset)', empty: 'var(--img-asset)', break: 'var(--img-asset)', steal: 'var(--img-asset)', water: 'var(--img-asset)'
+    };
+
+    const safeCategoryImages = {
+      旅行: 'var(--img-travel)', 健康: 'var(--img-family)', 意外: 'var(--img-family)', 寿险: 'var(--img-family)',
+      家财: 'var(--img-asset)', 车险: 'var(--img-carpet)', 宠物: 'var(--img-carpet)', 运动: 'var(--img-travel)',
+      数码: 'var(--img-asset)', 责任: 'var(--img-carpet)'
+    };
+
     const navs = [
       ['home', '首页', '首'], ['guide', '导购', '问'], ['shelf', '保障', '保'], ['service', '服务', '单'], ['mine', '我的', '我']
     ];
@@ -918,10 +1098,10 @@
           <div class="progress" style="--p:${pct}%"><i></i></div>
         </section>
         <section class="section">
-          <div class="choices">
+          <div class="visual-choices">
             ${q.options.map(([value, label]) => `
-              <button class="choice" data-answer="${value}">
-                <span>${label}</span><b>›</b>
+              <button class="visual-choice" style="--choice-img:${safeImages[value] || item.img}" data-answer="${value}">
+                <strong>${label}</strong><b>›</b>
               </button>
             `).join('')}
           </div>
@@ -957,9 +1137,8 @@
           <div class="head"><div><h2>备选方案</h2><span>少看一点，快决定</span></div></div>
           <div class="choices">
             ${item.alts.map((name, idx) => `
-              <button class="plan card" data-alt="${name}">
-                <div class="plan-icon">${idx + 1}</div>
-                <div><h3>${name}</h3><p class="tagline">${idx ? '更省钱' : '保障更强'}</p></div>
+              <button class="plan visual card" style="--alt-img:${idx ? safeImages.light : item.img}" data-alt="${name}">
+                <h3>${name}</h3><p class="tagline">${idx ? '更省钱' : '保障更强'}</p>
                 <div class="price">¥${idx ? plan.price - 18 : plan.price + 26}</div>
               </button>
             `).join('')}
@@ -1036,7 +1215,7 @@
           <div class="head"><div><h2>全部保障</h2><span>需要时再展开</span></div></div>
           <div class="product-grid">
             ${categories.map(([name, fit, price], idx) => `
-              <button class="product card" data-category="${name}">
+              <button class="product visual card" style="--cat-img:${safeCategoryImages[name] || 'var(--img-travel)'}" data-category="${name}">
                 <div><h3>${name}</h3><small>${fit}</small></div>
                 <div class="price">${price}</div>
               </button>
