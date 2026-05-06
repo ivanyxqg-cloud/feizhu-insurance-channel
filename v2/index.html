@@ -4,700 +4,227 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#ff6a00" />
-  <title>飞猪保险智能投保 OS</title>
+  <title>飞猪保险频道 V4</title>
   <style>
     :root {
       --orange: #ff6a00;
-      --orange-2: #ff9a2f;
-      --gold: #ffe6a8;
-      --ink: #16120d;
-      --soft: #75685d;
-      --muted: #a0958a;
-      --line: rgba(32, 22, 13, .08);
-      --bg: #f8f2e8;
-      --card: #fffdf8;
-      --green: #23a36f;
-      --blue: #3477f5;
-      --red: #e25545;
-      --shadow: 0 16px 38px rgba(83, 44, 10, .14);
-      --hero: url("assets/os-hero-travel.jpg");
+      --orange-2: #ff8a1f;
+      --blue: #2478ff;
+      --cyan: #e9f5ff;
+      --green: #22a36f;
+      --red: #ef5b4f;
+      --ink: #19140f;
+      --soft: #6f655c;
+      --muted: #9d9289;
+      --line: rgba(31, 22, 13, .08);
+      --bg: #f6f7fb;
+      --card: #fff;
+      --cream: #fff6ea;
+      --shadow: 0 12px 28px rgba(40, 32, 24, .08);
       --travel: url("assets/os-travel.jpg");
+      --hero: url("assets/os-hero-travel.jpg");
       --family: url("assets/os-family.jpg");
       --pet: url("assets/os-pet.jpg");
       --asset: url("assets/os-asset.jpg");
-      --car: url("assets/os-car.jpg");
-      --sport: url("assets/os-sport.jpg");
       --home: url("assets/os-home.jpg");
+      --sport: url("assets/os-sport.jpg");
+      --car: url("assets/os-car.jpg");
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     }
 
     * { box-sizing: border-box; }
-    html { min-height: 100%; background: #efe2d4; }
-    body {
-      margin: 0;
-      min-height: 100%;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 18% 0%, rgba(255, 230, 168, .72), transparent 28%),
-        radial-gradient(circle at 90% 9%, rgba(255, 106, 0, .16), transparent 24%),
-        linear-gradient(135deg, #fff8eb 0%, #eee1d2 100%);
-    }
-
+    html { min-height: 100%; background: #edf0f6; }
+    body { margin: 0; min-height: 100%; color: var(--ink); background: #edf0f6; }
     button, input { font: inherit; }
-    button {
-      border: 0;
-      color: inherit;
-      cursor: pointer;
-      background: transparent;
-      -webkit-tap-highlight-color: transparent;
-    }
-    input {
-      min-width: 0;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      color: var(--ink);
-    }
+    button { border: 0; background: transparent; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    input { min-width: 0; border: 0; outline: 0; background: transparent; color: var(--ink); }
 
-    .stage {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 22px 0;
-    }
+    .stage { min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 22px 0; }
     .phone {
       position: relative;
       width: min(430px, 100vw);
       min-height: min(932px, 100vh);
       overflow: hidden;
       border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.8);
       background: var(--bg);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255,255,255,.72);
+      box-shadow: 0 18px 50px rgba(36, 31, 24, .16);
     }
-
     .status {
       height: 34px;
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       padding: 0 18px 7px;
-      background: rgba(255, 249, 239, .9);
+      background: #fff;
       font-size: 12px;
       font-weight: 950;
     }
     .sys { display: flex; align-items: center; gap: 5px; }
     .signal { width: 18px; height: 10px; display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; align-items: end; }
-    .signal i { display: block; width: 3px; border-radius: 2px; background: #111; }
-    .signal i:nth-child(1) { height: 3px; }
-    .signal i:nth-child(2) { height: 5px; }
-    .signal i:nth-child(3) { height: 7px; }
-    .signal i:nth-child(4) { height: 10px; }
+    .signal i { width: 3px; border-radius: 2px; background: #111; display: block; }
+    .signal i:nth-child(1){height:3px}.signal i:nth-child(2){height:5px}.signal i:nth-child(3){height:7px}.signal i:nth-child(4){height:10px}
     .battery { width: 22px; height: 11px; border: 1.8px solid #111; border-radius: 3px; position: relative; }
-    .battery::before { content: ""; position: absolute; inset: 2px 5px 2px 2px; border-radius: 1px; background: #111; }
-    .battery::after { content: ""; position: absolute; right: -4px; top: 3px; width: 2px; height: 5px; border-radius: 0 2px 2px 0; background: #111; }
+    .battery::before { content:""; position:absolute; inset:2px 5px 2px 2px; background:#111; border-radius:1px; }
+    .battery::after { content:""; position:absolute; right:-4px; top:3px; width:2px; height:5px; background:#111; border-radius:0 2px 2px 0; }
 
-    .app {
-      height: calc(min(932px, 100vh) - 34px);
-      overflow-y: auto;
-      padding-bottom: calc(82px + env(safe-area-inset-bottom));
-      scroll-behavior: smooth;
-      overscroll-behavior: contain;
-    }
+    .app { height: calc(min(932px, 100vh) - 34px); overflow-y: auto; padding-bottom: calc(82px + env(safe-area-inset-bottom)); overscroll-behavior: contain; scroll-behavior: smooth; }
     .app::-webkit-scrollbar { width: 0; }
 
     .top {
       position: sticky;
       top: 0;
       z-index: 20;
-      padding: 9px 14px 10px;
-      background: rgba(255, 249, 239, .94);
-      border-bottom: 1px solid rgba(255,255,255,.64);
+      padding: 10px 14px 11px;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
       backdrop-filter: blur(18px);
     }
-    .top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .mark {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--orange), #ffb33d);
-      font-weight: 950;
-      box-shadow: 0 8px 18px rgba(255,106,0,.25);
-    }
-    h1 { margin: 0; font-size: 19px; line-height: 1.05; letter-spacing: 0; }
-    .brand small { display: block; margin-top: 2px; color: #8e6b48; font-size: 11px; font-weight: 850; }
-    .mini-btn {
-      width: 35px;
-      height: 35px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(47,31,18,.08);
-      font-weight: 950;
-    }
-    .ask {
+    .top-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .brand { display: flex; align-items: center; gap: 9px; }
+    .mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 12px; color: #fff; background: linear-gradient(135deg, var(--orange), #ffb13b); font-weight: 950; }
+    h1 { margin: 0; font-size: 20px; line-height: 1.05; letter-spacing: 0; }
+    .brand small { display: block; margin-top: 2px; color: #866b54; font-size: 11px; font-weight: 800; }
+    .top-actions { display: flex; gap: 8px; }
+    .icon-btn { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #f7f3ef; font-size: 12px; font-weight: 950; }
+    .search {
       height: 38px;
       display: flex;
       align-items: center;
       gap: 8px;
       padding: 0 12px;
-      border-radius: 16px;
-      background: #fff;
-      border: 1px solid rgba(255,106,0,.14);
-    }
-    .ask b { color: var(--orange); font-size: 15px; }
-    .ask input::placeholder { color: #aa9f94; }
-
-    .content { padding: 10px 13px 18px; }
-    .section { margin-top: 13px; }
-    .head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 10px;
-      margin: 0 3px 8px;
-    }
-    .head h2 { margin: 0; font-size: 17px; line-height: 1.1; letter-spacing: 0; }
-    .head span { color: var(--muted); font-size: 11px; font-weight: 850; }
-    .link { color: var(--orange); font-size: 12px; font-weight: 950; padding: 0; }
-
-    .hero-os {
-      min-height: 366px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 28px;
-      padding: 15px;
-      color: #fff;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.2) 44%, rgba(0,0,0,.82)),
-        var(--hero);
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 18px 40px rgba(84,45,12,.2);
-    }
-    .bot-orbit {
-      position: absolute;
-      left: 50%;
-      top: 42%;
-      width: 156px;
-      height: 156px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.22);
-      backdrop-filter: blur(16px);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 20px 46px rgba(33,22,10,.22);
-    }
-    .bot-orbit::before {
-      content: "";
-      position: absolute;
-      inset: 15px;
-      border-radius: inherit;
-      background: radial-gradient(circle at 38% 28%, #fff, #ffe8af 42%, var(--orange) 100%);
-      animation: breath 3s ease-in-out infinite;
-      box-shadow: 0 0 0 10px rgba(255,232,180,.16);
-    }
-    .bot-face {
-      position: relative;
-      z-index: 1;
-      width: 68px;
-      height: 48px;
-      border-radius: 21px;
-      background: rgba(255,255,255,.86);
-      box-shadow: inset 0 -4px 0 rgba(255,106,0,.12);
-    }
-    .bot-face::before,
-    .bot-face::after {
-      content: "";
-      position: absolute;
-      top: 18px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #5c2c05;
-    }
-    .bot-face::before { left: 20px; }
-    .bot-face::after { right: 20px; }
-    .orb-dot {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #fff1b7;
-      box-shadow: 0 0 0 6px rgba(255,241,183,.18);
-      animation: float 3.4s ease-in-out infinite;
-    }
-    .orb-dot.one { left: 18px; top: 32px; }
-    .orb-dot.two { right: 20px; bottom: 30px; animation-delay: .8s; }
-    .orb-dot.three { right: 42px; top: 18px; animation-delay: 1.4s; }
-    @keyframes breath { 0%,100% { transform: scale(.96); } 50% { transform: scale(1.04); } }
-    @keyframes float { 0%,100% { transform: translateY(0); opacity: .72; } 50% { transform: translateY(-8px); opacity: 1; } }
-
-    .hero-copy {
-      position: absolute;
-      left: 15px;
-      right: 15px;
-      bottom: 86px;
-    }
-    .pill {
-      width: fit-content;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 0 9px;
-      border-radius: 99px;
-      background: rgba(255,255,255,.18);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 950;
-      backdrop-filter: blur(12px);
-    }
-    .hero-copy h2 { margin: 9px 0 10px; font-size: 30px; line-height: 1.05; letter-spacing: 0; max-width: 260px; }
-    .hero-copy p { margin: 0 0 14px; color: rgba(255,255,255,.82); font-size: 12px; font-weight: 850; }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn {
-      height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 0 15px;
-      border-radius: 999px;
-      font-weight: 950;
-      white-space: nowrap;
-      transition: transform .16s ease;
-    }
-    .btn:active, .visual-card:active, .nav button:active, .option-card:active { transform: scale(.98); }
-    .btn.primary { color: #311600; background: linear-gradient(135deg, #fff1b6, #fff); }
-    .btn.dark { color: #fff; background: rgba(255,255,255,.17); border: 1px solid rgba(255,255,255,.24); }
-    .btn.orange { color: #fff; background: linear-gradient(135deg, var(--orange), #ffae37); box-shadow: 0 10px 18px rgba(255,106,0,.24); }
-    .btn.light { color: var(--ink); background: #fff4e2; border: 1px solid rgba(255,106,0,.12); }
-
-    .status-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .hero-status {
-      position: absolute;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      z-index: 2;
-    }
-    .hero-status .status-card {
-      min-height: 60px;
-      background: rgba(255,255,255,.86);
-      backdrop-filter: blur(12px);
-    }
-    .hero-status .status-card b { font-size: 17px; }
-    .hero-status .status-card span { font-size: 10px; }
-    .status-card {
-      min-height: 78px;
-      border-radius: 19px;
-      padding: 10px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 20px rgba(73,48,25,.06);
-    }
-    .status-card b { display: block; font-size: 19px; color: var(--orange); }
-    .status-card span { display: block; margin-top: 4px; color: var(--soft); font-size: 11px; font-weight: 850; }
-
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .visual-card {
-      min-height: 132px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 23px;
-      color: #fff;
-      text-align: left;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.25) 46%, rgba(0,0,0,.76)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 12px 24px rgba(61,38,16,.12);
-    }
-    .visual-card strong {
-      position: absolute;
-      left: 12px;
-      bottom: 36px;
-      font-size: 17px;
-      letter-spacing: 0;
-    }
-    .visual-card span {
-      position: absolute;
-      left: 12px;
-      bottom: 13px;
-      height: 21px;
-      display: inline-flex;
-      align-items: center;
-      padding: 0 8px;
-      border-radius: 99px;
-      color: #351800;
-      background: rgba(255,242,191,.94);
-      font-size: 10px;
-      font-weight: 950;
-    }
-
-    .journey {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-      padding: 8px;
-      border-radius: 22px;
-      background: #fff;
-      border: 1px solid var(--line);
-    }
-    .journey div {
-      min-height: 56px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: #faf2e7;
-      color: var(--soft);
-      font-size: 11px;
-      font-weight: 950;
-      text-align: center;
-    }
-    .journey div.active { color: #fff; background: linear-gradient(135deg, var(--orange), #ffb13d); }
-
-    .diagnosis-hero {
-      min-height: 178px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 26px;
-      padding: 14px;
-      color: #fff;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.66)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 14px 30px rgba(61,38,16,.15);
-    }
-    .diagnosis-hero h2 { position: absolute; left: 14px; bottom: 42px; margin: 0; font-size: 26px; letter-spacing: 0; }
-    .bar {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 20px;
-      height: 7px;
-      overflow: hidden;
-      border-radius: 99px;
-      background: rgba(255,255,255,.28);
-    }
-    .bar i { display: block; height: 100%; width: var(--p); border-radius: inherit; background: #fff1b6; }
-
-    .option-stack { display: grid; gap: 9px; }
-    .option-card {
-      min-height: 94px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 22px;
-      color: #fff;
-      text-align: left;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.74)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      box-shadow: 0 10px 22px rgba(61,38,16,.12);
-    }
-    .option-card strong { position: absolute; left: 13px; bottom: 15px; font-size: 20px; letter-spacing: 0; }
-    .option-card b {
-      position: absolute;
-      right: 13px;
-      bottom: 13px;
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: #321600;
-      background: rgba(255,242,191,.96);
-      font-size: 18px;
-    }
-
-    .gap-map {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .gap {
-      min-height: 112px;
-      padding: 10px 8px;
-      border-radius: 19px;
-      background: #fff;
-      border: 1px solid var(--line);
-      text-align: center;
-      box-shadow: 0 10px 20px rgba(73,48,25,.06);
-    }
-    .ring {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 8px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at center, #fff 56%, transparent 59%),
-        conic-gradient(var(--c) var(--v), #efe4d8 0);
+      border-radius: 15px;
+      background: #f7f8fb;
+      border: 1px solid #edf0f5;
+      color: var(--muted);
       font-size: 13px;
+      font-weight: 760;
+    }
+    .search b { color: var(--orange); }
+
+    .content { padding: 12px 13px 18px; }
+    .section { margin-top: 13px; }
+    .head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin: 0 3px 8px; }
+    .head h2 { margin: 0; font-size: 17px; line-height: 1.1; letter-spacing: 0; }
+    .head span { color: var(--muted); font-size: 11px; font-weight: 800; }
+    .link { color: var(--orange); padding: 0; font-size: 12px; font-weight: 950; }
+
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,.75); border-radius: 20px; box-shadow: var(--shadow); }
+    .account {
+      padding: 14px;
+      background:
+        linear-gradient(135deg, #fff 0%, #fff8ef 70%, #ffe9c6 100%);
+      border: 1px solid rgba(255,106,0,.08);
+    }
+    .account-top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .account h2 { margin: 0; font-size: 19px; letter-spacing: 0; }
+    .account p { margin: 5px 0 0; color: var(--soft); font-size: 12px; font-weight: 760; }
+    .score {
+      width: 72px; height: 72px; flex: 0 0 auto; border-radius: 50%;
+      display: grid; place-items: center;
+      background: radial-gradient(circle at center, #fff 58%, transparent 60%), conic-gradient(var(--orange) 76%, #f0e3d6 0);
       font-weight: 950;
     }
-    .gap strong { display: block; font-size: 12px; }
-    .gap span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 850; }
+    .score b { font-size: 22px; }
+    .account-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 13px; }
+    .stat { min-height: 58px; padding: 9px; border-radius: 15px; background: rgba(255,255,255,.72); border: 1px solid rgba(255,106,0,.07); }
+    .stat b { display: block; color: var(--orange); font-size: 17px; }
+    .stat span { display: block; color: var(--muted); font-size: 10px; font-weight: 850; margin-top: 3px; }
 
-    .plan-card {
-      overflow: hidden;
-      border-radius: 26px;
-      background: #fff;
-      border: 1px solid rgba(255,255,255,.78);
-      box-shadow: 0 14px 30px rgba(73,48,25,.1);
-    }
-    .plan-photo {
-      min-height: 166px;
-      position: relative;
-      padding: 13px;
-      color: #fff;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.7)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .plan-photo h3 { margin: 8px 0 0; font-size: 23px; letter-spacing: 0; }
-    .plan-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 12px;
-    }
-    .cover-dots { display: flex; gap: 7px; flex-wrap: wrap; }
-    .cover-dots span {
-      width: 38px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      color: #884409;
-      background: #fff4e4;
-      font-size: 11px;
-      font-weight: 950;
-    }
-    .price { color: var(--orange); font-size: 19px; font-weight: 950; white-space: nowrap; }
+    .quick-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    .quick { min-height: 72px; display: grid; place-items: center; border-radius: 18px; background: #fff; box-shadow: 0 8px 18px rgba(40,32,24,.06); font-size: 11px; font-weight: 900; text-align: center; }
+    .quick b { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 12px; margin-bottom: 5px; color: #fff; background: linear-gradient(135deg, var(--orange), #ffb13b); font-size: 13px; }
+    .quick:nth-child(2) b { background: linear-gradient(135deg, var(--blue), #6eb5ff); }
+    .quick:nth-child(3) b { background: linear-gradient(135deg, var(--green), #6ad69e); }
+    .quick:nth-child(4) b { background: linear-gradient(135deg, #714df4, #a889ff); }
 
-    .alt-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-    }
-    .alt-card {
-      min-height: 116px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 22px;
-      color: #fff;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.73)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      text-align: left;
-    }
-    .alt-card strong { position: absolute; left: 12px; bottom: 36px; font-size: 16px; }
-    .alt-card span { position: absolute; left: 12px; bottom: 14px; height: 20px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 99px; color: #321600; background: rgba(255,242,191,.95); font-size: 10px; font-weight: 950; }
-    .alt-card b { position: absolute; right: 12px; top: 10px; color: #fff; font-size: 16px; }
+    .gold-card { padding: 12px; display: grid; grid-template-columns: 58px 1fr auto; gap: 11px; align-items: center; text-align: left; }
+    .gold-icon { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 18px; color: #b45100; background: #fff1da; font-weight: 950; font-size: 18px; }
+    .gold-card h3 { margin: 0; font-size: 15px; letter-spacing: 0; }
+    .gold-card p { margin: 5px 0 0; color: var(--soft); font-size: 11px; line-height: 1.35; font-weight: 760; }
+    .price { color: var(--orange); font-size: 18px; font-weight: 950; white-space: nowrap; }
+    .tags { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+    .tags span { height: 20px; display: inline-flex; align-items: center; padding: 0 7px; border-radius: 99px; background: #f3f6fb; color: #687281; font-size: 10px; font-weight: 850; }
+    .tags .orange { background: #fff2df; color: #b24d00; }
 
-    details {
-      overflow: hidden;
-      border-radius: 18px;
-      background: #fff;
-      border: 1px solid var(--line);
-    }
-    summary {
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 13px;
-      list-style: none;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 950;
-    }
-    summary::-webkit-details-marker { display: none; }
-    .explain {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 8px;
-      padding: 0 12px 12px;
-    }
-    .explain span { min-height: 46px; display: grid; place-items: center; border-radius: 14px; color: #684628; background: #fff5e7; font-size: 11px; font-weight: 900; text-align: center; }
+    .five-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; }
+    .five { min-height: 56px; display: grid; place-items: center; border-radius: 14px; background: #fff; color: var(--soft); font-size: 10px; font-weight: 900; text-align: center; border: 1px solid #edf0f5; }
 
-    .confirm-box {
-      padding: 13px;
-      border-radius: 22px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 22px rgba(73,48,25,.07);
-    }
-    .row { min-height: 45px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 900; }
-    .row span { color: var(--soft); font-weight: 800; }
-    .check { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 7px; color: var(--soft); font-size: 11px; line-height: 1.45; font-weight: 760; }
+    .scene-row { display: grid; grid-auto-flow: column; grid-auto-columns: 155px; gap: 9px; overflow-x: auto; padding-bottom: 3px; scrollbar-width: none; }
+    .scene-row::-webkit-scrollbar { display: none; }
+    .scene { position: relative; min-height: 108px; border-radius: 19px; overflow: hidden; color: #fff; text-align: left; background-image: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.72)), var(--img); background-size: cover; background-position: center; }
+    .scene strong { position: absolute; left: 11px; bottom: 34px; font-size: 15px; }
+    .scene span { position: absolute; left: 11px; bottom: 12px; height: 20px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 99px; color: #3a1a00; background: rgba(255,242,191,.94); font-size: 10px; font-weight: 950; }
+
+    .policy-list, .service-list { display: grid; gap: 9px; }
+    .policy { padding: 11px; display: grid; grid-template-columns: 46px 1fr auto; gap: 10px; align-items: center; }
+    .policy-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 16px; color: var(--orange); background: #fff0d8; font-weight: 950; }
+    .policy h3 { margin: 0; font-size: 14px; }
+    .policy p { margin: 4px 0 0; color: var(--muted); font-size: 11px; font-weight: 760; }
+    .status-pill { height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 99px; background: #eaf7f1; color: #0b7a50; font-size: 10px; font-weight: 950; white-space: nowrap; }
+    .status-pill.warn { background: #fff2df; color: #a64700; }
+    .status-pill.gray { background: #f0f2f5; color: #767f8d; }
+
+    .compare { overflow: hidden; }
+    .compare-row { min-height: 43px; display: grid; grid-template-columns: 84px 1fr 1fr; border-top: 1px solid var(--line); }
+    .compare-row:first-child { border-top: 0; }
+    .compare-row div { padding: 10px 8px; border-left: 1px solid var(--line); font-size: 11px; line-height: 1.35; }
+    .compare-row div:first-child { border-left: 0; color: var(--soft); font-weight: 900; background: #faf6f1; }
+    .compare-row strong { font-size: 12px; }
+
+    .detail-hero { padding: 14px; border-radius: 22px; background: linear-gradient(135deg, #fff, #fff4e5); border: 1px solid rgba(255,106,0,.08); }
+    .detail-hero h2 { margin: 0; font-size: 21px; }
+    .detail-hero p { margin: 6px 0 0; color: var(--soft); font-size: 12px; font-weight: 760; }
+
+    .confirm { padding: 13px; }
+    .form-row { min-height: 44px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 900; }
+    .form-row span { color: var(--soft); font-weight: 800; text-align: right; }
+    .check { display: flex; gap: 8px; align-items: flex-start; margin-top: 11px; color: var(--soft); font-size: 11px; line-height: 1.45; font-weight: 760; }
     .check input { margin-top: 2px; accent-color: var(--orange); }
 
-    .service-list { display: grid; gap: 10px; }
-    .service-card {
-      display: grid;
-      grid-template-columns: 56px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      min-height: 76px;
-      padding: 11px;
-      border-radius: 22px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 22px rgba(73,48,25,.07);
-    }
-    .service-img {
-      width: 56px;
-      height: 56px;
-      border-radius: 17px;
-      background-image: var(--img);
-      background-size: cover;
-      background-position: center;
-    }
-    .service-card strong { display: block; font-size: 14px; }
-    .service-card span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 850; }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .step { min-height: 86px; padding: 10px 7px; text-align: center; border-radius: 17px; background: #fff; border: 1px solid var(--line); }
+    .step b { width: 34px; height: 34px; display: grid; place-items: center; margin: 0 auto 7px; border-radius: 50%; color: #fff; background: var(--orange); }
+    .step strong { display: block; font-size: 12px; }
+    .step span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; font-weight: 800; }
 
-    .library {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .ai-sheet {
+      position: absolute;
+      inset: 0;
+      z-index: 45;
+      display: none;
+      place-items: end center;
+      padding: 13px;
+      background: rgba(22,17,12,.36);
     }
-    .library-card {
-      min-height: 132px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 22px;
-      color: #fff;
-      background-image:
-        linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.74)),
-        var(--img);
-      background-position: center;
-      background-size: cover;
-      text-align: left;
-    }
-    .library-card strong { position: absolute; left: 12px; bottom: 36px; font-size: 17px; }
-    .library-card span { position: absolute; left: 12px; bottom: 13px; height: 20px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 99px; color: #351800; background: rgba(255,242,191,.94); font-size: 10px; font-weight: 950; }
-    .library-card b { position: absolute; right: 12px; top: 10px; color: #fff; font-size: 16px; }
+    .ai-sheet.show { display: grid; }
+    .sheet { width: 100%; border-radius: 24px; background: #fff; padding: 14px; box-shadow: 0 -18px 42px rgba(22,17,12,.2); }
+    .sheet-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+    .sheet h2 { margin: 0; font-size: 18px; }
+    .sheet p { margin: 5px 0 0; color: var(--soft); font-size: 12px; font-weight: 760; }
+    .close { width: 32px; height: 32px; border-radius: 50%; background: #f2f4f7; font-weight: 950; }
+    .ai-options { display: grid; gap: 8px; }
+    .ai-option { min-height: 52px; padding: 10px; border-radius: 16px; background: #f7f8fb; text-align: left; font-size: 13px; font-weight: 900; }
+    .ai-option span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 760; }
 
-    .sticky {
-      position: sticky;
-      bottom: calc(76px + env(safe-area-inset-bottom));
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-      padding: 9px 10px;
-      border-radius: 19px;
-      color: #fff;
-      background: rgba(29,20,12,.92);
-      box-shadow: 0 12px 28px rgba(29,20,12,.22);
-      backdrop-filter: blur(16px);
-      z-index: 10;
-    }
+    .sticky { position: sticky; bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; padding: 9px 10px; border-radius: 18px; color: #fff; background: rgba(28,20,13,.92); box-shadow: 0 12px 26px rgba(28,20,13,.2); backdrop-filter: blur(16px); }
     .sticky strong { display: block; font-size: 16px; }
     .sticky span { display: block; color: rgba(255,255,255,.68); font-size: 10px; font-weight: 780; }
+    .btn { height: 38px; display: inline-flex; align-items: center; justify-content: center; padding: 0 14px; border-radius: 999px; font-weight: 950; white-space: nowrap; }
+    .btn.orange { color: #fff; background: linear-gradient(135deg, var(--orange), #ffad36); }
 
-    .nav {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 30;
-      height: calc(70px + env(safe-area-inset-bottom));
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
-      padding: 7px 10px calc(8px + env(safe-area-inset-bottom));
-      background: rgba(255,255,255,.94);
-      border-top: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-    }
-    .nav button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      border-radius: 17px;
-      color: #95897d;
-      font-size: 10px;
-      font-weight: 950;
-    }
-    .nav b {
-      width: 23px;
-      height: 23px;
-      display: grid;
-      place-items: center;
-      border-radius: 9px;
-    }
-    .nav button.active { color: #321700; background: #fff1df; }
+    .nav { position: absolute; left: 0; right: 0; bottom: 0; z-index: 30; height: calc(70px + env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(5,1fr); gap: 4px; padding: 7px 10px calc(8px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.95); border-top: 1px solid var(--line); backdrop-filter: blur(18px); }
+    .nav button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-radius: 17px; color: #939aa5; font-size: 10px; font-weight: 950; }
+    .nav b { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 9px; }
+    .nav button.active { color: #2b1706; background: #fff2df; }
     .nav button.active b { color: #fff; background: linear-gradient(135deg, var(--orange), #ffaf31); }
 
-    .toast {
-      position: absolute;
-      left: 50%;
-      bottom: 90px;
-      z-index: 50;
-      transform: translateX(-50%) translateY(16px);
-      max-width: 320px;
-      padding: 10px 14px;
-      border-radius: 99px;
-      color: #fff;
-      background: rgba(28,19,12,.92);
-      font-size: 12px;
-      font-weight: 900;
-      opacity: 0;
-      pointer-events: none;
-      transition: .18s ease;
-    }
+    .toast { position: absolute; left: 50%; bottom: 90px; z-index: 50; transform: translateX(-50%) translateY(16px); max-width: 320px; padding: 10px 14px; border-radius: 99px; color: #fff; background: rgba(28,19,12,.92); font-size: 12px; font-weight: 900; opacity: 0; pointer-events: none; transition: .18s ease; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     @media (max-width: 520px) {
       .stage { padding: 0; }
-      .phone { width: 100vw; min-height: 100vh; border: 0; border-radius: 0; box-shadow: none; }
+      .phone { width: 100vw; min-height: 100vh; border-radius: 0; border: 0; box-shadow: none; }
       .app { height: calc(100vh - 34px); }
     }
   </style>
@@ -705,24 +232,22 @@
 <body>
   <div class="stage">
     <div class="phone">
-      <div class="status">
-        <span>9:41</span>
-        <div class="sys"><div class="signal"><i></i><i></i><i></i><i></i></div><span>5G</span><div class="battery"></div></div>
-      </div>
+      <div class="status"><span>9:41</span><div class="sys"><div class="signal"><i></i><i></i><i></i><i></i></div><span>5G</span><div class="battery"></div></div></div>
 
       <main class="app" id="app">
         <header class="top">
           <div class="top-row">
-            <div class="brand"><div class="mark">F</div><div><h1>飞猪投保 OS</h1><small>AI 先诊断，再投保</small></div></div>
-            <button class="mini-btn" data-view="service">单</button>
+            <div class="brand"><div class="mark">F</div><div><h1>飞猪保险</h1><small>保障账户 · 金选服务</small></div></div>
+            <div class="top-actions"><button class="icon-btn" data-ai>选</button><button class="icon-btn" data-view="policies">单</button></div>
           </div>
-          <label class="ask"><b>问</b><input id="intentInput" placeholder="我想给这次旅行配保障" /></label>
+          <button class="search" data-ai><b>帮</b><span>帮我选 / 条款解读 / 理赔预审</span></button>
         </header>
         <div class="content" id="view"></div>
       </main>
 
       <nav class="nav" id="nav"></nav>
       <div class="toast" id="toast"></div>
+      <div class="ai-sheet" id="aiSheet"></div>
     </div>
   </div>
 
@@ -730,125 +255,38 @@
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
-    const sourceLinks = [
-      'assistant-ui/assistant-ui',
-      'bloomsynth/medusa-mobile-react-native',
-      'georgi/opencode-mobile',
-      'Autofleet/locomotion',
-      'noobnooc/AssisChat',
-      'ChatGPTNextWeb/NextChat',
-      'deepchat-dev/deepchat',
-      'Vali-98/ChatterUI',
-      'Mobile-Artificial-Intelligence/maid',
-      'dappros/ethora',
-      'akveo/kittenTricks',
-      'akveo/react-native-ui-kitten',
-      'shoutem/ui',
-      'galio-org/galio',
-      'creativetimofficial/material-kit',
-      'creativetimofficial/argon-react-native',
-      'themesberg/volt-react-dashboard',
-      'adminmart/modernize-react-lite',
-      'uilibrary/matx-react',
-      'bloomsynth/medusa-mobile-react-native',
-      'vmdt/travel-mobile',
-      'Autofleet/locomotion',
-      'georgi/opencode-mobile',
-      'felixtravel.app',
-      'nativekits.vercel.app'
+    const products = [
+      { id: 'travel', icon: '旅', name: '出行安心金选', fit: '机酒签证用户', price: 39, tags: ['航变', '境外医疗', '行李'], img: 'var(--travel)', range: '航变/医疗/行李', wait: '次日生效', service: '理赔预审', score: '96' },
+      { id: 'family', icon: '家', name: '家庭健康金选', fit: '亲子与父母', price: 128, tags: ['门诊', '住院', '意外'], img: 'var(--family)', range: '门诊/住院/意外', wait: '按条款', service: '专家问答', score: '92' },
+      { id: 'medical', icon: '医', name: '百万医疗金选', fit: '成人与父母', price: 99, tags: ['住院', '门急诊', '绿通'], img: 'var(--family)', range: '住院/门急诊/绿通', wait: '按条款', service: '就医协助', score: '94' },
+      { id: 'life', icon: '责', name: '家庭责任金选', fit: '房贷与子女教育', price: 88, tags: ['寿险', '责任', '教育'], img: 'var(--family)', range: '身故/责任/教育', wait: '按条款', service: '顾问解读', score: '90' },
+      { id: 'asset', icon: '数', name: '数码资产金选', fit: '手机相机电脑', price: 66, tags: ['数码', '家财', '责任'], img: 'var(--asset)', range: '设备/家财/责任', wait: '即时可查', service: '材料清单', score: '89' },
+      { id: 'carpet', icon: '车', name: '车宠生活金选', fit: '自驾与宠物家庭', price: 72, tags: ['车险', '宠物', '责任'], img: 'var(--pet)', range: '车/宠物/第三方', wait: '按条款', service: '事故预审', score: '88' }
     ];
 
-    const flows = {
-      travel: {
-        title: '出行诊断',
-        hero: '出发前先扫风险',
-        img: 'var(--travel)',
-        status: '订单触发',
-        questions: [
-          { title: '去哪儿', options: [['domestic','国内','var(--travel)'], ['asia','亚洲','var(--hero)'], ['global','欧美澳','var(--travel)']] },
-          { title: '和谁去', options: [['solo','自己','var(--travel)'], ['family','亲子','var(--family)'], ['parents','父母','var(--family)']] },
-          { title: '怎么玩', options: [['city','城市','var(--hero)'], ['sport','滑雪潜水','var(--sport)'], ['drive','自驾','var(--car)']] }
-        ],
-        gaps: [['医疗',76,'var(--orange)'], ['取消',58,'var(--blue)'], ['行李',68,'var(--green)']],
-        plan: { name: '出行安心包', price: 39, img: 'var(--hero)', cover: ['航变','医疗','行李'], fit: '本次出行' },
-        alts: [['运动加护',65,'var(--sport)'], ['数码随行',21,'var(--asset)']]
-      },
-      family: {
-        title: '家庭诊断',
-        hero: '一家人的底线保障',
-        img: 'var(--family)',
-        status: '家庭账户',
-        questions: [
-          { title: '保障谁', options: [['child','孩子','var(--family)'], ['parents','父母','var(--family)'], ['all','全家','var(--family)']] },
-          { title: '最担心', options: [['clinic','门诊','var(--family)'], ['hospital','住院','var(--family)'], ['accident','意外','var(--sport)']] },
-          { title: '预算', options: [['light','轻量','var(--family)'], ['balanced','均衡','var(--family)'], ['plus','加强','var(--family)']] }
-        ],
-        gaps: [['医疗',70,'var(--orange)'], ['意外',64,'var(--blue)'], ['责任',45,'var(--green)']],
-        plan: { name: '家庭基础包', price: 128, img: 'var(--family)', cover: ['门诊','住院','意外'], fit: '亲子家庭' },
-        alts: [['老人关怀',98,'var(--family)'], ['儿童门诊',59,'var(--family)']]
-      },
-      pet: {
-        title: '车宠诊断',
-        hero: '路上和家里都安心',
-        img: 'var(--pet)',
-        status: '生活方式',
-        questions: [
-          { title: '生活方式', options: [['car','有车','var(--car)'], ['pet','有宠','var(--pet)'], ['both','车宠都有','var(--pet)']] },
-          { title: '常见场景', options: [['drive','自驾','var(--car)'], ['boarding','寄养','var(--pet)'], ['city','通勤','var(--car)']] },
-          { title: '优先补', options: [['rescue','救援','var(--car)'], ['medical','宠医','var(--pet)'], ['liability','责任','var(--home)']] }
-        ],
-        gaps: [['救援',62,'var(--orange)'], ['宠医',72,'var(--blue)'], ['责任',54,'var(--green)']],
-        plan: { name: '车宠生活包', price: 88, img: 'var(--pet)', cover: ['救援','宠医','责任'], fit: '有车有宠' },
-        alts: [['宠物医疗',29,'var(--pet)'], ['自驾责任',46,'var(--car)']]
-      },
-      asset: {
-        title: '资产诊断',
-        hero: '高值物件有底',
-        img: 'var(--asset)',
-        status: '资产设备',
-        questions: [
-          { title: '要守护', options: [['phone','手机','var(--asset)'], ['camera','相机电脑','var(--asset)'], ['home','房屋','var(--home)']] },
-          { title: '使用场景', options: [['trip','旅行','var(--travel)'], ['daily','日常','var(--asset)'], ['empty','房屋空置','var(--home)']] },
-          { title: '担心什么', options: [['break','损坏','var(--asset)'], ['steal','丢失','var(--asset)'], ['water','水电','var(--home)']] }
-        ],
-        gaps: [['设备',74,'var(--orange)'], ['家财',52,'var(--blue)'], ['责任',48,'var(--green)']],
-        plan: { name: '资产随行包', price: 66, img: 'var(--asset)', cover: ['数码','家财','责任'], fit: '高值资产' },
-        alts: [['数码轻保',19,'var(--asset)'], ['家财守护',38,'var(--home)']]
-      }
-    };
-
-    const library = [
-      ['旅行','航变医疗','¥19','var(--travel)','travel'],
-      ['健康','家庭门诊','¥69','var(--family)','family'],
-      ['意外','通勤运动','¥12','var(--sport)','family'],
-      ['寿险','家庭责任','¥45','var(--family)','family'],
-      ['家财','房屋贵重物','¥18','var(--home)','asset'],
-      ['车险','自驾救援','¥399','var(--car)','pet'],
-      ['宠物','宠医寄养','¥29','var(--pet)','pet'],
-      ['运动','滑雪潜水','¥15','var(--sport)','travel'],
-      ['数码','手机相机','¥9','var(--asset)','asset'],
-      ['责任','第三方','¥16','var(--home)','pet']
-    ];
-
-    const navs = [
-      ['home','首页','首'], ['diagnosis','诊断','诊'], ['plan','方案','案'], ['service','服务','单'], ['library','保障','保']
+    const policies = [
+      ['旅', '东京亲子游保障', '保障中 · 7月18日出发', '保障中'],
+      ['家', '家庭基础保障', '父母医疗待补齐', '待补齐'],
+      ['数', '数码设备保障', '已失效 · 可重新配置', '已失效'],
+      ['车', '车宠生活保障', '待领取自驾权益券', '待补齐']
     ];
 
     const state = {
       view: 'home',
-      flow: 'travel',
-      step: 0,
-      answers: [],
-      plan: null,
+      product: products[0],
+      compare: products[1],
       agreed: false,
       toastTimer: null
     };
 
-    function current() { return flows[state.flow] || flows.travel; }
-    function progressView() {
-      const active = ['diagnosis','plan','confirm','service'].indexOf(state.view);
-      return `<section class="section"><div class="journey">${['诊断','缺口','方案','服务'].map((label, i) => `<div class="${i <= Math.max(active,0) ? 'active' : ''}">${label}</div>`).join('')}</div></section>`;
-    }
+    const navs = [
+      ['home', '首页', '首'],
+      ['gold', '金选', '金'],
+      ['account', '账户', '账'],
+      ['policies', '保单', '单'],
+      ['claims', '理赔', '赔']
+    ];
+
     function toast(text) {
       const el = $('#toast');
       el.textContent = text;
@@ -856,189 +294,219 @@
       clearTimeout(state.toastTimer);
       state.toastTimer = setTimeout(() => el.classList.remove('show'), 1500);
     }
+
     function setView(view) {
       state.view = view;
       render();
       $('#app').scrollTo({ top: 0, behavior: 'smooth' });
     }
-    function start(flow) {
-      state.flow = flow;
-      state.step = 0;
-      state.answers = [];
-      state.plan = null;
-      setView('diagnosis');
+
+    function setProduct(id, view = 'detail') {
+      state.product = products.find(item => item.id === id) || products[0];
+      state.compare = products.find(item => item.id !== state.product.id) || products[1];
+      setView(view);
     }
-    function choose(value) {
-      state.answers[state.step] = value;
-      if (state.step < current().questions.length - 1) {
-        state.step += 1;
-        render();
-      } else {
-        state.plan = current().plan;
-        setView('plan');
-      }
-    }
+
     function renderNav() {
-      $('#nav').innerHTML = navs.map(([id,label,icon]) => `
-        <button class="${state.view === id || (id === 'diagnosis' && ['diagnosis','plan','confirm'].includes(state.view)) ? 'active' : ''}" data-view="${id}">
+      $('#nav').innerHTML = navs.map(([id, label, icon]) => `
+        <button class="${state.view === id ? 'active' : ''}" data-view="${id}">
           <b>${icon}</b><span>${label}</span>
         </button>
       `).join('');
     }
 
+    function accountCard() {
+      return `
+        <section class="card account">
+          <div class="account-top">
+            <div><h2>我的保障账户</h2><p>3 张保单 · 4 位家庭成员</p></div>
+            <div class="score"><b>76</b></div>
+          </div>
+          <div class="account-stats">
+            <button class="stat" data-view="account"><b>2</b><span>缺口</span></button>
+            <button class="stat" data-view="policies"><b>3</b><span>保单</span></button>
+            <button class="stat" data-view="claims"><b>1</b><span>权益</span></button>
+          </div>
+        </section>
+      `;
+    }
+
+    function goldList(limit = products.length) {
+      return `<div class="policy-list">${products.slice(0, limit).map(item => `
+        <button class="card gold-card" data-product="${item.id}">
+          <div class="gold-icon">${item.icon}</div>
+          <div>
+            <h3>${item.name}</h3>
+            <p>${item.fit}</p>
+            <div class="tags"><span class="orange">金选 ${item.score}</span>${item.tags.slice(0,2).map(tag => `<span>${tag}</span>`).join('')}</div>
+          </div>
+          <div class="price">¥${item.price}</div>
+        </button>
+      `).join('')}</div>`;
+    }
+
     function homeView() {
       return `
-        <section class="hero-os">
-          <div class="bot-orbit" aria-hidden="true">
-            <i class="orb-dot one"></i><i class="orb-dot two"></i><i class="orb-dot three"></i><div class="bot-face"></div>
-          </div>
-          <div class="hero-copy">
-            <span class="pill">智能投保 OS</span>
-            <h2>先诊断，再投保</h2>
-            <p>把保险从货架，变成一次清晰决策。</p>
-            <div class="actions"><button class="btn primary" data-start="travel">开始诊断</button><button class="btn dark" data-view="library">全部保障</button></div>
-          </div>
-          <div class="status-grid hero-status">
-            <div class="status-card"><b>76</b><span>保障分</span></div>
-            <div class="status-card"><b>3</b><span>待补齐</span></div>
-            <div class="status-card"><b>1</b><span>可用权益</span></div>
+        ${accountCard()}
+        <section class="section">
+          <div class="quick-grid">
+            <button class="quick" data-view="gold"><b>金</b>金选保障</button>
+            <button class="quick" data-product="travel"><b>旅</b>旅行保障</button>
+            <button class="quick" data-product="family"><b>家</b>家庭保障</button>
+            <button class="quick" data-view="claims"><b>赔</b>理赔服务</button>
           </div>
         </section>
         <section class="section">
-          <div class="head"><div><h2>选择诊断</h2><span>一图一入口</span></div></div>
-          <div class="visual-grid">
-            ${Object.entries(flows).map(([id, item]) => `
-              <button class="visual-card" style="--img:${item.img}" data-start="${id}">
-                <strong>${item.title.replace('诊断','')}</strong><span>${item.status}</span>
-              </button>
-            `).join('')}
+          <div class="head"><div><h2>飞猪金选</h2><span>五维筛选</span></div><button class="link" data-view="gold">更多</button></div>
+          ${goldList(2)}
+        </section>
+        <section class="section">
+          <div class="head"><div><h2>出行订单保障</h2><span>飞猪场景优先</span></div></div>
+          <div class="scene-row">
+            <button class="scene" style="--img:var(--hero)" data-product="travel"><strong>东京亲子游</strong><span>航变 医疗 行李</span></button>
+            <button class="scene" style="--img:var(--sport)" data-product="travel"><strong>滑雪出行</strong><span>运动加护</span></button>
+            <button class="scene" style="--img:var(--asset)" data-product="asset"><strong>数码随行</strong><span>相机电脑</span></button>
           </div>
         </section>
       `;
     }
 
-    function diagnosisView() {
-      const flow = current();
-      const q = flow.questions[state.step];
-      const pct = Math.round(((state.step + 1) / flow.questions.length) * 100);
+    function goldView() {
       return `
-        ${progressView()}
-        <section class="diagnosis-hero" style="--img:${flow.img}">
-          <span class="pill">第 ${state.step + 1} 步</span>
-          <h2>${q.title}</h2>
-          <div class="bar" style="--p:${pct}%"><i></i></div>
-        </section>
-        <section class="section">
-          <div class="option-stack">
-            ${q.options.map(([value, label, img]) => `<button class="option-card" style="--img:${img}" data-answer="${value}"><strong>${label}</strong><b>›</b></button>`).join('')}
-          </div>
-        </section>
-      `;
-    }
-
-    function planView() {
-      const flow = current();
-      const plan = state.plan || flow.plan;
-      return `
-        ${progressView()}
         <section class="section" style="margin-top:0;">
-          <div class="head"><div><h2>缺口地图</h2><span>先看重点</span></div></div>
-          <div class="gap-map">${flow.gaps.map(([name, value, color]) => `<div class="gap"><div class="ring" style="--v:${value}%;--c:${color}">${value}</div><strong>${name}</strong><span>需关注</span></div>`).join('')}</div>
+          <div class="head"><div><h2>飞猪金选</h2><span>不只看低价</span></div></div>
+          <div class="five-grid"><div class="five">投保<br>门槛</div><div class="five">保障<br>范围</div><div class="five">性价<br>比</div><div class="five">服务<br>理赔</div><div class="five">机构<br>能力</div></div>
+        </section>
+        <section class="section">${goldList()}</section>
+      `;
+    }
+
+    function detailView() {
+      const p = state.product;
+      return `
+        <section class="detail-hero">
+          <div class="tags"><span class="orange">飞猪金选 ${p.score}</span><span>${p.service}</span></div>
+          <h2 style="margin-top:10px;">${p.name}</h2>
+          <p>${p.fit} · ${p.range}</p>
+        </section>
+        <section class="section">${goldList(1)}</section>
+        <section class="section">
+          <div class="head"><div><h2>保障重点</h2><span>先看关键项</span></div></div>
+          <div class="five-grid">${p.tags.map(tag => `<div class="five">${tag}</div>`).join('')}<div class="five">${p.wait}</div><div class="five">${p.service}</div></div>
         </section>
         <section class="section">
-          <div class="plan-card">
-            <div class="plan-photo" style="--img:${plan.img}"><span class="pill">${plan.fit}</span><h3>${plan.name}</h3></div>
-            <div class="plan-bottom"><div class="cover-dots">${plan.cover.map(x => `<span>${x}</span>`).join('')}</div><div class="price">¥${plan.price}</div></div>
+          <div class="head"><div><h2>产品对比</h2><span>主推 vs 备选</span></div></div>
+          ${compareTable(p, state.compare)}
+        </section>
+        <div class="sticky"><div><strong>¥${p.price}</strong><span>演示价格</span></div><button class="btn orange" data-view="confirm">确认演示</button></div>
+      `;
+    }
+
+    function compareTable(a, b) {
+      return `
+        <div class="card compare">
+          <div class="compare-row"><div></div><div><strong>${a.name}</strong></div><div><strong>${b.name}</strong></div></div>
+          <div class="compare-row"><div>适合</div><div>${a.fit}</div><div>${b.fit}</div></div>
+          <div class="compare-row"><div>保障</div><div>${a.range}</div><div>${b.range}</div></div>
+          <div class="compare-row"><div>生效</div><div>${a.wait}</div><div>${b.wait}</div></div>
+          <div class="compare-row"><div>服务</div><div>${a.service}</div><div>${b.service}</div></div>
+        </div>
+      `;
+    }
+
+    function accountView() {
+      return `
+        ${accountCard()}
+        <section class="section">
+          <div class="head"><div><h2>家庭成员</h2><span>缺口视图</span></div></div>
+          <div class="policy-list">
+            <div class="card policy"><div class="policy-icon">我</div><div><h3>本人</h3><p>旅行、意外已覆盖</p></div><span class="status-pill">良好</span></div>
+            <div class="card policy"><div class="policy-icon">父</div><div><h3>父母</h3><p>医疗保障待补齐</p></div><span class="status-pill warn">待补</span></div>
+            <div class="card policy"><div class="policy-icon">孩</div><div><h3>孩子</h3><p>门诊和意外建议补齐</p></div><span class="status-pill warn">待补</span></div>
           </div>
         </section>
-        <section class="section">
-          <div class="head"><div><h2>备选</h2><span>只给两个</span></div></div>
-          <div class="alt-grid">${flow.alts.map(([name, price, img]) => `<button class="alt-card" style="--img:${img}" data-alt="${name}" data-price="${price}"><strong>${name}</strong><span>备选</span><b>¥${price}</b></button>`).join('')}</div>
+      `;
+    }
+
+    function policiesView() {
+      return `
+        <section class="section" style="margin-top:0;">
+          <div class="head"><div><h2>我的保单</h2><span>保障中 / 待生效 / 已失效</span></div></div>
+          <div class="policy-list">
+            ${policies.map(([icon, name, desc, status]) => `<div class="card policy"><div class="policy-icon">${icon}</div><div><h3>${name}</h3><p>${desc}</p></div><span class="status-pill ${status === '待补齐' ? 'warn' : status === '已失效' ? 'gray' : ''}">${status}</span></div>`).join('')}
+          </div>
         </section>
-        <section class="section"><details><summary>为什么推荐 <span>⌄</span></summary><div class="explain"><span>${plan.fit}</span><span>${plan.cover[0]}优先</span><span>含服务</span></div></details></section>
-        <div class="sticky"><div><strong>¥${plan.price}</strong><span>演示价格</span></div><button class="btn orange" data-view="confirm">确认方案</button></div>
+      `;
+    }
+
+    function claimsView() {
+      return `
+        <section class="section" style="margin-top:0;">
+          <div class="head"><div><h2>理赔服务</h2><span>先预审材料</span></div><button class="link" data-ai>预审</button></div>
+          <div class="steps"><div class="step"><b>1</b><strong>选保单</strong><span>定位事故</span></div><div class="step"><b>2</b><strong>看材料</strong><span>一次交对</span></div><div class="step"><b>3</b><strong>查进度</strong><span>透明跟踪</span></div></div>
+        </section>
+        <section class="section">
+          <div class="policy-list">
+            <div class="card policy"><div class="policy-icon">旅</div><div><h3>东京亲子游保障</h3><p>可发起行李延误/医疗咨询</p></div><button class="link" data-ai>预审</button></div>
+            <div class="card policy"><div class="policy-icon">家</div><div><h3>家庭健康保障</h3><p>门诊材料清单可查看</p></div><button class="link" data-ai>查看</button></div>
+          </div>
+        </section>
       `;
     }
 
     function confirmView() {
-      const plan = state.plan || current().plan;
+      const p = state.product;
       return `
-        ${progressView()}
-        <section class="plan-card">
-          <div class="plan-photo" style="--img:${plan.img}"><span class="pill">确认演示</span><h3>${plan.name}</h3></div>
-        </section>
+        <section class="detail-hero"><h2>投保确认</h2><p>${p.name} · 本页为演示确认</p></section>
         <section class="section">
-          <div class="confirm-box">
-            <label class="check"><input id="agree" type="checkbox" ${state.agreed ? 'checked' : ''}> <span>已阅读保障范围和免责说明。本页不采集真实信息。</span></label>
-            <div class="row"><strong>对象</strong><span>本人/家庭</span></div>
-            <div class="row"><strong>权益</strong><span>理赔预审</span></div>
-            <div class="row"><strong>合计</strong><span style="color:var(--orange);font-weight:950;">¥${plan.price}</span></div>
+          <div class="card confirm">
+            <div class="form-row"><strong>方案</strong><span>${p.name}</span></div>
+            <div class="form-row"><strong>服务</strong><span>${p.service}</span></div>
+            <div class="form-row"><strong>合计</strong><span style="color:var(--orange);font-weight:950;">¥${p.price}</span></div>
+            <label class="check"><input id="agree" type="checkbox" ${state.agreed ? 'checked' : ''}> <span>已阅读保障范围、免责说明和理赔材料要求。本页不采集真实信息。</span></label>
           </div>
         </section>
-        <div class="sticky"><div><strong>¥${plan.price}</strong><span>不真实支付</span></div><button class="btn orange" data-confirm>完成</button></div>
-      `;
-    }
-
-    function serviceView() {
-      return `
-        ${progressView()}
-        <section class="section" style="margin-top:0;">
-          <div class="head"><div><h2>服务驾驶舱</h2><span>保后不中断</span></div></div>
-          <div class="service-list">
-            <div class="service-card"><div class="service-img" style="--img:var(--hero)"></div><div><strong>东京亲子游</strong><span>7月18日 · 已保障</span></div><button class="link" data-start="travel">续配</button></div>
-            <div class="service-card"><div class="service-img" style="--img:var(--family)"></div><div><strong>家庭账户</strong><span>2项待补齐</span></div><button class="link" data-start="family">补齐</button></div>
-            <div class="service-card"><div class="service-img" style="--img:var(--asset)"></div><div><strong>理赔预审</strong><span>3步看材料</span></div><button class="link" data-claim>开始</button></div>
-          </div>
-        </section>
-        <section class="section"><div class="gap-map"><div class="gap"><div class="ring" style="--v:33%;--c:var(--orange)">1</div><strong>选事故</strong><span>第一步</span></div><div class="gap"><div class="ring" style="--v:66%;--c:var(--blue)">2</div><strong>看材料</strong><span>第二步</span></div><div class="gap"><div class="ring" style="--v:100%;--c:var(--green)">3</div><strong>查进度</strong><span>第三步</span></div></div></section>
-      `;
-    }
-
-    function libraryView() {
-      return `
-        <section class="section" style="margin-top:0;">
-          <div class="head"><div><h2>全部保障</h2><span>诊断后再看</span></div></div>
-          <div class="library">${library.map(([name, fit, price, img, flow]) => `<button class="library-card" style="--img:${img}" data-start="${flow}"><strong>${name}</strong><span>${fit}</span><b>${price}</b></button>`).join('')}</div>
-        </section>
+        <div class="sticky"><div><strong>¥${p.price}</strong><span>不真实支付</span></div><button class="btn orange" data-confirm>完成</button></div>
       `;
     }
 
     function render() {
       renderNav();
-      const views = { home: homeView, diagnosis: diagnosisView, plan: planView, confirm: confirmView, service: serviceView, library: libraryView };
+      const views = { home: homeView, gold: goldView, detail: detailView, account: accountView, policies: policiesView, claims: claimsView, confirm: confirmView };
       $('#view').innerHTML = (views[state.view] || homeView)();
       bind();
     }
 
+    function openAI() {
+      const sheet = $('#aiSheet');
+      sheet.innerHTML = `
+        <div class="sheet">
+          <div class="sheet-head"><div><h2>帮我选</h2><p>轻量助手，只做选品和解读。</p></div><button class="close" data-close>×</button></div>
+          <div class="ai-options">
+            <button class="ai-option" data-product="travel">我有出行订单<span>看航变、医疗、取消和行李</span></button>
+            <button class="ai-option" data-product="family">我想给家人配保障<span>看父母、孩子、家庭责任</span></button>
+            <button class="ai-option" data-view="claims">我要理赔预审<span>先看材料清单和进度</span></button>
+          </div>
+        </div>`;
+      sheet.classList.add('show');
+      bind();
+      $$('[data-close]', sheet).forEach(btn => btn.addEventListener('click', () => sheet.classList.remove('show')));
+      sheet.addEventListener('click', event => { if (event.target === sheet) sheet.classList.remove('show'); }, { once: true });
+    }
+
     function bind() {
-      $$('[data-view]').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
-      $$('[data-start]').forEach(btn => btn.addEventListener('click', () => start(btn.dataset.start)));
-      $$('[data-answer]').forEach(btn => btn.addEventListener('click', () => choose(btn.dataset.answer)));
-      $$('[data-alt]').forEach(btn => btn.addEventListener('click', () => {
-        const base = current().plan;
-        state.plan = { ...base, name: btn.dataset.alt, price: Number(btn.dataset.price), img: btn.style.getPropertyValue('--img') || base.img };
-        render();
-        toast('已切换方案');
-      }));
-      const input = $('#intentInput');
-      input.addEventListener('keydown', event => {
-        if (event.key !== 'Enter') return;
-        const text = input.value;
-        if (/家|孩|父|母|健康/.test(text)) start('family');
-        else if (/车|宠|狗|猫|自驾/.test(text)) start('pet');
-        else if (/数码|手机|相机|电脑|房|资产/.test(text)) start('asset');
-        else start('travel');
-      });
+      $$('[data-view]').forEach(btn => btn.addEventListener('click', () => { $('#aiSheet').classList.remove('show'); setView(btn.dataset.view); }));
+      $$('[data-product]').forEach(btn => btn.addEventListener('click', () => { $('#aiSheet').classList.remove('show'); setProduct(btn.dataset.product); }));
+      $$('[data-ai]').forEach(btn => btn.addEventListener('click', openAI));
       const agree = $('#agree');
       if (agree) agree.addEventListener('change', () => state.agreed = agree.checked);
       $$('[data-confirm]').forEach(btn => btn.addEventListener('click', () => {
         const agreeBox = $('#agree');
         if (!agreeBox || !agreeBox.checked) return toast('请先勾选阅读确认');
         state.agreed = true;
-        setView('service');
+        setView('policies');
         toast('已生成演示保单');
       }));
-      $$('[data-claim]').forEach(btn => btn.addEventListener('click', () => toast('理赔预审已开启')));
     }
 
     render();
